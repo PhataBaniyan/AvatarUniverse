@@ -290,7 +290,7 @@ public class WaterSpoutWave extends BendingAbility {
                 if (existing != null) {
                     continue;
                 }
-                TempBlock ice = new TempBlock(level, pos, Blocks.PACKED_ICE.defaultBlockState());
+                TempBlock ice = new TempBlock(level, pos, Blocks.PACKED_ICE.defaultBlockState(), TempBlock.QUIET);
                 affectedBlocks.put(pos, ice);
                 BendingManager.scheduleRevert(ice, level.getGameTime() + Config.ICEWAVE_REVERT_SECONDS.get() * 20L);
             } else {
@@ -335,7 +335,8 @@ public class WaterSpoutWave extends BendingAbility {
                     }
                     var state = level.getBlockState(pos);
                     if (state.isAir() || state.is(Blocks.ICE) || BendingSources.isWaterSource(level, pos)) {
-                        TempBlock ice = new TempBlock(level, pos.immutable(), Blocks.ICE.defaultBlockState());
+                        TempBlock ice =
+                                new TempBlock(level, pos.immutable(), Blocks.ICE.defaultBlockState(), TempBlock.QUIET);
                         FROZEN.put(ice, new FrozenEntry(owner, revertAt));
                     }
                 }

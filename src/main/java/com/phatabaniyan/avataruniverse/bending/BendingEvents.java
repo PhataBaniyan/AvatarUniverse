@@ -1474,6 +1474,14 @@ public final class BendingEvents {
         if (Torrent.ID.equalsIgnoreCase(bound)) {
             return startTorrent(player, bending, gameTime, source, serverLevel);
         }
+        // Korra redirect: clicking with a live bolt steers it to the new
+        // gaze target instead of firing another one.
+        WaterManipulation live = BendingManager.find(player.getUUID(), WaterManipulation.class);
+        Vec3 gaze = WaterArms.aimedPoint(player, Config.WATERMANIP_RANGE.get());
+        if (live != null) {
+            live.redirectTo(gaze);
+            return false;
+        }
         if (bending.isOnCooldown(WaterManipulation.ID, gameTime)) {
             long left = (bending.cooldownExpiresAt(WaterManipulation.ID) - gameTime + 19) / 20;
             feedback(player, bending, BendingElement.WATER, "The waters are spent (" + Math.max(left, 1) + "s).");
@@ -1481,9 +1489,16 @@ public final class BendingEvents {
         }
         bending.setCooldown(WaterManipulation.ID, gameTime + Config.WATERMANIP_COOLDOWN_TICKS.get());
         boolean icy = BendingSources.isIce(serverLevel, source);
-        BendingManager.start(new WaterManipulation(player, Vec3.atCenterOf(source), icy));
+        BendingManager.start(new WaterManipulation(player, Vec3.atCenterOf(source), gaze, icy));
         if (BendingSources.isPlant(serverLevel, source)) {
             BendingManager.consumePlantSource(serverLevel, source, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+        } else if (!icy
+                && serverLevel.getFluidState(source).is(net.minecraft.world.level.material.Fluids.WATER)
+                && BendingSources.adjacentWaterCount(serverLevel, source) < 3) {
+            // Isolated sources are spent by the cast (Korra ocean exemption:
+            // large bodies keep their water).
+            serverLevel.setBlock(
+                    source, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), TempBlock.QUIET);
         }
         // Selection persists across shots (Korra): the source is not consumed,
         // so repeat casts work until it goes invalid or out of range.

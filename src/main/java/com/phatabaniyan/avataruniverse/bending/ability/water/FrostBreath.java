@@ -241,7 +241,8 @@ public class FrostBreath extends BendingAbility {
         if (replacement.is(Blocks.ICE) && level.getBlockState(p).is(Blocks.ICE)) {
             return;
         }
-        frozen.add(new FrozenBlock(new TempBlock(level, p, replacement), replacement, now + durationTicks));
+        frozen.add(new FrozenBlock(
+                new TempBlock(level, p, replacement, TempBlock.QUIET), replacement, now + durationTicks));
     }
 
     private static final class FrozenBlock {

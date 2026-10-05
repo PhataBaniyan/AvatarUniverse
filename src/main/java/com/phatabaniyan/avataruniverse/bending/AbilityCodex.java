@@ -23,7 +23,7 @@ public final class AbilityCodex {
                 "WaterManipulation",
                 BendingElement.WATER,
                 "The first lesson of every waterbender: seize a nearby water source and hurl it as a guided bolt. Fast, cheap, and spammable — ideal for finishing weakened targets.",
-                "Sneak while facing a water source, then click to launch the bolt toward your cursor. Click again mid-flight to redirect it — including bolts thrown by other benders.");
+                "Sneak while facing a water source, then click to launch the bolt toward your cursor. Click again mid-flight to redirect it — including bolts thrown by other benders. Isolated sources are spent by the cast; lakes and seas are not.");
         register(
                 "Torrent",
                 BendingElement.WATER,

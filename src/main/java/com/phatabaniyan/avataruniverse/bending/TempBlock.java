@@ -1,6 +1,7 @@
 package com.phatabaniyan.avataruniverse.bending;
 
 import com.phatabaniyan.avataruniverse.AvatarUniverseMod;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
@@ -30,6 +31,15 @@ public final class TempBlock {
     public static final int QUIET = Block.UPDATE_CLIENTS;
 
     private static final Set<TempBlock> ACTIVE = ConcurrentHashMap.newKeySet();
+    /**
+     * Position index for O(1) lookups (Korra's per-block instance map). The
+     * first live entry owns the cell; later stacked entries are tracked in
+     * {@link #ACTIVE} only. Revert removes the mapping only if it still
+     * points at the reverting instance.
+     */
+    private record CellKey(ServerLevel level, BlockPos pos) {}
+
+    private static final Map<CellKey, TempBlock> BY_POS = new ConcurrentHashMap<>();
 
     private final ServerLevel level;
     private final BlockPos pos;
@@ -69,6 +79,7 @@ public final class TempBlock {
             level.getFluidTicks().clearArea(new BoundingBox(this.pos));
         }
         ACTIVE.add(this);
+        BY_POS.putIfAbsent(new CellKey(level, this.pos), this);
     }
 
     /** Current (bent) occupancy, mutating with updateReplacement calls. */
@@ -105,10 +116,9 @@ public final class TempBlock {
 
     /** The live entry bent at a position, if any (thawing other constructs' ice). */
     public static TempBlock getAt(ServerLevel level, BlockPos pos) {
-        for (TempBlock temp : ACTIVE) {
-            if (!temp.reverted && temp.level == level && temp.pos.equals(pos)) {
-                return temp;
-            }
+        TempBlock indexed = BY_POS.get(new CellKey(level, pos));
+        if (indexed != null && !indexed.reverted) {
+            return indexed;
         }
         return null;
     }
@@ -124,6 +134,7 @@ public final class TempBlock {
         }
         reverted = true;
         ACTIVE.remove(this);
+        BY_POS.remove(new CellKey(level, pos), this);
         if (virtual) {
             return;
         }
@@ -141,10 +152,20 @@ public final class TempBlock {
      * Neighbor edits, explosions or other mods can re-wake flow through
      * paths no event covers; the fluid delay always exceeds this per-tick
      * sweep. Called from the server tick.
+     *
+     * <p>Water temps also sweep their 1-block neighborhood (Korra
+     * {@code AFFECTED_BLOCKS} flow guards): natural rapids beside a bent
+     * source would otherwise run the infinite-water check against it and
+     * convert to sources along the ability's path.
      */
     public static void suppressFlowTicks() {
         for (TempBlock temp : Set.copyOf(ACTIVE)) {
-            if (!temp.reverted && !temp.virtual) {
+            if (temp.reverted || temp.virtual) {
+                continue;
+            }
+            if (temp.replacement.getFluidState().is(Fluids.WATER)) {
+                temp.level.getFluidTicks().clearArea(new BoundingBox(temp.pos).inflatedBy(1));
+            } else {
                 temp.level.getFluidTicks().clearArea(new BoundingBox(temp.pos));
             }
         }

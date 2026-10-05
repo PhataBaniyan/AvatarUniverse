@@ -1,6 +1,7 @@
 package com.phatabaniyan.avataruniverse.bending.ability.water;
 
 import com.phatabaniyan.avataruniverse.Config;
+import com.phatabaniyan.avataruniverse.bending.BendingSources;
 import com.phatabaniyan.avataruniverse.bending.BendingTheme;
 import com.phatabaniyan.avataruniverse.bending.TempBlock;
 import com.phatabaniyan.avataruniverse.bending.ability.BendingAbility;
@@ -12,35 +13,47 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Reference port of ProjectKorra {@code WaterManipulation}
  * (waterbending/WaterManipulation.java): the fundamental water ability. Like
- * Korra it bends a real block: a {@link TempBlock} travels the bolt path and
- * each previous position is reverted as it advances, so the world is
- * untouched when the ability ends. The bolt originates at the player's tapped
- * source (Korra source selection) and flies along the look direction. Ice and
- * snow sources fire a packed-ice bolt with snowflake spray instead of water.
- * (A particle spray rides along for the visual Korra adds on top of the
- * block.)
+ * Korra it bends a real block: a 3-block comet (source head plus two fading
+ * tail blocks) advances exactly one block per tick, each previous position
+ * reverting only after the new head is placed, so the bolt never strobes or
+ * gaps and the world is untouched when it ends. The bolt originates at the
+ * player's tapped source (Korra source selection) and steers toward the live
+ * gaze target on every click (Korra redirect); an isolated source is
+ * consumed unless it sits in a large body (Korra 3+ source ocean
+ * exemption). Ice and snow sources fire a packed-ice bolt with snowflake
+ * spray instead of water. (A particle spray rides along for the visual
+ * Korra adds on top of the block.)
  */
 public class WaterManipulation extends BendingAbility {
     public static final String ID = "WaterManipulation";
 
+    private static final double STEP = 1.0;
+    private static final double ARRIVE_DIST_SQR = 1.0;
+    private static final double COLLISION_RADIUS = 1.0;
+    private static final double KNOCKBACK = 0.3;
+
     private final ServerLevel level;
-    private final Vec3 direction;
     private final boolean icy;
     private Vec3 position;
-    private TempBlock bolt;
+    private Vec3 target;
+    private TempBlock head;
+    private TempBlock tail;
+    private TempBlock tail2;
     private double traveled;
 
-    public WaterManipulation(ServerPlayer player, Vec3 origin, boolean icy) {
+    public WaterManipulation(ServerPlayer player, Vec3 origin, Vec3 target, boolean icy) {
         super(player.getUUID(), player.level().getGameTime());
         this.level = player.serverLevel();
-        this.direction = player.getLookAngle().normalize();
         this.position = origin;
+        this.target = target;
         this.icy = icy;
         this.traveled = 0.0;
         level.playSound(
@@ -57,25 +70,49 @@ public class WaterManipulation extends BendingAbility {
         return ID;
     }
 
+    /** Korra redirect: an in-flight bolt adopts the caster's latest target. */
+    public void redirectTo(Vec3 target) {
+        this.target = target;
+    }
+
     @Override
     public boolean progress() {
-        double range = Config.WATERMANIP_RANGE.get();
-        double speed = 1.2;
-        if (traveled >= range) {
+        ServerPlayer player = level.getServer().getPlayerList().getPlayer(owner);
+        if (player == null || player.isRemoved()) {
             return false;
         }
-        position = position.add(direction.scale(speed));
-        traveled += speed;
-
-        // Advance the real bolt block, reverting the previous position.
-        if (bolt != null) {
-            bolt.revert();
+        double range = Config.WATERMANIP_RANGE.get();
+        if (traveled >= range || position.distanceToSqr(target) <= ARRIVE_DIST_SQR) {
+            return false;
         }
-        bolt = new TempBlock(
-                level,
-                BlockPos.containing(position),
-                icy ? Blocks.PACKED_ICE.defaultBlockState() : Blocks.WATER.defaultBlockState(),
-                TempBlock.QUIET);
+        Vec3 to = target.subtract(position);
+        if (to.lengthSqr() < 1.0e-6) {
+            return false;
+        }
+        position = position.add(to.normalize().scale(STEP));
+        traveled += STEP;
+        BlockPos cell = BlockPos.containing(position);
+
+        // Walls stop the bolt (Korra collide); replaceable cover is brushed
+        // aside by simply bending through it.
+        BlockState state = level.getBlockState(cell);
+        if (!state.isAir() && state.getFluidState().isEmpty() && !BendingSources.isTransparentForBend(level, cell)) {
+            return false;
+        }
+
+        // Place the new head first, then slide the fading tail forward
+        // (Korra order): held cells are never touched, so nothing flickers.
+        TempBlock newHead = new TempBlock(
+                level, cell.immutable(), icy ? Blocks.PACKED_ICE.defaultBlockState() : waterLevel(7), TempBlock.QUIET);
+        if (tail2 != null) {
+            tail2.revert();
+        }
+        tail2 = tail;
+        tail = head;
+        head = newHead;
+        if (tail != null) {
+            tail.updateReplacement(icy ? Blocks.PACKED_ICE.defaultBlockState() : waterLevel(6));
+        }
 
         if (icy) {
             level.sendParticles(
@@ -101,27 +138,44 @@ public class WaterManipulation extends BendingAbility {
                     0.05);
         }
 
-        double radius = 1.6;
-        AABB box = new AABB(position.subtract(radius, radius, radius), position.add(radius, radius, radius));
+        AABB box = new AABB(
+                position.subtract(COLLISION_RADIUS, COLLISION_RADIUS, COLLISION_RADIUS),
+                position.add(COLLISION_RADIUS, COLLISION_RADIUS, COLLISION_RADIUS));
         boolean hit = false;
-        for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, box)) {
-            if (target.getUUID().equals(owner)) {
+        for (LivingEntity targetEntity : level.getEntitiesOfClass(LivingEntity.class, box)) {
+            if (targetEntity.getUUID().equals(owner)) {
                 continue;
             }
-            Vec3 push = direction.scale(1.0).add(new Vec3(0.0, 0.3, 0.0));
-            target.setDeltaMovement(target.getDeltaMovement().add(push));
-            target.hurtMarked = true;
-            target.hurt(level.damageSources().magic(), (float) (double) Config.WATERMANIP_DAMAGE.get());
+            Vec3 push = player.getLookAngle().normalize().scale(KNOCKBACK).add(new Vec3(0.0, 0.1, 0.0));
+            targetEntity.setDeltaMovement(targetEntity.getDeltaMovement().add(push));
+            targetEntity.hurtMarked = true;
+            targetEntity.hurt(level.damageSources().magic(), (float) (double) Config.WATERMANIP_DAMAGE.get());
             hit = true;
         }
         return !hit;
     }
 
+    private static BlockState waterLevel(int level) {
+        BlockState state = Blocks.WATER.defaultBlockState();
+        if (state.hasProperty(BlockStateProperties.LEVEL)) {
+            state = state.setValue(BlockStateProperties.LEVEL, level);
+        }
+        return state;
+    }
+
     @Override
     public void onRemove() {
-        if (bolt != null) {
-            bolt.revert();
-            bolt = null;
+        if (tail2 != null) {
+            tail2.revert();
+            tail2 = null;
+        }
+        if (tail != null) {
+            tail.revert();
+            tail = null;
+        }
+        if (head != null) {
+            head.revert();
+            head = null;
         }
     }
 }

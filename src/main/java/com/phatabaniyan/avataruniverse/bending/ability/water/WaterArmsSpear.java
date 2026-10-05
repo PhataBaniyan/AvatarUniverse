@@ -182,7 +182,7 @@ public class WaterArmsSpear extends BendingAbility {
             if (!BendingSources.isTransparentForBend(level, pos)) {
                 continue;
             }
-            TempBlock ice = new TempBlock(level, pos, Blocks.ICE.defaultBlockState());
+            TempBlock ice = new TempBlock(level, pos, Blocks.ICE.defaultBlockState(), TempBlock.QUIET);
             ICE_BLOCKS.put(ice, new FrozenEntry(owner, level.getGameTime() + baseMs / 50 + level.random.nextInt(10)));
         }
     }
@@ -212,7 +212,8 @@ public class WaterArmsSpear extends BendingAbility {
                     if (!BendingSources.isTransparentForBend(level, pos)) {
                         continue;
                     }
-                    TempBlock ice = new TempBlock(level, pos.immutable(), Blocks.ICE.defaultBlockState());
+                    TempBlock ice =
+                            new TempBlock(level, pos.immutable(), Blocks.ICE.defaultBlockState(), TempBlock.QUIET);
                     ICE_BLOCKS.put(
                             ice, new FrozenEntry(owner, level.getGameTime() + baseMs / 50 + level.random.nextInt(10)));
                 }

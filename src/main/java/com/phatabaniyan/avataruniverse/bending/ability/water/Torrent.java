@@ -241,9 +241,9 @@ public class Torrent extends BendingAbility {
             return false;
         }
         revertSetup();
-        if (level.getBlockState(pos).isAir()) {
-            setupTemp = new TempBlock(level, pos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
-        }
+        // Water-on-water is virtual (no placement, no flow risk), so the
+        // traveller stays visible while crossing lakes.
+        setupTemp = new TempBlock(level, pos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
         return true;
     }
 
@@ -263,8 +263,11 @@ public class Torrent extends BendingAbility {
         startAngle = (startAngle + 20.0) % 360.0;
         Vec3 eye = player.getEyePosition();
         double radius = Config.TORRENT_RADIUS.get();
+        // Sample densely enough that the arc stays contiguous even at large
+        // configured radii (a 10° lattice leaves holes past radius ~5).
+        double step = Math.min(10.0, Math.toDegrees(0.75 / Math.max(1.0, radius)));
         Set<BlockPos> want = new HashSet<>();
-        for (double theta = startAngle; theta < startAngle + angle; theta += 10.0) {
+        for (double theta = startAngle; theta < startAngle + angle; theta += step) {
             double phi = Math.toRadians(theta);
             BlockPos pos = BlockPos.containing(eye.x + Math.cos(phi) * radius, eye.y, eye.z + Math.sin(phi) * radius);
             if (BendingSources.isTransparentForBend(level, pos)) {
@@ -346,29 +349,14 @@ public class Torrent extends BendingAbility {
      * first cell. Returns false when nothing launchable exists.
      */
     public boolean launch(ServerPlayer player) {
-        revertRing();
-        Vec3 eye = player.getEyePosition();
-        Set<BlockPos> seen = new HashSet<>();
-        for (double i = 0.0; i < angle; i += 10.0) {
-            double radians = Math.toRadians(i + startAngle);
-            double x = eye.x + Math.cos(radians) * Config.TORRENT_RADIUS.get();
-            double z = eye.z + Math.sin(radians) * Config.TORRENT_RADIUS.get();
-            BlockPos pos = BlockPos.containing(new Vec3(x, eye.y, z));
-            if (!seen.add(pos.immutable())) {
-                continue;
-            }
-            if (!BendingSources.isTransparentForBend(level, pos)) {
-                continue;
-            }
-            TempBlock temp = new TempBlock(level, pos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
-            launched.addLast(temp);
-            if (launched.size() == 1) {
-                head = Vec3.atCenterOf(pos);
-            }
-        }
-        if (launched.isEmpty()) {
+        if (ring.isEmpty()) {
             return false;
         }
+        // Adopt the live ring cells (Korra): the arc flies as-is instead of
+        // blinking out for a rebuild tick.
+        launched.addAll(ring);
+        ring.clear();
+        head = Vec3.atCenterOf(launched.getFirst().pos());
         traveled = 0.0;
         state = State.LAUNCHING;
         // Aim-locked flight: the wave leaves along the full 3D look vector
@@ -510,10 +498,10 @@ public class Torrent extends BendingAbility {
         }
         long revertAt = level.getGameTime() + Config.TORRENT_FROZEN_REVERT_SECONDS.get() * 20L;
         for (TempBlock temp : launched) {
-            BlockPos pos = temp.pos();
-            temp.revert();
-            TempBlock ice = new TempBlock(level, pos, Blocks.PACKED_ICE.defaultBlockState());
-            FROZEN.put(ice, new FrozenEntry(owner, revertAt));
+            // Freeze in place (keeps the quiet flag: no neighbor wake, no
+            // flow kick like a fresh placement would cause).
+            temp.updateReplacement(Blocks.PACKED_ICE.defaultBlockState());
+            FROZEN.put(temp, new FrozenEntry(owner, revertAt));
         }
         launched.clear();
         double freezeRadius = Config.TORRENT_FREEZE_RADIUS.get();

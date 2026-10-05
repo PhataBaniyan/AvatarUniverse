@@ -41,8 +41,8 @@ public class WaterSpout extends BendingAbility {
     private static final int MAX_HEIGHT = 21;
 
     private static final double OVER_HEIGHT_TOLERANCE = 2.0;
-    /** Canonical ~4 b/s cap as fly thrust (drag ~= 0.09), never velocity writes. */
-    private static final float SPOUT_FLY_SPEED = 0.018F;
+    /** Canonical fly thrust (Korra uses default flight speed: brisk, not hovering). */
+    private static final float SPOUT_FLY_SPEED = 0.05F;
 
     private static final double FLY_RELEASE_ABOVE_TOP = 1.0;
     private static final int FLY_RELEASE_GRACE_TICKS = 5;
@@ -104,16 +104,15 @@ public class WaterSpout extends BendingAbility {
 
         // Down-scan for a spout base: fluid water, ice or snow (Korra).
         // Solid non-bendable ground above any water vetoes the spout: no
-        // columns through stone floors over cave lakes. Live temp cells are
-        // never adopted (own column included): otherwise the rising scan
-        // finds our own water a block below the feet, the column collapses
-        // to a stub, and the spout dies a few blocks up.
+        // columns through stone floors over cave lakes. Own cells are stepped
+        // over (Korra skips its own spout blocks); foreign temps are read
+        // normally, so other abilities' water can serve as a base.
         Vec3 origin = player.position().add(0.0, 0.2, 0.0);
         BlockPos found = null;
         int gap = -1;
         for (int i = 0; i <= MAX_HEIGHT; i++) {
             BlockPos pos = BlockPos.containing(origin).below(i);
-            if (TempBlock.isTemp(level, pos)) {
+            if (isOwnCell(pos)) {
                 continue;
             }
             if (isSpoutBase(pos)) {
@@ -141,9 +140,14 @@ public class WaterSpout extends BendingAbility {
             shaftWant.add(found.above(i).immutable());
         }
         Set<BlockPos> spiralWant = spiralCells(player);
-        // Ice/snow bases get a water cover like Korra's baseBlock.
+        // Ice/snow bases get a water cover like Korra's baseBlock, re-covered
+        // every tick (Korra re-covers in the scan): otherwise travelling
+        // across ice litters stale covers behind and the new base stands bare.
         if (!level.getFluidState(found).is(net.minecraft.world.level.material.Fluids.WATER)) {
-            if (baseTemp == null) {
+            if (baseTemp == null || !baseTemp.pos().equals(found)) {
+                if (baseTemp != null) {
+                    baseTemp.revert();
+                }
                 baseTemp = new TempBlock(level, found, Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
             }
         } else if (baseTemp != null) {
@@ -213,6 +217,14 @@ public class WaterSpout extends BendingAbility {
         return true;
     }
 
+    /** Cells owned by this spout (shaft, spiral, base cover): never veto the scan. */
+    private boolean isOwnCell(BlockPos pos) {
+        if (owned.containsKey(pos)) {
+            return true;
+        }
+        return baseTemp != null && baseTemp.pos().equals(pos);
+    }
+
     /**
      * Sends the abilities packet only when something actually changed, plus
      * a heartbeat reconciling against the live flags so external changes
@@ -244,9 +256,9 @@ public class WaterSpout extends BendingAbility {
 
     /**
      * Rotating radius-1 ring of thin falling-water temps climbing the column
-     * (Korra displayWaterSpiral shape: 20-degree steps every 0.4 blocks;
-     * rotation slowed to 0.2/tick so the churn reads as a spin, not a strobe).
-     * Returns the wanted cells; the caller diff-updates the single owned map.
+     * (Korra displayWaterSpiral shape: 20-degree steps every 0.4 blocks,
+     * 0.4 rad/tick spin). Returns the wanted cells; the caller diff-updates
+     * the single owned map.
      */
     private Set<BlockPos> spiralCells(ServerPlayer player) {
         Set<BlockPos> want = new HashSet<>();
@@ -254,7 +266,7 @@ public class WaterSpout extends BendingAbility {
             return want;
         }
         double maxHeight = player.getY() - base.getY() - 0.5;
-        rotation += 0.2;
+        rotation += 0.4;
         double height = 0.0;
         int i = 0;
         while (height < maxHeight && height <= Config.WATERSPOUT_HEIGHT.get() + 5.0) {
@@ -271,7 +283,7 @@ public class WaterSpout extends BendingAbility {
         return want;
     }
 
-    /** Splash burst cycling with the spiral angle, throttled like Korra's interval. */
+    /** Splash line climbing the full shaft at the rider's x/z (Korra rotateParticles). */
     private void sprayParticles(ServerPlayer player, int top) {
         if (!Config.WATERSPOUT_PARTICLES.get() || base == null) {
             return;
@@ -281,19 +293,23 @@ public class WaterSpout extends BendingAbility {
             return;
         }
         lastParticleTime = now;
-        double midY = base.getY() + Math.max(1.0, (top - base.getY()) / 2.0);
-        double x = base.getX() + 0.5 + Math.cos(rotation);
-        double z = base.getZ() + 0.5 + Math.sin(rotation);
-        level.sendParticles(
-                BendingTheme.particle(Config.WATERSPOUT_SPRAY_PARTICLE.get(), ParticleTypes.SPLASH),
-                x,
-                midY,
-                z,
-                Config.WATERSPOUT_SPRAY_PARTICLE_COUNT.get(),
-                0.2,
-                0.5,
-                0.2,
-                0.1);
+        double dy = Math.min(player.getY() - base.getY(), Config.WATERSPOUT_HEIGHT.get());
+        double[] drift = {-0.5, 0.325, 0.25, 0.125, 0.0, 0.125, 0.25, 0.325, 0.5};
+        double x = player.getX();
+        double z = player.getZ();
+        for (int i = 1; i <= dy; i++) {
+            double d = drift[i % drift.length];
+            level.sendParticles(
+                    BendingTheme.particle(Config.WATERSPOUT_SPRAY_PARTICLE.get(), ParticleTypes.SPLASH),
+                    x,
+                    base.getY() + i,
+                    z,
+                    Math.max(1, Config.WATERSPOUT_SPRAY_PARTICLE_COUNT.get() / 3),
+                    d,
+                    d,
+                    d,
+                    0.1);
+        }
     }
 
     @Override

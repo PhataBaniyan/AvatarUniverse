@@ -9,10 +9,10 @@ import net.minecraft.world.level.material.Fluids;
 
 /**
  * What a waterbender can draw from (ProjectKorra water/ice/plant sourcing).
- * Flowing water counts alongside still sources; every ice and snow variant
- * counts; ferns and all leaves count via plantbending. One predicate shared
- * by the select packet, the cast gate, the client picker and the focus
- * shimmer so they can never disagree.
+ * Still source water only — flowing water can never be selected or consumed;
+ * every ice and snow variant counts; ferns and all leaves count via
+ * plantbending. One predicate shared by the select packet, the cast gate,
+ * the client picker and the focus shimmer so they can never disagree.
  */
 public final class BendingSources {
     private static final Set<Block> ICE = Set.of(Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE, Blocks.FROSTED_ICE);
@@ -36,11 +36,42 @@ public final class BendingSources {
     private BendingSources() {}
 
     public static boolean isWaterSource(BlockGetter level, BlockPos pos) {
-        if (level.getFluidState(pos).is(Fluids.WATER)) {
+        var fluid = level.getFluidState(pos);
+        // Still (source-level) water only, like Korra: rapids and falling
+        // water cannot be bent, so rivers cannot be drained dry.
+        if (fluid.is(Fluids.WATER) && fluid.isSource()) {
             return true;
         }
         Block block = level.getBlockState(pos).getBlock();
         return ICE.contains(block) || SNOW.contains(block) || PLANTS.contains(block);
+    }
+
+    /**
+     * Neighboring water count for the ocean exemption (Korra
+     * {@code isAdjacentToThreeOrMoreSources}): sources inside a large body
+     * are never consumed, so lakes and seas survive bending.
+     */
+    public static int adjacentWaterCount(BlockGetter level, BlockPos pos) {
+        int count = 0;
+        if (level.getFluidState(pos.above()).is(Fluids.WATER)) {
+            count++;
+        }
+        if (level.getFluidState(pos.below()).is(Fluids.WATER)) {
+            count++;
+        }
+        if (level.getFluidState(pos.north()).is(Fluids.WATER)) {
+            count++;
+        }
+        if (level.getFluidState(pos.south()).is(Fluids.WATER)) {
+            count++;
+        }
+        if (level.getFluidState(pos.east()).is(Fluids.WATER)) {
+            count++;
+        }
+        if (level.getFluidState(pos.west()).is(Fluids.WATER)) {
+            count++;
+        }
+        return count;
     }
 
     /** Ice/snow sources fire an icy bolt instead of a water bolt. */

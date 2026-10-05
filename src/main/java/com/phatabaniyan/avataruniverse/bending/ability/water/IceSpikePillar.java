@@ -104,7 +104,9 @@ public class IceSpikePillar extends BendingAbility {
                 }
                 affect(entity);
             }
-            ice.put(cell.immutable(), new TempBlock(level, cell.immutable(), Blocks.ICE.defaultBlockState()));
+            ice.put(
+                    cell.immutable(),
+                    new TempBlock(level, cell.immutable(), Blocks.ICE.defaultBlockState(), TempBlock.QUIET));
             return true;
         }
         if (!sinkPillar()) {

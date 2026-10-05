@@ -18,7 +18,8 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Port of ProjectKorra {@code WaterArms} (manager only). Grows two water arms
  * (shoulder side-offset, two joints, then forward along the look) that
- * rebuild every tick, snapshot hotbar slots 1-5 to the sub-abilities while
+ * diff-update every tick like the spout column — held cells are never
+ * re-placed, so the arms read solid instead of strobing. Snapshot hotbar
  * active, and count down uses. Sub-abilities: Pull/Punch/Grapple/Grab on
  * slots 1-4, Spear on 5. Sneak + double-click removes.
  *
@@ -87,14 +88,35 @@ public class WaterArms extends BendingAbility {
                     net.minecraft.network.chat.Component.literal("WaterArms collapsed - re-cast to regrow."), true);
             return false;
         }
-        revertArms();
-        displayRightArm(player);
-        displayLeftArm(player);
+        // Diff-update (Korra skips already-bent cells): only cells entering
+        // or leaving an arm are touched, so held water never strobes.
+        syncArm(right, computeRightArm(player));
+        syncArm(left, computeLeftArm(player));
         // Own arm water slows swimming like any water: counter with a quiet
         // Dolphin's Grace refresh (lapses on its own ~1.5s after arms end).
         player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
                 net.minecraft.world.effect.MobEffects.DOLPHINS_GRACE, 30, 0, false, false, false));
         return true;
+    }
+
+    private void syncArm(List<TempBlock> held, List<BlockPos> want) {
+        java.util.Set<BlockPos> wantSet = new java.util.HashSet<>(want);
+        for (TempBlock temp : new ArrayList<>(held)) {
+            if (!wantSet.contains(temp.pos())) {
+                temp.revert();
+                held.remove(temp);
+            }
+        }
+        java.util.Set<BlockPos> heldSet = new java.util.HashSet<>();
+        for (TempBlock temp : held) {
+            heldSet.add(temp.pos());
+        }
+        for (BlockPos pos : want) {
+            if (!heldSet.contains(pos)) {
+                held.add(new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+                heldSet.add(pos);
+            }
+        }
     }
 
     private void revertArms() {
@@ -115,7 +137,7 @@ public class WaterArms extends BendingAbility {
     }
 
     /** First non-air block along the look ray, else the max-range point (Korra targeted location). */
-    static Vec3 aimedPoint(ServerPlayer player, double range) {
+    public static Vec3 aimedPoint(ServerPlayer player, double range) {
         Vec3 eye = player.getEyePosition();
         Vec3 look = player.getLookAngle().normalize();
         ServerLevel level = player.serverLevel();
@@ -148,17 +170,17 @@ public class WaterArms extends BendingAbility {
     }
 
     /** Right arm: shoulder at side -1, joint at -2, then forward. Partial on block. */
-    private boolean displayRightArm(ServerPlayer player) {
-        if (rightConsumed) {
-            return false;
-        }
+    private List<BlockPos> computeRightArm(ServerPlayer player) {
         List<BlockPos> built = new ArrayList<>();
+        if (rightConsumed) {
+            return built;
+        }
         Vec3 feet = player.position();
         Vec3 side = sideVec(player);
         Vec3 look = player.getLookAngle().normalize();
         BlockPos r1 = BlockPos.containing(feet.subtract(side.scale(1.0)).add(0.0, 1.5, 0.0));
         if (!canPlaceBlock(r1)) {
-            return false;
+            return built;
         }
         BlockPos hand = BlockPos.containing(feet.subtract(side.scale(0.34)).add(0.0, 1.5, 0.0));
         if (!hand.equals(r1)) {
@@ -166,35 +188,32 @@ public class WaterArms extends BendingAbility {
         }
         BlockPos r2 = BlockPos.containing(feet.subtract(side.scale(2.0)).add(0.0, 1.5, 0.0));
         if (!canPlaceBlock(r2) || !canPlaceBlock(r1)) {
-            right.addAll(placeAll(built));
-            return false;
+            return built;
         }
         addWide(built, r2, side.scale(-1.0));
         for (int j = 1; j <= Config.WATERARMS_INITIAL_LENGTH.get(); j++) {
             BlockPos pos =
                     BlockPos.containing(new Vec3(r2.getX() + 0.5, r2.getY() + 0.5, r2.getZ() + 0.5).add(look.scale(j)));
             if (!canPlaceBlock(pos) || !canPlaceBlock(r2) || !canPlaceBlock(r1)) {
-                right.addAll(placeAll(built));
-                return false;
+                return built;
             }
             addWide(built, pos, side.scale(-1.0));
         }
-        right.addAll(placeAll(built));
-        return true;
+        return built;
     }
 
     /** Left arm: mirror of the right (Korra displayLeftArm). */
-    private boolean displayLeftArm(ServerPlayer player) {
-        if (leftConsumed) {
-            return false;
-        }
+    private List<BlockPos> computeLeftArm(ServerPlayer player) {
         List<BlockPos> built = new ArrayList<>();
+        if (leftConsumed) {
+            return built;
+        }
         Vec3 feet = player.position();
         Vec3 side = sideVec(player);
         Vec3 look = player.getLookAngle().normalize();
         BlockPos l1 = BlockPos.containing(feet.add(side.scale(1.0)).add(0.0, 1.5, 0.0));
         if (!canPlaceBlock(l1)) {
-            return false;
+            return built;
         }
         BlockPos hand = BlockPos.containing(feet.add(side.scale(0.34)).add(0.0, 1.5, 0.0));
         if (!hand.equals(l1)) {
@@ -202,29 +221,18 @@ public class WaterArms extends BendingAbility {
         }
         BlockPos l2 = BlockPos.containing(feet.add(side.scale(2.0)).add(0.0, 1.5, 0.0));
         if (!canPlaceBlock(l2) || !canPlaceBlock(l1)) {
-            left.addAll(placeAll(built));
-            return false;
+            return built;
         }
         addWide(built, l2, side.scale(1.0));
         for (int j = 1; j <= Config.WATERARMS_INITIAL_LENGTH.get(); j++) {
             BlockPos pos =
                     BlockPos.containing(new Vec3(l2.getX() + 0.5, l2.getY() + 0.5, l2.getZ() + 0.5).add(look.scale(j)));
             if (!canPlaceBlock(pos) || !canPlaceBlock(l2) || !canPlaceBlock(l1)) {
-                left.addAll(placeAll(built));
-                return false;
+                return built;
             }
             addWide(built, pos, side.scale(1.0));
         }
-        left.addAll(placeAll(built));
-        return true;
-    }
-
-    private List<TempBlock> placeAll(List<BlockPos> positions) {
-        List<TempBlock> placed = new ArrayList<>();
-        for (BlockPos pos : positions) {
-            placed.add(new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
-        }
-        return placed;
+        return built;
     }
 
     /** Theoretical full-length tip (Korra getRightArmEnd), for P2/P3 targeting. */
@@ -251,12 +259,12 @@ public class WaterArms extends BendingAbility {
     public Arm switchPreferredArm(ServerPlayer player) {
         switchActiveArm();
         if (activeArm == Arm.LEFT) {
-            if (!displayLeftArm(player)) {
+            if (computeLeftArm(player).isEmpty()) {
                 switchActiveArm();
             }
         }
         if (activeArm == Arm.RIGHT) {
-            if (!displayRightArm(player)) {
+            if (computeRightArm(player).isEmpty()) {
                 switchActiveArm();
             }
         }
@@ -268,7 +276,9 @@ public class WaterArms extends BendingAbility {
     }
 
     public boolean canDisplayActiveArm(ServerPlayer player) {
-        return activeArm == Arm.LEFT ? displayLeftArm(player) : displayRightArm(player);
+        return activeArm == Arm.LEFT
+                ? !computeLeftArm(player).isEmpty()
+                : !computeRightArm(player).isEmpty();
     }
 
     public Arm getActiveArm() {
