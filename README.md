@@ -1,15 +1,49 @@
+![AvatarUniverse](docs/banner.png)
+
+[![License: LGPL-2.1-or-later](https://img.shields.io/badge/License-LGPL--2.1--or--later-green.svg)](LICENSE)
+[![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-5B9E4D.svg)](https://minecraft.net)
+[![NeoForge](https://img.shields.io/badge/Loader-NeoForge-orange.svg)](https://neoforged.net)
+[![Java 21](https://img.shields.io/badge/Java-21-blue.svg)](https://adoptium.net)
+
 # AvatarUniverse
 
-AvatarUniverse by PhataBaniyan — NeoForge 1.21.1 bending mod (ModDevGradle):
+AvatarUniverse by PhataBaniyan — a NeoForge 1.21.1 bending mod (ModDevGradle):
 master the four elements, unlock their sub-arts over time, and bend with
 abilities inspired by ProjectKorra.
 
-## Prerequisites
+## Contents
 
-- JDK 21 (Temurin recommended)
-- IntelliJ IDEA or Eclipse with Gradle import
+- [Playing](#playing)
+- [Time mastery](#time-mastery)
+- [Building](#building)
+- [Project layout](#project-layout)
+- [Mod details](#mod-details)
+- [Screenshots](#screenshots)
+- [Mapping names](#mapping-names)
+- [Resources](#resources)
 
-## Commands
+## Playing
+
+- `/au choose <air|water|earth|fire>` — pick an element (no OP needed).
+  `bind`, `help`, `display`, `toggle`, `clear` and the rest work for everyone;
+  `add` and `reload` stay operator-only.
+
+## Time mastery
+
+Every 10 Minecraft days of attuned play unlocks the next sub-element of each
+held base element automatically:
+
+| Base    | Unlock order                              |
+| ------- | ----------------------------------------- |
+| Water   | Ice → Plant → Healing → Blood             |
+| Earth   | Sand → Metal → Lava                       |
+| Fire    | Lightning → Combustion → Blue Fire        |
+| Air     | Spiritual → Flight                        |
+
+Avatar is granted by operators only (`/au add`). Tune via
+`general.masteryEnabled` / `masteryAttunementMs`.
+
+## Building
 
 ```bash
 ./gradlew --refresh-dependencies   # refresh local cache
@@ -22,6 +56,8 @@ abilities inspired by ProjectKorra.
 ```
 
 Copy the built JAR from `build/libs/` into a NeoForge 1.21.1 `mods/` folder.
+You need **JDK 21** (Temurin recommended) plus IntelliJ IDEA or Eclipse with
+Gradle import.
 
 ## Project layout
 
@@ -42,16 +78,13 @@ Copy the built JAR from `build/libs/` into a NeoForge 1.21.1 `mods/` folder.
   (Keys were renamed from the old flat layout — delete an existing
   `avataruniverse-common.toml` once to regenerate it with defaults.)
 
-## Playing
+## Screenshots
 
-- `/au choose <air|water|earth|fire>` — pick an element (no OP needed).
-  `bind`, `help`, `display`, `toggle`, `clear` and the rest work for everyone;
-  `add` and `reload` stay operator-only.
-- **Time mastery:** every 10 Minecraft days of attuned play unlocks the next
-  sub-element of each held base element automatically (Water → Ice → Plant →
-  Healing → Blood, Earth → Sand → Metal → Lava, Fire → Lightning →
-  Combustion → Blue Fire, Air → Spiritual → Flight). Avatar is granted by
-  operators only. Tune via `general.masteryEnabled` / `masteryAttunementMs`.
+Gameplay shots go here — drop PNGs into `docs/` and reference them, e.g.:
+
+```markdown
+![Torrent wave](docs/torrent.png)
+```
 
 ## Mapping names
 
