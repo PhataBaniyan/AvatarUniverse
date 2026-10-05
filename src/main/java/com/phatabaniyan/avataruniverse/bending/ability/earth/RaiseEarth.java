@@ -16,7 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 public class RaiseEarth extends CollapseWall {
     public static final String ID = "RaiseEarth";
     /** Stand time before the wall reverts, in server ticks. */
-    private static final long STAND_TICKS = Config.RAISEEARTH_STAND_TICKS.get();
+    private static final long STAND_TICKS = Config.msToTicks(Config.RAISEEARTH_STAND_MS.get());
 
     public RaiseEarth(ServerPlayer player) {
         super(player);

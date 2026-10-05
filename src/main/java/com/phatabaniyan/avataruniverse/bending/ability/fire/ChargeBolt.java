@@ -34,9 +34,9 @@ public class ChargeBolt extends BendingAbility {
     public static final String ID = "ChargeBolt";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.CHARGEBOLT_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.CHARGEBOLT_COOLDOWN_MS.get());
     /** Reference charge 1500ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.CHARGEBOLT_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.CHARGEBOLT_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.CHARGEBOLT_DAMAGE.get();
     private static final double BOLT_RANGE = Config.CHARGEBOLT_BOLT_RANGE.get();

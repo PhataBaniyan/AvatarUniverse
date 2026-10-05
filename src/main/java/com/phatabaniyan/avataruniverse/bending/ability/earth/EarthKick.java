@@ -52,7 +52,7 @@ public class EarthKick extends EarthAbility {
     private static final double KNOCKBACK = Config.EARTHKICK_KNOCKBACK.get();
     private static final double KNOCKUP = Config.EARTHKICK_KNOCKUP.get();
     private static final double TRAVEL_RANGE = Config.EARTHKICK_TRAVEL_RANGE.get();
-    private static final int MAX_TICKS = Config.EARTHKICK_MAX_TICKS.get();
+    private static final int MAX_TICKS = Config.msToTicks(Config.EARTHKICK_MAX_MS.get());
 
     private Vec3 direction;
     private final Vec3 start;

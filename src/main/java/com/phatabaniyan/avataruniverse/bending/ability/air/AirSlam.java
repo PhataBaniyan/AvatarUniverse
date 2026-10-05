@@ -28,14 +28,14 @@ public class AirSlam extends BendingAbility {
     public static final String ID = "AirSlam";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRSLAM_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRSLAM_COOLDOWN_MS.get());
 
     private static final double POWER = Config.AIRSLAM_POWER.get();
     private static final double RANGE = Config.AIRSLAM_RANGE.get();
     /** Spike delay ~50ms, in server ticks. */
-    private static final int SPIKE_TICKS = Config.AIRSLAM_SPIKE_TICKS.get();
+    private static final int SPIKE_TICKS = Config.msToTicks(Config.AIRSLAM_SPIKE_MS.get());
     /** Lifetime ~400ms, in server ticks. */
-    private static final int LIFETIME_TICKS = Config.AIRSLAM_LIFETIME_TICKS.get();
+    private static final int LIFETIME_TICKS = Config.msToTicks(Config.AIRSLAM_LIFETIME_MS.get());
 
     private static final double LIFT = Config.AIRSLAM_LIFT.get();
 

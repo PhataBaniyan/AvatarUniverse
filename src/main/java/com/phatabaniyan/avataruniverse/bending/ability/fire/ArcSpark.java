@@ -32,11 +32,11 @@ public class ArcSpark extends BendingAbility {
     public static final String ID = "ArcSpark";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ARCSPARK_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ARCSPARK_COOLDOWN_MS.get());
     /** Reference charge 1500ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.ARCSPARK_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.ARCSPARK_CHARGE_MS.get());
     /** Reference active window after the shot, in server ticks. */
-    private static final long DURATION_TICKS = Config.ARCSPARK_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.ARCSPARK_DURATION_MS.get());
 
     private static final int SPEED = Config.ARCSPARK_SPEED.get();
     private static final int LENGTH = Config.ARCSPARK_LENGTH.get();

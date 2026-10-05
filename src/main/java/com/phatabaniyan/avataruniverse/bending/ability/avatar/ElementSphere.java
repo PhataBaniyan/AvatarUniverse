@@ -39,14 +39,14 @@ public class ElementSphere extends BendingAbility {
     public static final String ID = "ElementSphere";
 
     /** Reference Cooldown 12000ms, in server ticks. Set on start. */
-    private static final long COOLDOWN_TICKS = Config.ELEMENTSPHERE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ELEMENTSPHERE_COOLDOWN_MS.get());
     /** Reference Duration 60000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.ELEMENTSPHERE_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.ELEMENTSPHERE_DURATION_MS.get());
 
     private static final double MAX_HEIGHT = Config.ELEMENTSPHERE_MAX_HEIGHT.get();
     private static final double FLY_SPEED = Config.ELEMENTSPHERE_FLY_SPEED.get();
     /** Double-sneak dismiss window (reference 600ms). */
-    private static final long DISMISS_WINDOW_TICKS = Config.ELEMENTSPHERE_DISMISS_WINDOW_TICKS.get();
+    private static final long DISMISS_WINDOW_TICKS = Config.msToTicks(Config.ELEMENTSPHERE_DISMISS_WINDOW_MS.get());
 
     private static final DustParticleOptions WATER_DUST =
             new DustParticleOptions(new Vector3f(0.35F, 0.85F, 1.0F), 1.2F);
@@ -54,6 +54,7 @@ public class ElementSphere extends BendingAbility {
             new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState());
 
     private final ServerLevel level;
+
     private int airUses = Config.ELEMENTSPHERE_AIR_USES.get();
     private int fireUses = Config.ELEMENTSPHERE_FIRE_USES.get();
     private int waterUses = Config.ELEMENTSPHERE_WATER_USES.get();
@@ -207,9 +208,9 @@ public class ElementSphere extends BendingAbility {
         if (even && this.airUses != 0) {
             for (double j = -180; j <= 180; j += 45) {
                 double rad = Math.toRadians(j);
-                double lx = baseX + 2 * Math.cos(rad) * Math.cos(Math.toRadians(this.yaw));
-                double lz = baseZ + 2 * Math.cos(rad) * Math.sin(Math.toRadians(this.yaw));
-                double ly = baseY + 2 * Math.sin(rad);
+                double lx = baseX + 3 * Math.cos(rad) * Math.cos(Math.toRadians(this.yaw));
+                double lz = baseZ + 3 * Math.cos(rad) * Math.sin(Math.toRadians(this.yaw));
+                double ly = baseY + 3 * Math.sin(rad);
                 level.sendParticles(
                         BendingTheme.particle(Config.ELEMENTSPHERE_AIR_PARTICLE.get(), ParticleTypes.SMALL_GUST),
                         lx,
@@ -229,9 +230,9 @@ public class ElementSphere extends BendingAbility {
                 double angle = i * Math.PI / 180 + this.point;
                 level.sendParticles(
                         BendingTheme.particle(Config.ELEMENTSPHERE_FIRE_PARTICLE.get(), owner, ParticleTypes.FLAME),
-                        baseX + 2 * Math.cos(angle),
+                        baseX + 3 * Math.cos(angle),
                         baseY,
-                        baseZ + 2 * Math.sin(angle),
+                        baseZ + 3 * Math.sin(angle),
                         Config.ELEMENTSPHERE_FIRE_PARTICLE_COUNT.get(),
                         0.05,
                         0.05,
@@ -249,10 +250,10 @@ public class ElementSphere extends BendingAbility {
             double yawRad = Math.toRadians(sp.getYRot());
             for (int i = -180; i < 180; i += 30) {
                 double a = i * Math.PI / 180 + this.point;
-                Vec3 v = new Vec3(Math.cos(a) * 2, Math.sin(a) * 2, 0);
+                Vec3 v = new Vec3(Math.cos(a) * 3, Math.sin(a) * 3, 0);
                 v = rotX(v, tilt);
                 v = rotY(v, -(yawRad - 1.575));
-                Vec3 v1 = new Vec3(Math.cos(a) * 2, Math.sin(a) * 2, 0);
+                Vec3 v1 = new Vec3(Math.cos(a) * 3, Math.sin(a) * 3, 0);
                 v1 = rotX(v1, -tilt);
                 v1 = rotY(v1, -(yawRad - 1.575));
                 if (this.waterUses != 0) {

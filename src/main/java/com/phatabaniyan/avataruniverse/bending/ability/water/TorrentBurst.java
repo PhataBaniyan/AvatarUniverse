@@ -17,7 +17,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -48,7 +47,7 @@ public class TorrentBurst extends BendingAbility {
         com.phatabaniyan.avataruniverse.bending.BendingPlayer bending =
                 com.phatabaniyan.avataruniverse.bending.BendingPlayer.get(player.getUUID());
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.TORRENTBURST_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.TORRENTBURST_COOLDOWN_MS.get()));
         }
     }
 
@@ -62,14 +61,10 @@ public class TorrentBurst extends BendingAbility {
         if (radius > Config.TORRENT_BURST_MAX_RADIUS.get()) {
             return false;
         }
-        // One fresh burst per tick like the source formBurst: old water
-        // reverts, the ring redraws wider, and hits re-arm so the passing
-        // wall shoves again instead of once.
-        for (TempBlock temp : ring) {
-            temp.revert();
-        }
-        ring.clear();
-        affected.clear();
+        // Diff-updated expanding wall (Korra formBurst rebuilds; diffing the
+        // same shape strobes nothing): only entering/leaving cells churn.
+        // Rushing water, never a source, so rapids never glass over inside it.
+        java.util.Set<BlockPos> want = new java.util.HashSet<>();
         int bound = (int) Math.ceil(radius) + 1;
         for (int dx = -bound; dx <= bound; dx++) {
             for (int dz = -bound; dz <= bound; dz++) {
@@ -86,10 +81,27 @@ public class TorrentBurst extends BendingAbility {
                         blocked.add(pos);
                         continue;
                     }
-                    ring.add(new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+                    want.add(pos);
                 }
             }
         }
+        for (TempBlock temp : new java.util.ArrayList<>(ring)) {
+            if (!want.contains(temp.pos())) {
+                temp.revert();
+                ring.remove(temp);
+            }
+        }
+        java.util.Set<BlockPos> held = new java.util.HashSet<>();
+        for (TempBlock temp : ring) {
+            held.add(temp.pos());
+        }
+        for (BlockPos pos : want) {
+            if (!held.contains(pos)) {
+                ring.add(TempBlock.cube(level, pos, 0.25F));
+                held.add(pos);
+            }
+        }
+        affected.clear();
         Vec3 centerVec = Vec3.atCenterOf(center);
         double knockback = Config.TORRENT_BURST_KNOCKBACK.get();
         for (LivingEntity entity : level.getEntitiesOfClass(

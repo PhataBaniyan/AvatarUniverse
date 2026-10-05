@@ -43,7 +43,7 @@ public class Drain extends BendingAbility {
         super(player.getUUID(), player.level().getGameTime());
         this.level = player.serverLevel();
         this.fillMode = fillMode;
-        this.endTick = player.level().getGameTime() + Config.DRAIN_DURATION_TICKS.get();
+        this.endTick = player.level().getGameTime() + Config.msToTicks(Config.DRAIN_DURATION_MS.get());
     }
 
     /** Click fire (Korra fireBlast): spend one banked charge on a blast. */
@@ -202,7 +202,7 @@ public class Drain extends BendingAbility {
 
     private void drainPlant(BlockPos pos) {
         motes.add(Vec3.atCenterOf(pos));
-        BendingManager.consumePlantSource(level, pos, Config.DRAIN_REGEN_SECONDS.get());
+        BendingManager.consumePlantSource(level, pos, Config.msToTicks(Config.DRAIN_REGEN_MS.get()));
     }
 
     private void drainWater(BlockPos pos) {
@@ -223,7 +223,7 @@ public class Drain extends BendingAbility {
             }
             lowered = new TempBlock(level, pos, shallow, TempBlock.QUIET);
         }
-        BendingManager.scheduleRevert(lowered, level.getGameTime() + Config.DRAIN_REGEN_SECONDS.get() * 20L);
+        BendingManager.scheduleRevert(lowered, level.getGameTime() + Config.msToTicks(Config.DRAIN_REGEN_MS.get()));
     }
 
     private void dragMotes(ServerPlayer player) {
@@ -269,7 +269,7 @@ public class Drain extends BendingAbility {
     public void onRemove() {
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.DRAIN_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.DRAIN_COOLDOWN_MS.get()));
         }
     }
 }

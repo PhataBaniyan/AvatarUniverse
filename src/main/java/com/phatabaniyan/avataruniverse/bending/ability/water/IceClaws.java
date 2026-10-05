@@ -43,7 +43,7 @@ public class IceClaws extends BendingAbility {
     }
 
     public boolean isCharged() {
-        return level.getGameTime() - startTick >= Config.ICECLAWS_CHARGE_TICKS.get();
+        return level.getGameTime() - startTick >= Config.msToTicks(Config.ICECLAWS_CHARGE_MS.get());
     }
 
     /** Hurl the charged claws (Korra throwClaws, sneak held). */
@@ -58,7 +58,8 @@ public class IceClaws extends BendingAbility {
         if (Config.ICECLAWS_THROW_COOLDOWN_ON_THROW.get()) {
             BendingPlayer bending = BendingPlayer.get(owner);
             if (bending != null) {
-                bending.setCooldown(ID, level.getGameTime() + Config.ICECLAWS_THROW_COOLDOWN_TICKS.get());
+                bending.setCooldown(
+                        ID, level.getGameTime() + Config.msToTicks(Config.ICECLAWS_THROW_COOLDOWN_MS.get()));
             }
         }
     }
@@ -68,14 +69,14 @@ public class IceClaws extends BendingAbility {
         victim.removeEffect(MobEffects.MOVEMENT_SPEED);
         victim.addEffect(new MobEffectInstance(
                 MobEffects.MOVEMENT_SLOWDOWN,
-                Config.ICECLAWS_PUNCH_SLOW_TICKS.get(),
+                Config.msToTicks(Config.ICECLAWS_PUNCH_SLOW_MS.get()),
                 Config.ICECLAWS_PUNCH_SLOW_LEVEL.get()));
         victim.hurt(
                 level.damageSources().magic(),
                 Config.ICECLAWS_PUNCH_DAMAGE.get().floatValue());
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.ICECLAWS_PUNCH_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.ICECLAWS_PUNCH_COOLDOWN_MS.get()));
         }
         BendingManager.remove(this);
     }
@@ -169,7 +170,7 @@ public class IceClaws extends BendingAbility {
                 entity.removeEffect(MobEffects.MOVEMENT_SPEED);
                 entity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
-                        Config.ICECLAWS_THROW_SLOW_TICKS.get(),
+                        Config.msToTicks(Config.ICECLAWS_THROW_SLOW_MS.get()),
                         Config.ICECLAWS_THROW_SLOW_LEVEL.get()));
                 entity.hurt(
                         level.damageSources().magic(),

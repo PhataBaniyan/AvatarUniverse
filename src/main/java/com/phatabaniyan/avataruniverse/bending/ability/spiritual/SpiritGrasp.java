@@ -30,13 +30,13 @@ public class SpiritGrasp extends BendingAbility {
     public static final String ID = "SpiritGrasp";
 
     /** Reference Cooldown 8000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SPIRITGRASP_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SPIRITGRASP_COOLDOWN_MS.get());
 
     private static final double REACH = Config.SPIRITGRASP_REACH.get();
     private static final double RADIUS = Config.SPIRITGRASP_RADIUS.get();
     private static final double DAMAGE = Config.SPIRITGRASP_DAMAGE.get();
-    private static final long DURATION_TICKS = Config.SPIRITGRASP_DURATION_TICKS.get();
-    private static final int SLOW_DURATION_TICKS = Config.SPIRITGRASP_SLOW_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.SPIRITGRASP_DURATION_MS.get());
+    private static final int SLOW_DURATION_TICKS = Config.msToTicks(Config.SPIRITGRASP_SLOW_DURATION_MS.get());
     private static final int SLOW_AMP = Config.SPIRITGRASP_SLOW_AMP.get();
 
     private final ServerLevel level;

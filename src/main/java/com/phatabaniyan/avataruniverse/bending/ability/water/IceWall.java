@@ -215,7 +215,7 @@ public class IceWall extends BendingAbility {
             return false;
         }
         if (Config.ICEWALL_LIFETIME_ENABLED.get()
-                && level.getGameTime() - startTick > Config.ICEWALL_LIFETIME_TICKS.get()) {
+                && level.getGameTime() - startTick > Config.msToTicks(Config.ICEWALL_LIFETIME_MS.get())) {
             collapse(player, false);
             return false;
         }

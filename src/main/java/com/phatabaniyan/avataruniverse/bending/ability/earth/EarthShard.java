@@ -41,7 +41,7 @@ public class EarthShard extends EarthAbility {
     public static final String TAG = "avataruniverse_earthshard";
 
     /** Reference Cooldown 1000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EARTHSHARD_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHSHARD_COOLDOWN_MS.get());
 
     private static final float NORMAL_DAMAGE =
             Config.EARTHSHARD_NORMAL_DAMAGE.get().floatValue();

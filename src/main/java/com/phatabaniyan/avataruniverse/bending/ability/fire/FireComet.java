@@ -34,16 +34,16 @@ public class FireComet extends BendingAbility {
     public static final String ID = "FireComet";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIRECOMET_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIRECOMET_COOLDOWN_MS.get());
     /** Reference Charge 2500ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.FIRECOMET_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.FIRECOMET_CHARGE_MS.get());
     /** Scorch-fire revert, in server ticks (WallOfFire footing parity). */
-    private static final long SCORCH_REVERT_TICKS = Config.FIRECOMET_SCORCH_REVERT_TICKS.get();
+    private static final long SCORCH_REVERT_TICKS = Config.msToTicks(Config.FIRECOMET_SCORCH_REVERT_MS.get());
 
     private static final float DAMAGE = Config.FIRECOMET_DAMAGE.get().floatValue();
     private static final double BLAST_RADIUS = Config.FIRECOMET_BLAST_RADIUS.get();
     private static final double RANGE = Config.FIRECOMET_RANGE.get();
-    private static final int BLAST_FIRE_SECONDS = Config.FIRECOMET_BLAST_FIRE_SECONDS.get();
+    private static final int BLAST_FIRE_SECONDS = Config.FIRECOMET_BLAST_FIRE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

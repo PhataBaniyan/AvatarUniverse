@@ -82,11 +82,11 @@ public class FrostBreath extends BendingAbility {
             return false;
         });
         if (breathing) {
-            if (!player.isShiftKeyDown() || breathTicks >= Config.FROSTBREATH_DURATION_TICKS.get()) {
+            if (!player.isShiftKeyDown() || breathTicks >= Config.msToTicks(Config.FROSTBREATH_DURATION_MS.get())) {
                 breathing = false;
                 if (!cooledDown) {
                     cooledDown = true;
-                    bending.setCooldown(ID, now + Config.FROSTBREATH_COOLDOWN_TICKS.get());
+                    bending.setCooldown(ID, now + Config.msToTicks(Config.FROSTBREATH_COOLDOWN_MS.get()));
                 }
             } else {
                 breathTicks++;
@@ -126,7 +126,7 @@ public class FrostBreath extends BendingAbility {
                 if (Config.FROSTBREATH_SLOW_ENABLED.get()) {
                     entity.addEffect(new MobEffectInstance(
                             MobEffects.MOVEMENT_SLOWDOWN,
-                            Config.FROSTBREATH_SLOW_DURATION_TICKS.get(),
+                            Config.msToTicks(Config.FROSTBREATH_SLOW_DURATION_MS.get()),
                             Config.FROSTBREATH_SLOW_AMPLIFIER.get()));
                 }
                 if (Config.FROSTBREATH_DAMAGE_ENABLED.get()) {
@@ -184,7 +184,7 @@ public class FrostBreath extends BendingAbility {
         BlockState ice = Blocks.ICE.defaultBlockState();
         for (BlockPos cell : cells) {
             if (BendingSources.isTransparentForBend(level, cell)) {
-                updateFrozenBlock(cell, ice, Config.FROSTBREATH_FROST_DURATION_TICKS.get());
+                updateFrozenBlock(cell, ice, Config.msToTicks(Config.FROSTBREATH_FROST_DURATION_MS.get()));
             }
         }
     }
@@ -202,7 +202,7 @@ public class FrostBreath extends BendingAbility {
                         updateFrozenBlock(
                                 pos,
                                 Blocks.ICE.defaultBlockState(),
-                                Config.FROSTBREATH_FROZEN_WATER_DURATION_TICKS.get());
+                                Config.msToTicks(Config.FROSTBREATH_FROZEN_WATER_DURATION_MS.get()));
                         continue;
                     }
                     if (!BendingSources.isTransparentForBend(level, pos)) {
@@ -217,7 +217,9 @@ public class FrostBreath extends BendingAbility {
                         continue;
                     }
                     updateFrozenBlock(
-                            pos, Blocks.SNOW.defaultBlockState(), Config.FROSTBREATH_SNOW_DURATION_TICKS.get());
+                            pos,
+                            Blocks.SNOW.defaultBlockState(),
+                            Config.msToTicks(Config.FROSTBREATH_SNOW_DURATION_MS.get()));
                 }
             }
         }

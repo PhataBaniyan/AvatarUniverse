@@ -77,7 +77,8 @@ public record BendingSelectPayload(BlockPos pos) implements CustomPacketPayload 
             if (Torrent.ID.equalsIgnoreCase(bound)
                     && BendingManager.find(player.getUUID(), Torrent.class) == null
                     && !bending.isOnCooldown(Torrent.ID, player.level().getGameTime())) {
-                bending.setCooldown(Torrent.ID, player.level().getGameTime() + Config.TORRENT_COOLDOWN_TICKS.get());
+                bending.setCooldown(
+                        Torrent.ID, player.level().getGameTime() + Config.msToTicks(Config.TORRENT_COOLDOWN_MS.get()));
                 BendingManager.start(new Torrent(player, pos));
                 player.displayClientMessage(Component.literal("Torrent ready - sneak to form."), true);
             }

@@ -125,7 +125,7 @@ public class IceSpikePillarField extends BendingAbility {
             }
         }
         if (raised > 0) {
-            bending.setCooldown(ID, level.getGameTime() + Config.ICESPIKE_FIELD_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.ICESPIKE_FIELD_COOLDOWN_MS.get()));
         }
         return false;
     }

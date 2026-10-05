@@ -35,9 +35,9 @@ public class MagnetShield extends EarthAbility {
     public static final String ID = "MagnetShield";
 
     /** Reference Duration 6000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.MAGNETSHIELD_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.MAGNETSHIELD_DURATION_MS.get());
     /** Reference Shift/Click Cooldowns 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.MAGNETSHIELD_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.MAGNETSHIELD_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.MAGNETSHIELD_RANGE.get();
     private static final double VELOCITY = Config.MAGNETSHIELD_VELOCITY.get();

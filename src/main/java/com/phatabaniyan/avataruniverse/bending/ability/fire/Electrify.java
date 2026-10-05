@@ -37,14 +37,14 @@ public class Electrify extends BendingAbility {
     public static final String ID = "Electrify";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ELECTRIFY_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ELECTRIFY_COOLDOWN_MS.get());
     /** Reference Duration 8000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.ELECTRIFY_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.ELECTRIFY_DURATION_MS.get());
 
     private static final double RANGE = Config.ELECTRIFY_RANGE.get();
     private static final double WATER_DAMAGE = Config.ELECTRIFY_WATER_DAMAGE.get();
     private static final int SPREAD_DEPTH = Config.ELECTRIFY_SPREAD_DEPTH.get();
-    private static final int DEBUFF_TICKS = Config.ELECTRIFY_DEBUFF_TICKS.get();
+    private static final int DEBUFF_TICKS = Config.msToTicks(Config.ELECTRIFY_DEBUFF_MS.get());
     private static final double HIT_RADIUS = Config.ELECTRIFY_HIT_RADIUS.get();
 
     private static final Set<BlockPos> ELECTRIFIED = ConcurrentHashMap.newKeySet();

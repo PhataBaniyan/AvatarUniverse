@@ -47,7 +47,7 @@ public class EarthPillar extends EarthAbility {
     private boolean captured;
     private final long bornTick;
     /** Ticks to let the aim settle before locking the source. */
-    private static final long AIM_SETTLE_TICKS = Config.EARTHPILLAR_AIM_SETTLE_TICKS.get();
+    private static final long AIM_SETTLE_TICKS = Config.msToTicks(Config.EARTHPILLAR_AIM_SETTLE_MS.get());
 
     private static final double TOGGLE_RANGE = Config.EARTHPILLAR_TOGGLE_RANGE.get();
 

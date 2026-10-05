@@ -23,7 +23,7 @@ public class ESAir extends SphereAttack {
     public static final String ID = "ESAir";
 
     /** Reference Cooldown 1500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ESAIR_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ESAIR_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.ESAIR_RANGE.get();
     private static final double DAMAGE = Config.ESAIR_DAMAGE.get();

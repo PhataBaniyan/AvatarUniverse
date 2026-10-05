@@ -61,6 +61,9 @@ public class Torrent extends BendingAbility {
     private record FrozenEntry(UUID owner, long revertAt) {}
 
     private static final Map<TempBlock, FrozenEntry> FROZEN = new ConcurrentHashMap<>();
+    /** Ring overlay cube size: deliberately smaller than the spout spiral blobs. */
+    private static final float RING_CUBE = 0.25F;
+
     private static final double CLEANUP_RANGE_SQR = 50.0 * 50.0;
 
     private final ServerLevel level;
@@ -137,7 +140,7 @@ public class Torrent extends BendingAbility {
         if (state == State.WAITING) {
             if (!player.isShiftKeyDown()) {
                 waitTicks++;
-                int waitLimit = Config.TORRENT_SNEAK_WAIT_TICKS.get();
+                int waitLimit = Config.msToTicks(Config.TORRENT_SNEAK_WAIT_MS.get());
                 if (waitLimit > 0 && waitTicks > waitLimit) {
                     player.displayClientMessage(
                             Component.literal("Torrent fizzled - sneak sooner after readying."), true);
@@ -151,7 +154,8 @@ public class Torrent extends BendingAbility {
                 return false;
             }
             if (BendingSources.isPlant(level, sourcePos)) {
-                BendingManager.consumePlantSource(level, sourcePos, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+                BendingManager.consumePlantSource(
+                        level, sourcePos, Config.msToTicks(Config.WATERMANIP_PLANT_REGROW_MS.get()));
             } else {
                 sourceTemp = new TempBlock(level, sourcePos, Blocks.AIR.defaultBlockState(), TempBlock.QUIET);
             }
@@ -202,7 +206,7 @@ public class Torrent extends BendingAbility {
                     Component.literal("Ring complete - left-click to shoot, release for wave."), true);
         }
         if (state == State.FORMED) {
-            int timeout = Config.TORRENT_FORMED_TIMEOUT_TICKS.get();
+            int timeout = Config.msToTicks(Config.TORRENT_FORMED_TIMEOUT_MS.get());
             if (timeout > 0 && ticks - formedAtTick > timeout) {
                 player.displayClientMessage(Component.literal("Torrent fizzled (ring timed out)."), true);
                 return false;
@@ -241,9 +245,8 @@ public class Torrent extends BendingAbility {
             return false;
         }
         revertSetup();
-        // Water-on-water is virtual (no placement, no flow risk), so the
-        // traveller stays visible while crossing lakes.
-        setupTemp = new TempBlock(level, pos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
+        // Small cube; invisible over lakes (no hiding the water).
+        setupTemp = TempBlock.cube(level, pos.immutable(), 0.25F);
         return true;
     }
 
@@ -281,8 +284,9 @@ public class Torrent extends BendingAbility {
             }
         }
         for (BlockPos pos : want) {
-            if (!hasRingCell(pos)) {
-                ring.add(new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+            if (!hasRingCell(pos) && BendingSources.isTransparentForBend(level, pos)) {
+                // Small overlay cubes (smaller than the spout spiral blobs).
+                ring.add(TempBlock.cube(level, pos, RING_CUBE));
             }
         }
         if (angle < 220.0) {
@@ -444,9 +448,8 @@ public class Torrent extends BendingAbility {
         if (!blocked && !outOfRange) {
             head = nextHead;
             // Water pass-through: head advances, queue holds length (virtual
-            // TempBlocks make over-water placement free and flow-safe).
-            launched.addFirst(
-                    new TempBlock(level, nextPos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+            // entries over water stay invisible and flow-safe).
+            launched.addFirst(TempBlock.cube(level, nextPos.immutable(), 0.25F));
         }
         if (launched.isEmpty()) {
             return false;
@@ -496,7 +499,7 @@ public class Torrent extends BendingAbility {
         if (traveled < 3.0 || launched.isEmpty()) {
             return false;
         }
-        long revertAt = level.getGameTime() + Config.TORRENT_FROZEN_REVERT_SECONDS.get() * 20L;
+        long revertAt = level.getGameTime() + Config.msToTicks(Config.TORRENT_FROZEN_REVERT_MS.get());
         for (TempBlock temp : launched) {
             // Freeze in place (keeps the quiet flag: no neighbor wake, no
             // flow kick like a fresh placement would cause).

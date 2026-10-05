@@ -47,7 +47,7 @@ public class ShockwaveRing extends EarthAbility {
     /** Crest thickness in cells. */
     private static final int BAND = Config.SHOCKWAVE_RING_BAND.get();
     /** Ticks a popped block flies before its hole restores. */
-    private static final long HOP_TICKS = Config.SHOCKWAVE_RING_HOP_TICKS.get();
+    private static final long HOP_TICKS = Config.msToTicks(Config.SHOCKWAVE_RING_HOP_MS.get());
     /** Hop shape: gentle up-pop with a breath of outward drift. */
     private static final double UP_POP = Config.SHOCKWAVE_RING_UP_POP.get();
 

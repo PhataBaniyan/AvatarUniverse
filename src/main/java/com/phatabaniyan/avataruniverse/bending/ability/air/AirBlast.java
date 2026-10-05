@@ -37,12 +37,12 @@ public class AirBlast extends BendingAbility {
     private record OriginEntry(ServerLevel level, Vec3 pos, long expiry) {}
 
     private static final Map<UUID, OriginEntry> ORIGINS = new ConcurrentHashMap<>();
-    private static final int MAX_TICKS = Config.AIRBLAST_MAX_TICKS.get();
+    private static final int MAX_TICKS = Config.msToTicks(Config.AIRBLAST_MAX_MS.get());
 
     /** Reference Cooldown 2000ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRBLAST_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRBLAST_COOLDOWN_MS.get());
     /** Selected-origin memory 10s, in server ticks. */
-    private static final int ORIGIN_TICKS = Config.AIRBLAST_ORIGIN_TICKS.get();
+    private static final int ORIGIN_TICKS = Config.msToTicks(Config.AIRBLAST_ORIGIN_MS.get());
 
     private static final double SPEED = Config.AIRBLAST_SPEED.get();
     private static final double RANGE = Config.AIRBLAST_RANGE.get();

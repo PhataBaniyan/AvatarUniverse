@@ -33,17 +33,17 @@ public class LavaFlux extends EarthAbility {
     public static final String ID = "LavaFlux";
 
     /** Reference Cooldown 8000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LAVAFLUX_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LAVAFLUX_COOLDOWN_MS.get());
     /** Reference Duration 4000ms of hold, in server ticks. */
-    private static final long DURATION_TICKS = Config.LAVAFLUX_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.LAVAFLUX_DURATION_MS.get());
     /** Reference Cleanup 1000ms, in server ticks. */
-    private static final long CLEANUP_TICKS = Config.LAVAFLUX_CLEANUP_TICKS.get();
+    private static final long CLEANUP_TICKS = Config.msToTicks(Config.LAVAFLUX_CLEANUP_MS.get());
 
     private static final int RANGE = Config.LAVAFLUX_RANGE.get();
     private static final float DAMAGE = Config.LAVAFLUX_DAMAGE.get().floatValue();
-    private static final long SPLASH_REVERT_TICKS = Config.LAVAFLUX_SPLASH_REVERT_TICKS.get();
+    private static final long SPLASH_REVERT_TICKS = Config.msToTicks(Config.LAVAFLUX_SPLASH_REVERT_MS.get());
     private static final double HIT_RADIUS = Config.LAVAFLUX_HIT_RADIUS.get();
-    private static final int FIRE_TICKS = Config.LAVAFLUX_FIRE_TICKS.get();
+    private static final int FIRE_TICKS = Config.msToTicks(Config.LAVAFLUX_FIRE_MS.get());
     private static final double KNOCKUP = Config.LAVAFLUX_KNOCKUP.get();
 
     private final List<BlockPos> flux = new ArrayList<>();

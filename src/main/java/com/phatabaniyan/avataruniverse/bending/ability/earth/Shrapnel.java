@@ -34,9 +34,9 @@ public class Shrapnel extends EarthAbility {
     public static final String ID = "Shrapnel";
 
     /** Reference Shot Cooldown 2000ms, in server ticks. */
-    private static final long SHOT_COOLDOWN = Config.SHRAPNEL_SHOT_COOLDOWN_TICKS.get();
+    private static final long SHOT_COOLDOWN = Config.msToTicks(Config.SHRAPNEL_SHOT_COOLDOWN_MS.get());
     /** Reference Blast Cooldown 8000ms, in server ticks. */
-    private static final long BLAST_COOLDOWN = Config.SHRAPNEL_BLAST_COOLDOWN_TICKS.get();
+    private static final long BLAST_COOLDOWN = Config.msToTicks(Config.SHRAPNEL_BLAST_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.SHRAPNEL_DAMAGE.get().floatValue();
     private static final double SHOT_SPEED = Config.SHRAPNEL_SHOT_SPEED.get();

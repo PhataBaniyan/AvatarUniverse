@@ -11,7 +11,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -27,13 +26,13 @@ public class ESWater extends SphereAttack {
     public static final String ID = "ESWater";
 
     /** Reference Cooldown 1500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ESWATER_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ESWATER_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.ESWATER_RANGE.get();
     private static final double DAMAGE = Config.ESWATER_DAMAGE.get();
     private static final int SPEED = Config.ESWATER_SPEED.get();
     /** Reference trail revert 150ms, in server ticks. */
-    private static final long TRAIL_REVERT_TICKS = Config.ESWATER_TRAIL_REVERT_TICKS.get();
+    private static final long TRAIL_REVERT_TICKS = Config.msToTicks(Config.ESWATER_TRAIL_REVERT_MS.get());
 
     private Vec3 pos;
     private Vec3 dir;
@@ -104,8 +103,12 @@ public class ESWater extends SphereAttack {
                     0.03);
             if (level.getBlockState(bp).isAir()) {
                 BlockPos immutable = bp.immutable();
-                TempBlock trail = new TempBlock(level, immutable, Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
+                TempBlock trail = TempBlock.cube(level, immutable, 0.25F);
                 BendingManager.scheduleRevert(trail, level.getGameTime() + TRAIL_REVERT_TICKS);
+            }
+            // Explicit head cube so the bolt reads as more than spray.
+            if (level.getBlockState(bp).isAir()) {
+                BendingManager.scheduleRevert(TempBlock.cube(level, bp.immutable(), 0.3F), level.getGameTime() + 2L);
             }
             for (Entity entity : level.getEntities(sp, new AABB(pos, pos).inflate(2.5))) {
                 if (entity.getUUID().equals(sp.getUUID())

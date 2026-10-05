@@ -68,7 +68,7 @@ public class IceCrawl extends BendingAbility {
         launched = true;
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.ICECRAWL_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.ICECRAWL_COOLDOWN_MS.get()));
         }
         Vec3 c = Vec3.atCenterOf(sourceBlock);
         level.sendParticles(
@@ -187,7 +187,7 @@ public class IceCrawl extends BendingAbility {
                 && !TempBlock.isTemp(level, base)) {
             BendingManager.scheduleRevert(
                     new TempBlock(level, base.immutable(), Blocks.ICE.defaultBlockState(), TempBlock.QUIET),
-                    level.getGameTime() + Config.ICECRAWL_ICE_TICKS.get());
+                    level.getGameTime() + Config.msToTicks(Config.ICECRAWL_ICE_MS.get()));
         }
         level.sendParticles(
                 BendingTheme.particle(Config.ICECRAWL_TRAIL_PARTICLE.get(), ParticleTypes.SNOWFLAKE),
@@ -214,13 +214,13 @@ public class IceCrawl extends BendingAbility {
             }
             entity.hurt(
                     level.damageSources().magic(), Config.ICECRAWL_DAMAGE.get().floatValue());
-            entity.addEffect(
-                    new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Config.ICECRAWL_FREEZE_TICKS.get(), 5));
+            entity.addEffect(new MobEffectInstance(
+                    MobEffects.MOVEMENT_SLOWDOWN, Config.msToTicks(Config.ICECRAWL_FREEZE_MS.get()), 5));
             BlockPos feet = entity.blockPosition().below();
             if (BendingSources.isTransparentForBend(level, feet) && !TempBlock.isTemp(level, feet)) {
                 BendingManager.scheduleRevert(
                         new TempBlock(level, feet.immutable(), Blocks.PACKED_ICE.defaultBlockState(), TempBlock.QUIET),
-                        level.getGameTime() + Config.ICECRAWL_FREEZE_TICKS.get());
+                        level.getGameTime() + Config.msToTicks(Config.ICECRAWL_FREEZE_MS.get()));
             }
             return false;
         }

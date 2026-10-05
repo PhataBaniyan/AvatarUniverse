@@ -30,7 +30,7 @@ public class Illumination extends BendingAbility {
     public static final String ID = "Illumination";
 
     /** Reference Cooldown 1000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ILLUMINATION_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ILLUMINATION_COOLDOWN_MS.get());
 
     private static final int THRESHOLD = Config.ILLUMINATION_THRESHOLD.get();
     private static final int LIGHT_LEVEL = Config.ILLUMINATION_LIGHT_LEVEL.get();

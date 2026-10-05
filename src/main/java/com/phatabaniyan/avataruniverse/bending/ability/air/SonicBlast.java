@@ -33,15 +33,15 @@ public class SonicBlast extends BendingAbility {
     public static final String ID = "SonicBlast";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SONICBLAST_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SONICBLAST_COOLDOWN_MS.get());
     /** Reference warmup 1500ms, in server ticks. */
-    private static final long WARMUP_TICKS = Config.SONICBLAST_WARMUP_TICKS.get();
+    private static final long WARMUP_TICKS = Config.msToTicks(Config.SONICBLAST_WARMUP_MS.get());
 
     private static final double DAMAGE = Config.SONICBLAST_DAMAGE.get();
     private static final double RANGE = Config.SONICBLAST_RANGE.get();
     private static final double HIT_RADIUS = Config.SONICBLAST_HIT_RADIUS.get();
-    private static final int NAUSEA_TICKS = Config.SONICBLAST_NAUSEA_TICKS.get();
-    private static final int BLIND_TICKS = Config.SONICBLAST_BLIND_TICKS.get();
+    private static final int NAUSEA_TICKS = Config.msToTicks(Config.SONICBLAST_NAUSEA_MS.get());
+    private static final int BLIND_TICKS = Config.msToTicks(Config.SONICBLAST_BLIND_MS.get());
     private static final int NAUSEA_AMP = Config.SONICBLAST_NAUSEA_AMPLIFIER.get();
     private static final int BLIND_AMP = Config.SONICBLAST_BLIND_AMPLIFIER.get();
     private static final double KNOCKBACK = Config.SONICBLAST_KNOCKBACK.get();

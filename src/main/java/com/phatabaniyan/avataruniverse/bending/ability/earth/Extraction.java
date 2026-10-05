@@ -34,7 +34,7 @@ public class Extraction extends EarthAbility {
 
     private static final double SELECT_RANGE = Config.EXTRACTION_SELECT_RANGE.get();
     /** Reference Cooldown 500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EXTRACTION_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EXTRACTION_COOLDOWN_MS.get());
 
     private static final double DOUBLE_CHANCE = Config.EXTRACTION_DOUBLE_CHANCE.get();
     private static final double TRIPLE_CHANCE = Config.EXTRACTION_TRIPLE_CHANCE.get();

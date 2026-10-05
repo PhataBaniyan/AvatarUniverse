@@ -33,11 +33,11 @@ public class AirBullet extends BendingAbility {
     public static final String ID = "AirBullet";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.AIRBULLET_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.AIRBULLET_COOLDOWN_MS.get());
     /** Reference Charge 2000ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.AIRBULLET_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.AIRBULLET_CHARGE_MS.get());
     /** Reference Armed 15000ms, in server ticks. */
-    private static final long ARMED_TICKS = Config.AIRBULLET_ARMED_TICKS.get();
+    private static final long ARMED_TICKS = Config.msToTicks(Config.AIRBULLET_ARMED_MS.get());
 
     private static final double DAMAGE = Config.AIRBULLET_DAMAGE.get();
     private static final double RANGE = Config.AIRBULLET_RANGE.get();

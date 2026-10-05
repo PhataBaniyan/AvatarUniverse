@@ -27,13 +27,13 @@ public class AirSpout extends BendingAbility {
     public static final String ID = "AirSpout";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRSPOUT_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRSPOUT_COOLDOWN_MS.get());
     /** Reference Duration 0 (infinite), in server ticks. */
-    private static final int DURATION_TICKS = Config.AIRSPOUT_DURATION_TICKS.get();
+    private static final int DURATION_TICKS = Config.msToTicks(Config.AIRSPOUT_DURATION_MS.get());
 
     private static final double HEIGHT = Config.AIRSPOUT_HEIGHT.get();
     /** Reference Interval 100ms, in server ticks. */
-    private static final int INTERVAL_TICKS = Config.AIRSPOUT_INTERVAL_TICKS.get();
+    private static final int INTERVAL_TICKS = Config.msToTicks(Config.AIRSPOUT_INTERVAL_MS.get());
 
     private static final double THRESHOLD = Config.AIRSPOUT_THRESHOLD.get();
 

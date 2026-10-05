@@ -28,13 +28,13 @@ public class FlameBreath extends BendingAbility {
     public static final String ID = "FlameBreath";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FLAMEBREATH_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FLAMEBREATH_COOLDOWN_MS.get());
     /** Reference Duration 5000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.FLAMEBREATH_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.FLAMEBREATH_DURATION_MS.get());
 
     private static final double RANGE = Config.FLAMEBREATH_RANGE.get();
     private static final double DAMAGE = Config.FLAMEBREATH_DAMAGE.get();
-    private static final int FIRE_SECONDS = Config.FLAMEBREATH_FIRE_SECONDS.get();
+    private static final int FIRE_SECONDS = Config.FLAMEBREATH_FIRE_MS.get() / 1000;
     private static final double SPEED = Config.FLAMEBREATH_SPEED.get();
 
     private final ServerLevel level;

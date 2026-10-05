@@ -11,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -70,9 +69,7 @@ public class DrainBlast extends BendingAbility {
             if (!BendingSources.isTransparentForBend(level, cell)) {
                 return false;
             }
-            BendingManager.scheduleRevert(
-                    new TempBlock(level, cell.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET),
-                    level.getGameTime() + 2L);
+            BendingManager.scheduleRevert(TempBlock.cube(level, cell.immutable(), 0.25F), level.getGameTime() + 2L);
             for (LivingEntity entity : level.getEntitiesOfClass(
                     LivingEntity.class,
                     new AABB(

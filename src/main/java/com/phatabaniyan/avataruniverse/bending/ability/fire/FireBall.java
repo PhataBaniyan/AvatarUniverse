@@ -29,15 +29,15 @@ public class FireBall extends BendingAbility {
     public static final String ID = "FireBall";
 
     /** Reference Cooldown 2500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREBALL_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREBALL_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.FIREBALL_DAMAGE.get().floatValue();
     private static final double RANGE = Config.FIREBALL_RANGE.get();
     private static final double SPEED = Config.FIREBALL_SPEED.get();
-    private static final int FIRE_SECONDS = Config.FIREBALL_FIRE_SECONDS.get();
+    private static final int FIRE_SECONDS = Config.FIREBALL_FIRE_MS.get() / 1000;
     private static final double HIT_RADIUS = Config.FIREBALL_HIT_RADIUS.get();
     private static final boolean CONTROLLABLE = Config.FIREBALL_CONTROLLABLE.get();
-    private static final int MAX_TICKS = Config.FIREBALL_MAX_TICKS.get();
+    private static final int MAX_TICKS = Config.msToTicks(Config.FIREBALL_MAX_MS.get());
 
     private final ServerPlayer player;
     private final ServerLevel level;

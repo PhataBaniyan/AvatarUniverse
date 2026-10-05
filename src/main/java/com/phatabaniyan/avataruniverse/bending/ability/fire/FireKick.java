@@ -34,7 +34,7 @@ public class FireKick extends BendingAbility {
     public static final String ID = "FireKick";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREKICK_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREKICK_COOLDOWN_MS.get());
 
     private static final double DAMAGE = Config.FIREKICK_DAMAGE.get();
     private static final double SPEED = Config.FIREKICK_SPEED.get();
@@ -117,7 +117,7 @@ public class FireKick extends BendingAbility {
                 }
                 if (e instanceof LivingEntity living && this.affected.add(e.getUUID())) {
                     living.hurt(player.damageSources().magic(), (float) DAMAGE);
-                    living.igniteForSeconds(Config.FIREKICK_FIRE_SECONDS.get());
+                    living.igniteForSeconds(Config.FIREKICK_FIRE_MS.get() / 1000);
                 }
                 e.setDeltaMovement(h.dir().scale(PUSH));
                 e.hurtMarked = true;

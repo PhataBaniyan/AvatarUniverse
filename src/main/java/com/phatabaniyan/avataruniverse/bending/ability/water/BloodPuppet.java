@@ -172,7 +172,7 @@ public class BloodPuppet extends BendingAbility {
         if (!player.isShiftKeyDown()) {
             return false;
         }
-        if (level.getGameTime() - startTick > Config.BLOODPUPPET_HOLD_TICKS.get()) {
+        if (level.getGameTime() - startTick > Config.msToTicks(Config.BLOODPUPPET_HOLD_MS.get())) {
             return false;
         }
         if (puppet == null || puppet.isRemoved() || !puppet.isAlive()) {
@@ -203,7 +203,7 @@ public class BloodPuppet extends BendingAbility {
         }
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.BLOODPUPPET_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.BLOODPUPPET_COOLDOWN_MS.get()));
         }
     }
 }

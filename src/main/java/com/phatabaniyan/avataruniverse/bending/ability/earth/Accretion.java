@@ -63,7 +63,7 @@ public class Accretion extends BendingAbility {
         this.damage = Config.ACCRETION_DAMAGE.get();
         this.blocks = Config.ACCRETION_BLOCKS.get();
         this.selectRange = Config.ACCRETION_SELECT_RANGE.get();
-        this.revertTimeTicks = Config.ACCRETION_REVERT_TIME_TICKS.get();
+        this.revertTimeTicks = Config.msToTicks(Config.ACCRETION_REVERT_TIME_MS.get());
         this.throwSpeed = Config.ACCRETION_THROW_SPEED.get();
         this.startedAt = System.currentTimeMillis();
         this.decayAt = this.startedAt + 6_000L;
@@ -265,7 +265,7 @@ public class Accretion extends BendingAbility {
         shot = true;
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.ACCRETION_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.ACCRETION_COOLDOWN_MS.get()));
         }
         caster.displayClientMessage(net.minecraft.network.chat.Component.literal("Accretion launched!"), true);
     }
@@ -329,10 +329,12 @@ public class Accretion extends BendingAbility {
         TempBlock existing = TempBlock.getAt(level, pos);
         if (existing != null) {
             existing.updateReplacement(placed);
-            BendingManager.scheduleRevert(existing, level.getGameTime() + Config.ACCRETION_REVERT_TIME_TICKS.get());
+            BendingManager.scheduleRevert(
+                    existing, level.getGameTime() + Config.msToTicks(Config.ACCRETION_REVERT_TIME_MS.get()));
             return;
         }
         TempBlock temp = new TempBlock(level, pos, placed, TempBlock.QUIET);
-        BendingManager.scheduleRevert(temp, level.getGameTime() + Config.ACCRETION_REVERT_TIME_TICKS.get());
+        BendingManager.scheduleRevert(
+                temp, level.getGameTime() + Config.msToTicks(Config.ACCRETION_REVERT_TIME_MS.get()));
     }
 }

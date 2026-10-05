@@ -31,9 +31,9 @@ public class FireJet extends BendingAbility {
     public static final String ID = "FireJet";
 
     /** Reference Duration 2000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.FIREJET_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.FIREJET_DURATION_MS.get());
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREJET_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREJET_COOLDOWN_MS.get());
 
     private static final double SPEED = Config.FIREJET_SPEED.get();
     private static final boolean SHOW_GLIDING = true;
@@ -73,8 +73,8 @@ public class FireJet extends BendingAbility {
             player.level().setBlockAndUpdate(feet, Blocks.FIRE.defaultBlockState());
             this.firePos = feet.immutable();
         }
-        player.addEffect(
-                new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Config.FIREJET_RESIST_TICKS.get(), 0, false, false));
+        player.addEffect(new MobEffectInstance(
+                MobEffects.FIRE_RESISTANCE, Config.msToTicks(Config.FIREJET_RESIST_MS.get()), 0, false, false));
 
         this.prevMayfly = player.getAbilities().mayfly;
         this.prevFlying = player.getAbilities().flying;

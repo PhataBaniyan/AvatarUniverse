@@ -42,7 +42,7 @@ public class MudSurge extends EarthAbility {
     public static final String ID = "MudSurge";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.MUDSURGE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.MUDSURGE_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.MUDSURGE_DAMAGE.get().floatValue();
     private static final double SPEED = Config.MUDSURGE_SPEED.get();
@@ -50,13 +50,13 @@ public class MudSurge extends EarthAbility {
     private static final double SOURCE_RADIUS = Config.MUDSURGE_SOURCE_RADIUS.get();
     private static final int MAX_BLOCKS = Config.MUDSURGE_MAX_BLOCKS.get();
     private static final int BLIND_CHANCE = Config.MUDSURGE_BLIND_CHANCE.get();
-    private static final int BLIND_TICKS = Config.MUDSURGE_BLIND_TICKS.get();
+    private static final int BLIND_TICKS = Config.msToTicks(Config.MUDSURGE_BLIND_MS.get());
     /** Magma flash before the source goes live, in ticks. */
-    private static final long FLASH_TICKS = Config.MUDSURGE_FLASH_TICKS.get();
+    private static final long FLASH_TICKS = Config.msToTicks(Config.MUDSURGE_FLASH_MS.get());
     /** Shard lifetime, in server ticks. */
-    private static final long SHARD_LIFE = Config.MUDSURGE_SHARD_LIFE_TICKS.get();
+    private static final long SHARD_LIFE = Config.msToTicks(Config.MUDSURGE_SHARD_LIFE_MS.get());
 
-    private static final long CRATER_REVERT_TICKS = Config.MUDSURGE_CRATER_REVERT_TICKS.get();
+    private static final long CRATER_REVERT_TICKS = Config.msToTicks(Config.MUDSURGE_CRATER_REVERT_MS.get());
 
     private static final double HIT_RADIUS = Config.MUDSURGE_HIT_RADIUS.get();
     private static final double KNOCKBACK = Config.MUDSURGE_KNOCKBACK.get();

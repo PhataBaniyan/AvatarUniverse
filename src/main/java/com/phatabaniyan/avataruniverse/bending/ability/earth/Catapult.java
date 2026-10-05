@@ -31,9 +31,9 @@ public class Catapult extends EarthAbility {
     /** Reference Angle 45. */
     private static final double ANGLE_RADIANS = Math.toRadians(Config.CATAPULT_ANGLE_DEG.get());
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.CATAPULT_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.CATAPULT_COOLDOWN_MS.get());
 
-    private static final long HOLD_TICKS = Config.CATAPULT_HOLD_TICKS.get();
+    private static final long HOLD_TICKS = Config.msToTicks(Config.CATAPULT_HOLD_MS.get());
     private static final double THROW_RADIUS = Config.CATAPULT_THROW_RADIUS.get();
     private static final int EARTH_DISTANCE = Config.CATAPULT_EARTH_DISTANCE.get();
     private static final int MAX_STAGE = Config.CATAPULT_MAX_STAGE.get();

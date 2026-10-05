@@ -37,9 +37,9 @@ public class SpiritProjection extends BendingAbility {
     public static final String ID = "SpiritProjection";
 
     /** Reference Cooldown 8000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SPIRITPROJECTION_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SPIRITPROJECTION_COOLDOWN_MS.get());
 
-    private static final long CHARGE_TICKS = Config.SPIRITPROJECTION_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.SPIRITPROJECTION_CHARGE_MS.get());
     private static final double TETHER = Config.SPIRITPROJECTION_TETHER.get();
 
     private enum Phase {

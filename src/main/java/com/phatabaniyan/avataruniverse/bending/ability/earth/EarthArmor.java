@@ -33,11 +33,11 @@ import net.minecraft.world.phys.Vec3;
 public class EarthArmor extends EarthAbility {
     public static final String ID = "EarthArmor";
     /** Reference MaxDuration 17500ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.EARTHARMOR_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.EARTHARMOR_DURATION_MS.get());
     /** Reference Cooldown 7500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EARTHARMOR_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHARMOR_COOLDOWN_MS.get());
 
-    private static final int FORM_TICKS = Config.EARTHARMOR_FORM_TICKS.get();
+    private static final int FORM_TICKS = Config.msToTicks(Config.EARTHARMOR_FORM_MS.get());
     private static final double SELECT_RANGE = Config.EARTHARMOR_SELECT_RANGE.get();
     private static final float ABSORPTION = Config.EARTHARMOR_ABSORPTION.get().floatValue();
     private static final double MIN_ABSORPTION = Config.EARTHARMOR_MIN_ABSORPTION.get();

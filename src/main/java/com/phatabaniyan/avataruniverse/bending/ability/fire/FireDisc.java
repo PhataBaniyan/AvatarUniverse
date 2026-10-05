@@ -38,7 +38,7 @@ public class FireDisc extends BendingAbility {
     public static final String ID = "FireDisc";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREDISC_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREDISC_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.FIREDISC_DAMAGE.get().floatValue();
     private static final double RANGE = Config.FIREDISC_RANGE.get();
@@ -47,7 +47,7 @@ public class FireDisc extends BendingAbility {
     private static final boolean REVERT = Config.FIREDISC_REVERT.get();
     private static final boolean DROP = Config.FIREDISC_DROP.get();
     /** Reference cut-block regen 10000ms, in server ticks. */
-    private static final long REVERT_TICKS = Config.FIREDISC_REVERT_TICKS.get();
+    private static final long REVERT_TICKS = Config.msToTicks(Config.FIREDISC_REVERT_MS.get());
 
     private final ServerPlayer player;
     private final ServerLevel level;
@@ -154,9 +154,9 @@ public class FireDisc extends BendingAbility {
             }
             if (e instanceof LivingEntity living) {
                 living.hurt(player.damageSources().magic(), DAMAGE);
-                living.igniteForSeconds(Config.FIREDISC_FIRE_SECONDS.get());
+                living.igniteForSeconds(Config.FIREDISC_FIRE_MS.get() / 1000);
             } else {
-                e.igniteForSeconds(Config.FIREDISC_FIRE_SECONDS.get());
+                e.igniteForSeconds(Config.FIREDISC_FIRE_MS.get() / 1000);
             }
             e.setDeltaMovement(this.dir.normalize().scale(KNOCKBACK));
             e.hurtMarked = true;

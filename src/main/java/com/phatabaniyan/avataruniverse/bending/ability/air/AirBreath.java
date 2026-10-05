@@ -35,9 +35,9 @@ public class AirBreath extends BendingAbility {
     public static final String ID = "AirBreath";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.AIRBREATH_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.AIRBREATH_COOLDOWN_MS.get());
     /** Reference Duration 3000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.AIRBREATH_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.AIRBREATH_DURATION_MS.get());
 
     private static final double RANGE = Config.AIRBREATH_RANGE.get();
     private static final double KNOCKBACK = Config.AIRBREATH_KNOCKBACK.get();
@@ -46,7 +46,7 @@ public class AirBreath extends BendingAbility {
     private static final double LAUNCH = Config.AIRBREATH_LAUNCH.get();
     private static final int PARTICLES = Config.AIRBREATH_PARTICLES.get();
     private static final double HIT_RADIUS = Config.AIRBREATH_HIT_RADIUS.get();
-    private static final int OXYGEN_DURATION_TICKS = Config.AIRBREATH_OXYGEN_DURATION_TICKS.get();
+    private static final int OXYGEN_DURATION_TICKS = Config.msToTicks(Config.AIRBREATH_OXYGEN_DURATION_MS.get());
     private static final int OXYGEN_AMPLIFIER = Config.AIRBREATH_OXYGEN_AMPLIFIER.get();
     private static final boolean DAMAGE_ENABLED = true;
     private static final boolean EXTINGUISH_FIRE = true;

@@ -46,7 +46,7 @@ public class EarthBlast extends EarthAbility {
 
     private static final double COLLISION_RADIUS = Config.EARTHBLAST_COLLISION_RADIUS.get();
     /** Reference Cooldown 500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EARTHBLAST_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHBLAST_COOLDOWN_MS.get());
     /** Ticks of vertical oscillation after each hurl or redirect. */
     private static final int WOBBLE_TICKS = 20;
     /** Peak height of the flight wobble, in blocks. */

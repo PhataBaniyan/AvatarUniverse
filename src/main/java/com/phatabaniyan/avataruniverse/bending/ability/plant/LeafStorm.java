@@ -30,7 +30,7 @@ public class LeafStorm extends BendingAbility {
     public static final String ID = "LeafStorm";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LEAFSTORM_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LEAFSTORM_COOLDOWN_MS.get());
 
     private static final int LEAF_COUNT = Config.LEAFSTORM_LEAF_COUNT.get();
     private static final double LEAF_SPEED = Config.LEAFSTORM_LEAF_SPEED.get();

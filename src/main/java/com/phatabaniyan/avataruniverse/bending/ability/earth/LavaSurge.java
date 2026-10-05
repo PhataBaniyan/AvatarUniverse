@@ -42,7 +42,7 @@ public class LavaSurge extends EarthAbility {
     public static final String ID = "LavaSurge";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LAVASURGE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LAVASURGE_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.LAVASURGE_DAMAGE.get().floatValue();
     private static final double SPEED = Config.LAVASURGE_SPEED.get();
@@ -51,13 +51,13 @@ public class LavaSurge extends EarthAbility {
     /** Reference MaxBlocks 10. */
     private static final int MAX_BLOCKS = Config.LAVASURGE_MAX_BLOCKS.get();
 
-    private static final int BURN_TICKS = Config.LAVASURGE_BURN_TICKS.get();
+    private static final int BURN_TICKS = Config.msToTicks(Config.LAVASURGE_BURN_MS.get());
     /** Magma flash before the source goes live, in ticks. */
-    private static final long FLASH_TICKS = Config.LAVASURGE_FLASH_TICKS.get();
+    private static final long FLASH_TICKS = Config.msToTicks(Config.LAVASURGE_FLASH_MS.get());
     /** Shard lifetime, in ticks (reference 4s). */
-    private static final long SHARD_LIFE = Config.LAVASURGE_SHARD_LIFE_TICKS.get();
+    private static final long SHARD_LIFE = Config.msToTicks(Config.LAVASURGE_SHARD_LIFE_MS.get());
 
-    private static final long CRATER_REVERT_TICKS = Config.LAVASURGE_CRATER_REVERT_TICKS.get();
+    private static final long CRATER_REVERT_TICKS = Config.msToTicks(Config.LAVASURGE_CRATER_REVERT_MS.get());
 
     private static final double HIT_RADIUS = Config.LAVASURGE_HIT_RADIUS.get();
     /** Half-size cubes. */

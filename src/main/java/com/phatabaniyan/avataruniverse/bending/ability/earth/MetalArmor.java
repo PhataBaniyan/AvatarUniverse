@@ -23,7 +23,7 @@ public class MetalArmor extends EarthAbility {
     public static final String ID = "MetalArmor";
 
     /** Reference Resistance Duration 4000ms, in server ticks. */
-    private static final long RESIST_TICKS = Config.METALARMOR_RESIST_TICKS.get();
+    private static final long RESIST_TICKS = Config.msToTicks(Config.METALARMOR_RESIST_MS.get());
 
     private static final int RESIST_AMPLIFIER = Config.METALARMOR_RESIST_AMPLIFIER.get();
 

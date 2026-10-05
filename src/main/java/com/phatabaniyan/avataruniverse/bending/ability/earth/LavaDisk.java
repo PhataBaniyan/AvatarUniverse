@@ -35,13 +35,13 @@ public class LavaDisk extends EarthAbility {
     public static final String ID = "LavaDisk";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LAVADISK_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LAVADISK_COOLDOWN_MS.get());
 
     private static final float MAX_DAMAGE = Config.LAVADISK_MAX_DAMAGE.get().floatValue();
     private static final float MIN_DAMAGE = Config.LAVADISK_MIN_DAMAGE.get().floatValue();
     private static final double RANGE = Config.LAVADISK_RANGE.get();
     /** Reference RegenDelay 10000ms, in server ticks. */
-    private static final long REGEN_TICKS = Config.LAVADISK_REGEN_TICKS.get();
+    private static final long REGEN_TICKS = Config.msToTicks(Config.LAVADISK_REGEN_MS.get());
 
     private static final double SOURCE_RANGE = Config.LAVADISK_SOURCE_RANGE.get();
 

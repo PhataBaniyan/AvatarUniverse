@@ -28,12 +28,12 @@ public class Zephyr extends BendingAbility {
     public static final String ID = "Zephyr";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ZEPHYR_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ZEPHYR_COOLDOWN_MS.get());
 
     private static final double RADIUS = Config.ZEPHYR_RADIUS.get();
-    private static final int SLOW_DURATION_TICKS = Config.ZEPHYR_SLOW_DURATION_TICKS.get();
+    private static final int SLOW_DURATION_TICKS = Config.msToTicks(Config.ZEPHYR_SLOW_DURATION_MS.get());
     private static final int SLOW_AMPLIFIER = Config.ZEPHYR_SLOW_AMPLIFIER.get();
-    private static final int REFRESH_THRESHOLD_TICKS = Config.ZEPHYR_REFRESH_THRESHOLD_TICKS.get();
+    private static final int REFRESH_THRESHOLD_TICKS = Config.msToTicks(Config.ZEPHYR_REFRESH_THRESHOLD_MS.get());
 
     private final ServerLevel level;
     private double ringAngle = 0;

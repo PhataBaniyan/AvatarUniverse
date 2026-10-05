@@ -1,6 +1,8 @@
 # AvatarUniverse
 
-AvatarUniverse by PhataBaniyan — NeoForge 1.21.1 mod (ModDevGradle).
+AvatarUniverse by PhataBaniyan — NeoForge 1.21.1 bending mod (ModDevGradle):
+master the four elements, unlock their sub-arts over time, and bend with
+abilities inspired by ProjectKorra.
 
 ## Prerequisites
 
@@ -35,6 +37,21 @@ Copy the built JAR from `build/libs/` into a NeoForge 1.21.1 `mods/` folder.
 - License: LGPL-2.1-or-later (see `LICENSE`). Ability mechanics are inspired by
   ProjectKorra and related bending plugins — see `CREDITS.md`.
 - Config: COMMON `avataruniverse-common.toml` (`enableDebugLogging`, default false) + in-game config screen.
+- Config layout mirrors ProjectKorra's `config.yml`: `general` switches, then
+  `abilities.<element>.<Ability>` sections, all times in **milliseconds**.
+  (Keys were renamed from the old flat layout — delete an existing
+  `avataruniverse-common.toml` once to regenerate it with defaults.)
+
+## Playing
+
+- `/au choose <air|water|earth|fire>` — pick an element (no OP needed).
+  `bind`, `help`, `display`, `toggle`, `clear` and the rest work for everyone;
+  `add` and `reload` stay operator-only.
+- **Time mastery:** every 10 Minecraft days of attuned play unlocks the next
+  sub-element of each held base element automatically (Water → Ice → Plant →
+  Healing → Blood, Earth → Sand → Metal → Lava, Fire → Lightning →
+  Combustion → Blue Fire, Air → Spiritual → Flight). Avatar is granted by
+  operators only. Tune via `general.masteryEnabled` / `masteryAttunementMs`.
 
 ## Mapping names
 

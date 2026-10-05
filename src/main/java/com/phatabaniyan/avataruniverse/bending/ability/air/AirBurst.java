@@ -31,9 +31,9 @@ public class AirBurst extends BendingAbility {
     private static final double CONE_ANGLE_DEGREES = Config.AIRBURST_CONE_ANGLE_DEGREES.get();
     private static final double CONE_ANGLE = Math.toRadians(CONE_ANGLE_DEGREES);
     /** Reference Cooldown 2500ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRBURST_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRBURST_COOLDOWN_MS.get());
     /** Reference charge 1500ms, in server ticks. */
-    private static final int CHARGE_TICKS = Config.AIRBURST_CHARGE_TICKS.get();
+    private static final int CHARGE_TICKS = Config.msToTicks(Config.AIRBURST_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.AIRBURST_DAMAGE.get();
     private static final double RADIUS = Config.AIRBURST_RADIUS.get();

@@ -33,22 +33,22 @@ public class WallOfFire extends BendingAbility {
     public static final String ID = "WallOfFire";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.WALLOFFIRE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.WALLOFFIRE_COOLDOWN_MS.get());
     /** Reference Duration 8000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.WALLOFFIRE_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.WALLOFFIRE_DURATION_MS.get());
     /** Reference DamageInterval 1000ms, in server ticks. */
-    private static final long DAMAGE_INTERVAL_TICKS = Config.WALLOFFIRE_DAMAGE_INTERVAL_TICKS.get();
+    private static final long DAMAGE_INTERVAL_TICKS = Config.msToTicks(Config.WALLOFFIRE_DAMAGE_INTERVAL_MS.get());
     /** Reference FxInterval 100ms, in server ticks. */
-    private static final long FX_INTERVAL_TICKS = Config.WALLOFFIRE_FX_INTERVAL_TICKS.get();
+    private static final long FX_INTERVAL_TICKS = Config.msToTicks(Config.WALLOFFIRE_FX_INTERVAL_MS.get());
     /** Foot-fire revert 3000ms, in server ticks. */
-    private static final long FOOT_REVERT_TICKS = Config.WALLOFFIRE_FOOT_REVERT_TICKS.get();
+    private static final long FOOT_REVERT_TICKS = Config.msToTicks(Config.WALLOFFIRE_FOOT_REVERT_MS.get());
 
     private static final double RANGE = Config.WALLOFFIRE_RANGE.get();
     private static final double AIM_RANGE = Config.WALLOFFIRE_AIM_RANGE.get();
     private static final double WIDTH = Config.WALLOFFIRE_WIDTH.get();
     private static final double HEIGHT = Config.WALLOFFIRE_HEIGHT.get();
     private static final float DAMAGE = Config.WALLOFFIRE_DAMAGE.get().floatValue();
-    private static final int FIRE_TICKS = Config.WALLOFFIRE_FIRE_SECONDS.get();
+    private static final int FIRE_TICKS = Config.WALLOFFIRE_FIRE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

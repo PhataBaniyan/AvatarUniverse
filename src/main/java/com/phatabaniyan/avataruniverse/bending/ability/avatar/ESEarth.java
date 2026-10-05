@@ -31,7 +31,7 @@ public class ESEarth extends SphereAttack {
     public static final String ID = "ESEarth";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ESEARTH_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ESEARTH_COOLDOWN_MS.get());
 
     private static final double DAMAGE = Config.ESEARTH_DAMAGE.get();
     private static final int CRATER = Config.ESEARTH_CRATER.get();

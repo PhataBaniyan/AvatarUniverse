@@ -26,11 +26,11 @@ public class Meditate extends BendingAbility {
     public static final String ID = "Meditate";
 
     /** Reference Warmup 3000ms, in server ticks. */
-    private static final long WARMUP_TICKS = Config.MEDITATE_WARMUP_TICKS.get();
+    private static final long WARMUP_TICKS = Config.msToTicks(Config.MEDITATE_WARMUP_MS.get());
     /** Reference Cooldown 10000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.MEDITATE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.MEDITATE_COOLDOWN_MS.get());
     /** Reference Boost 60000ms, in server ticks. */
-    private static final long BOOST_TICKS = Config.MEDITATE_BOOST_TICKS.get();
+    private static final long BOOST_TICKS = Config.msToTicks(Config.MEDITATE_BOOST_MS.get());
 
     private static final int PARTICLES = Config.MEDITATE_PARTICLES.get();
     private static final int ABSORPTION_AMP = Config.MEDITATE_ABSORPTION_AMPLIFIER.get();

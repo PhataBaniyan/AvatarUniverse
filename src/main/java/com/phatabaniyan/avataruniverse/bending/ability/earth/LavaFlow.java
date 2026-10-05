@@ -41,14 +41,14 @@ public class LavaFlow extends EarthAbility {
     private static final double RECT_LENGTH = Config.LAVAFLOW_RECT_LENGTH.get();
 
     private static final double RECT_HALF_WIDTH = Config.LAVAFLOW_RECT_HALF_WIDTH.get();
-    private static final long SHIFT_COOLDOWN = Config.LAVAFLOW_SHIFT_COOLDOWN_TICKS.get();
-    private static final long CLICK_LAVA_COOLDOWN = Config.LAVAFLOW_CLICK_LAVA_COOLDOWN_TICKS.get();
-    private static final long CLICK_LAND_COOLDOWN = Config.LAVAFLOW_CLICK_LAND_COOLDOWN_TICKS.get();
-    private static final long SHIFT_CLEANUP = Config.LAVAFLOW_SHIFT_CLEANUP_TICKS.get();
-    private static final long CLICK_LAVA_CLEANUP = Config.LAVAFLOW_CLICK_LAVA_CLEANUP_TICKS.get();
-    private static final long CLICK_LAND_CLEANUP = Config.LAVAFLOW_CLICK_LAND_CLEANUP_TICKS.get();
-    private static final long CLICK_LAVA_DELAY = Config.LAVAFLOW_CLICK_LAVA_DELAY_TICKS.get();
-    private static final long CLICK_LAND_DELAY = Config.LAVAFLOW_CLICK_LAND_DELAY_TICKS.get();
+    private static final long SHIFT_COOLDOWN = Config.msToTicks(Config.LAVAFLOW_SHIFT_COOLDOWN_MS.get());
+    private static final long CLICK_LAVA_COOLDOWN = Config.msToTicks(Config.LAVAFLOW_CLICK_LAVA_COOLDOWN_MS.get());
+    private static final long CLICK_LAND_COOLDOWN = Config.msToTicks(Config.LAVAFLOW_CLICK_LAND_COOLDOWN_MS.get());
+    private static final long SHIFT_CLEANUP = Config.msToTicks(Config.LAVAFLOW_SHIFT_CLEANUP_MS.get());
+    private static final long CLICK_LAVA_CLEANUP = Config.msToTicks(Config.LAVAFLOW_CLICK_LAVA_CLEANUP_MS.get());
+    private static final long CLICK_LAND_CLEANUP = Config.msToTicks(Config.LAVAFLOW_CLICK_LAND_CLEANUP_MS.get());
+    private static final long CLICK_LAVA_DELAY = Config.msToTicks(Config.LAVAFLOW_CLICK_LAVA_DELAY_MS.get());
+    private static final long CLICK_LAND_DELAY = Config.msToTicks(Config.LAVAFLOW_CLICK_LAND_DELAY_MS.get());
 
     private final boolean shiftMode;
     private final long bornTick;

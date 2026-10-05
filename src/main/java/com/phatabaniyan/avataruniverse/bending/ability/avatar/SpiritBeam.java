@@ -37,17 +37,17 @@ public class SpiritBeam extends BendingAbility {
     public static final String ID = "SpiritBeam";
 
     /** Reference Duration 5000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.SPIRITBEAM_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.SPIRITBEAM_DURATION_MS.get());
     /** Reference Cooldown 8000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SPIRITBEAM_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SPIRITBEAM_COOLDOWN_MS.get());
 
     private static final double BASE_DAMAGE = Config.SPIRITBEAM_DAMAGE.get();
     private static final double BASE_RANGE = Config.SPIRITBEAM_RANGE.get();
     private static final int BLOCK_RADIUS = Config.SPIRITBEAM_BLOCK_RADIUS.get();
     /** Reference BlockRevert 8000ms, in server ticks. */
-    private static final long BLOCK_REVERT_TICKS = Config.SPIRITBEAM_BLOCK_REVERT_TICKS.get();
+    private static final long BLOCK_REVERT_TICKS = Config.msToTicks(Config.SPIRITBEAM_BLOCK_REVERT_MS.get());
 
-    private static final int IGNITE_SECONDS = Config.SPIRITBEAM_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.SPIRITBEAM_IGNITE_MS.get() / 1000;
 
     private final ServerLevel level;
     private final double damage;

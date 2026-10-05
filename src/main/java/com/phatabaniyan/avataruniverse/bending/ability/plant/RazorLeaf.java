@@ -164,7 +164,7 @@ public class RazorLeaf extends BendingAbility {
         }
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.RAZORLEAF_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.RAZORLEAF_COOLDOWN_MS.get()));
         }
     }
 }

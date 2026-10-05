@@ -102,7 +102,7 @@ public class PlantArmor extends BendingAbility {
         super(player.getUUID(), player.level().getGameTime());
         this.level = player.serverLevel();
         this.maxDurability = this.durability = Config.PLANTARMOR_DURABILITY.get();
-        this.duration = Config.PLANTARMOR_DURATION_TICKS.get();
+        this.duration = Config.msToTicks(Config.PLANTARMOR_DURATION_MS.get());
         this.durabilityDecay = this.duration <= 0 ? 0 : maxDurability / (double) duration;
         this.requiredPlants = Config.PLANTARMOR_REQUIRED_PLANTS.get();
         this.selectRange = Config.PLANTARMOR_SELECT_RANGE.get();
@@ -185,7 +185,8 @@ public class PlantArmor extends BendingAbility {
                 }
                 BlockPos plant = randomPlantSource(player);
                 if (plant != null) {
-                    BendingManager.consumePlantSource(level, plant, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+                    BendingManager.consumePlantSource(
+                            level, plant, Config.msToTicks(Config.WATERMANIP_PLANT_REGROW_MS.get()));
                     sources.add(plant);
                 }
                 return true;
@@ -311,7 +312,7 @@ public class PlantArmor extends BendingAbility {
                         .normalize()
                         .scale(Config.LEAP_POWER.get()));
                 player.hurtMarked = true;
-                bending.setCooldown(sub, now + Config.LEAP_COOLDOWN_TICKS.get());
+                bending.setCooldown(sub, now + Config.msToTicks(Config.LEAP_COOLDOWN_MS.get()));
                 Vec3 ground = player.position();
                 for (double i = 0; i < 1; i += 0.25) {
                     for (int ang = 0; ang < 360; ang += 15) {
@@ -342,7 +343,7 @@ public class PlantArmor extends BendingAbility {
                     return;
                 }
                 BlockPos plant = findTargetPlant(player);
-                bending.setCooldown(sub, now + Config.RAZORLEAF_COOLDOWN_TICKS.get());
+                bending.setCooldown(sub, now + Config.msToTicks(Config.RAZORLEAF_COOLDOWN_MS.get()));
                 BendingManager.start(new RazorLeaf(player, plant, plant != null));
                 active = sub;
                 break;
@@ -350,18 +351,18 @@ public class PlantArmor extends BendingAbility {
                 if (!spend(Config.LEAFSHIELD_COST.get())) {
                     return;
                 }
-                bending.setCooldown(sub, now + Config.LEAFSHIELD_COOLDOWN_TICKS.get());
+                bending.setCooldown(sub, now + Config.msToTicks(Config.LEAFSHIELD_COOLDOWN_MS.get()));
                 active = sub;
                 break;
             case "LeafDome":
                 if (!spend(Config.LEAFDOME_COST.get())) {
                     return;
                 }
-                bending.setCooldown(sub, now + Config.LEAFDOME_COOLDOWN_TICKS.get());
+                bending.setCooldown(sub, now + Config.msToTicks(Config.LEAFDOME_COOLDOWN_MS.get()));
                 active = sub;
                 break;
             case "Regenerate":
-                bending.setCooldown(sub, now + Config.REGENERATE_COOLDOWN_TICKS.get());
+                bending.setCooldown(sub, now + Config.msToTicks(Config.REGENERATE_COOLDOWN_MS.get()));
                 active = sub;
                 break;
             default:
@@ -527,7 +528,9 @@ public class PlantArmor extends BendingAbility {
                         whipForward = false;
                         BendingPlayer b = BendingPlayer.get(owner);
                         if (b != null) {
-                            b.setCooldown("VineWhip", level.getGameTime() + Config.VINEWHIP_COOLDOWN_TICKS.get());
+                            b.setCooldown(
+                                    "VineWhip",
+                                    level.getGameTime() + Config.msToTicks(Config.VINEWHIP_COOLDOWN_MS.get()));
                         }
                         return;
                     }
@@ -557,11 +560,11 @@ public class PlantArmor extends BendingAbility {
         for (LivingEntity hit : level.getEntitiesOfClass(
                 LivingEntity.class, new AABB(tanglePos, tanglePos).inflate(Config.TANGLE_RADIUS.get()))) {
             if (!hit.getUUID().equals(owner) && hit.isAlive()) {
-                TangleStop.stop(hit, level, Config.TANGLE_DURATION_TICKS.get());
+                TangleStop.stop(hit, level, Config.msToTicks(Config.TANGLE_DURATION_MS.get()));
                 hit.hurt(player.damageSources().playerAttack(player), 0.0F);
                 BendingPlayer b = BendingPlayer.get(owner);
                 if (b != null) {
-                    b.setCooldown("Tangle", level.getGameTime() + Config.TANGLE_COOLDOWN_TICKS.get());
+                    b.setCooldown("Tangle", level.getGameTime() + Config.msToTicks(Config.TANGLE_COOLDOWN_MS.get()));
                 }
                 resetActive();
                 return;
@@ -605,7 +608,7 @@ public class PlantArmor extends BendingAbility {
             if (player.position().distanceTo(grappleTarget) < 2.0) {
                 BendingPlayer b = BendingPlayer.get(owner);
                 if (b != null) {
-                    b.setCooldown("Grapple", level.getGameTime() + Config.GRAPPLE_COOLDOWN_TICKS.get());
+                    b.setCooldown("Grapple", level.getGameTime() + Config.msToTicks(Config.GRAPPLE_COOLDOWN_MS.get()));
                 }
                 resetActive();
                 return;
@@ -824,7 +827,7 @@ public class PlantArmor extends BendingAbility {
             for (Map.Entry<Integer, String> e : savedSlots.entrySet()) {
                 bending.bind(e.getKey(), e.getValue());
             }
-            bending.setCooldown(ID, level.getGameTime() + Config.PLANTARMOR_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.PLANTARMOR_COOLDOWN_MS.get()));
         }
         revertShield();
         revertDrained();
@@ -832,7 +835,7 @@ public class PlantArmor extends BendingAbility {
 
     /** Plant consumed for a formed shell stays bent briefly (Korra TempBlock). */
     public static void consumePlantSourceFor(BlockPos pos, ServerLevel level) {
-        BendingManager.consumePlantSource(level, pos, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+        BendingManager.consumePlantSource(level, pos, Config.msToTicks(Config.WATERMANIP_PLANT_REGROW_MS.get()));
     }
 
     public static boolean isSubBind(String sub) {

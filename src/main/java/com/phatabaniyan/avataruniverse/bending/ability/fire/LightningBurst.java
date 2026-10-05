@@ -35,9 +35,9 @@ public class LightningBurst extends BendingAbility {
     public static final String ID = "LightningBurst";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LIGHTNINGBURST_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LIGHTNINGBURST_COOLDOWN_MS.get());
     /** Reference charge 2000ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.LIGHTNINGBURST_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.LIGHTNINGBURST_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.LIGHTNINGBURST_DAMAGE.get();
     private static final double RADIUS = Config.LIGHTNINGBURST_RADIUS.get();
@@ -47,7 +47,7 @@ public class LightningBurst extends BendingAbility {
     private static final double GAP_LENGTH = Config.LIGHTNINGBURST_GAP_LENGTH.get();
     private static final int JITTER_DEGREES = Config.LIGHTNINGBURST_JITTER_DEGREES.get();
     private static final double HIT_RADIUS = Config.LIGHTNINGBURST_HIT_RADIUS.get();
-    private static final int IGNITE_SECONDS = Config.LIGHTNINGBURST_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.LIGHTNINGBURST_IGNITE_MS.get() / 1000;
 
     private record Bolt(Vec3 pos, Vec3 dir, double dist, float yaw, float pitch) {}
 

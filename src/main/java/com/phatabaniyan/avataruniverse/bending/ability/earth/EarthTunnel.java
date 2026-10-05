@@ -26,16 +26,16 @@ public class EarthTunnel extends EarthAbility {
     public static final String ID = "EarthTunnel";
 
     /** Reference Interval 30ms, converted against the 50ms server tick. */
-    private static final long INTERVAL_TICKS = Config.EARTHTUNNEL_INTERVAL_TICKS.get();
+    private static final long INTERVAL_TICKS = Config.msToTicks(Config.EARTHTUNNEL_INTERVAL_MS.get());
 
     private static final int BLOCKS_PER_INTERVAL = Config.EARTHTUNNEL_BLOCKS_PER_INTERVAL.get();
     private static final double MAX_RADIUS = Config.EARTHTUNNEL_MAX_RADIUS.get();
     private static final double RANGE = Config.EARTHTUNNEL_RANGE.get();
     private static final double START_RADIUS = Config.EARTHTUNNEL_START_RADIUS.get();
     /** Reference RevertCheckTime 300000ms, in server ticks. */
-    private static final long REVERT_TICKS = Config.EARTHTUNNEL_REVERT_TICKS.get();
+    private static final long REVERT_TICKS = Config.msToTicks(Config.EARTHTUNNEL_REVERT_MS.get());
     /** Reference Cooldown 0. */
-    private static final long COOLDOWN_TICKS = Config.EARTHTUNNEL_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHTUNNEL_COOLDOWN_MS.get());
 
     private static final double MAX_GAZE_DEVIATION_DEGREES = Config.EARTHTUNNEL_MAX_DEVIATION_DEG.get();
 

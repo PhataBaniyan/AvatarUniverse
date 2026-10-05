@@ -30,13 +30,13 @@ public class Explode extends BendingAbility {
     public static final String ID = "Explode";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EXPLODE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EXPLODE_COOLDOWN_MS.get());
 
     private static final double DAMAGE = Config.EXPLODE_DAMAGE.get();
     private static final double RADIUS = Config.EXPLODE_RADIUS.get();
     private static final double KNOCKBACK = Config.EXPLODE_KNOCKBACK.get();
     private static final double RANGE = Config.EXPLODE_RANGE.get();
-    private static final int IGNITE_SECONDS = Config.EXPLODE_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.EXPLODE_IGNITE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

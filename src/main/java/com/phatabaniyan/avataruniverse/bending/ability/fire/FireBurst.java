@@ -31,9 +31,9 @@ public class FireBurst extends BendingAbility {
 
     private static final double CONE_ANGLE = Math.toRadians(30);
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREBURST_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREBURST_COOLDOWN_MS.get());
     /** Reference charge 1500ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.FIREBURST_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.FIREBURST_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.FIREBURST_DAMAGE.get();
     private static final double RADIUS = Config.FIREBURST_RADIUS.get();
@@ -105,7 +105,7 @@ public class FireBurst extends BendingAbility {
             double falloff = Math.max(0.3, 1.0 - (dist / RADIUS) * 0.5);
             if (e instanceof LivingEntity living) {
                 living.hurt(player.damageSources().magic(), (float) (DAMAGE * falloff));
-                living.igniteForSeconds(Config.FIREBURST_FIRE_SECONDS.get());
+                living.igniteForSeconds(Config.FIREBURST_FIRE_MS.get() / 1000);
             }
             Vec3 v = dir.scale(PUSH * falloff);
             e.setDeltaMovement(v.x, v.y + 0.45 * PUSH * falloff, v.z);
@@ -227,7 +227,7 @@ public class FireBurst extends BendingAbility {
             double falloff = Math.max(0.3, 1.0 - (dist / range) * 0.5);
             if (e instanceof LivingEntity living) {
                 living.hurt(player.damageSources().magic(), (float) (DAMAGE * falloff));
-                living.igniteForSeconds(Config.FIREBURST_FIRE_SECONDS.get());
+                living.igniteForSeconds(Config.FIREBURST_FIRE_MS.get() / 1000);
             }
             Vec3 v = dir.scale(PUSH * 1.2 * falloff);
             e.setDeltaMovement(v.x, v.y + 0.4 * PUSH * falloff, v.z);

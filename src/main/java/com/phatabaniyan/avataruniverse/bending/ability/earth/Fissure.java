@@ -33,13 +33,13 @@ public class Fissure extends EarthAbility {
     public static final String ID = "Fissure";
 
     /** Reference Cooldown 20000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FISSURE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FISSURE_COOLDOWN_MS.get());
     /** Reference Duration 15000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.FISSURE_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.FISSURE_DURATION_MS.get());
 
     private static final int MAX_WIDTH = Config.FISSURE_MAX_WIDTH.get();
     private static final int SLAP_RANGE = Config.FISSURE_SLAP_RANGE.get();
-    private static final long SEAL_REVERT_TICKS = Config.FISSURE_SEAL_REVERT_TICKS.get();
+    private static final long SEAL_REVERT_TICKS = Config.msToTicks(Config.FISSURE_SEAL_REVERT_MS.get());
     private static final double AIM_RANGE = Config.FISSURE_AIM_RANGE.get();
     private static final double ORIGIN_OFFSET = Config.FISSURE_ORIGIN_OFFSET.get();
 

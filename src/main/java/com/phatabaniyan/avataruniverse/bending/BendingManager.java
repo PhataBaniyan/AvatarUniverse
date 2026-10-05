@@ -130,6 +130,7 @@ public final class BendingManager {
         com.phatabaniyan.avataruniverse.bending.ability.plant.TangleStop.tick(event.getServer());
         tickBoardSync(event.getServer());
         com.phatabaniyan.avataruniverse.bending.BendingPassives.tick(event.getServer());
+        com.phatabaniyan.avataruniverse.bending.BendingMastery.tick(event.getServer());
     }
 
     /** Push board state to every player ten times a second. */
@@ -1121,10 +1122,8 @@ public final class BendingManager {
      * tall grass / large fern) is removed and grows back after 50-100% of
      * the base delay (Korra PlantRegrowth timing).
      */
-    public static void consumePlantSource(ServerLevel level, BlockPos pos, int baseSeconds) {
-        long revertAt = level.getGameTime()
-                + baseSeconds * 20L / 2
-                + (long) (level.random.nextDouble() * baseSeconds * 20L / 2);
+    public static void consumePlantSource(ServerLevel level, BlockPos pos, int baseTicks) {
+        long revertAt = level.getGameTime() + baseTicks / 2 + (long) (level.random.nextDouble() * baseTicks / 2);
         List<BlockPos> parts = new ArrayList<>();
         parts.add(pos);
         BlockState state = level.getBlockState(pos);

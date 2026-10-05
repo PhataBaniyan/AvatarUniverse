@@ -37,9 +37,9 @@ public class AirPunch extends BendingAbility {
     public static final String ID = "AirPunch";
 
     /** Reference Cooldown 1500ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRPUNCH_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRPUNCH_COOLDOWN_MS.get());
     /** Reference flurry window 800ms, in server ticks. */
-    private static final int THRESHOLD_TICKS = Config.AIRPUNCH_THRESHOLD_TICKS.get();
+    private static final int THRESHOLD_TICKS = Config.msToTicks(Config.AIRPUNCH_THRESHOLD_MS.get());
 
     private static final int SHOTS = Config.AIRPUNCH_SHOTS.get();
     private static final double RANGE = Config.AIRPUNCH_RANGE.get();

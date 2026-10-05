@@ -12,7 +12,6 @@ import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -113,7 +112,7 @@ public class WaterArms extends BendingAbility {
         }
         for (BlockPos pos : want) {
             if (!heldSet.contains(pos)) {
-                held.add(new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+                held.add(TempBlock.cube(level, pos, 0.25F));
                 heldSet.add(pos);
             }
         }
@@ -143,7 +142,8 @@ public class WaterArms extends BendingAbility {
         ServerLevel level = player.serverLevel();
         for (double d = 0.5; d <= range; d += 0.5) {
             BlockPos pos = BlockPos.containing(eye.add(look.scale(d)));
-            if (!level.getBlockState(pos).isAir()) {
+            // Bent overlay markers are not real cover: aim through them.
+            if (!level.getBlockState(pos).isAir() && !BendingSources.isBentMarker(level, pos)) {
                 return Vec3.atCenterOf(pos);
             }
         }
@@ -365,7 +365,7 @@ public class WaterArms extends BendingAbility {
             for (int slot = 1; slot <= 5; slot++) {
                 bending.bind(slot, savedSlots.get(slot));
             }
-            bending.setCooldown(ID, level.getGameTime() + Config.WATERARMS_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.WATERARMS_COOLDOWN_MS.get()));
         }
     }
 }

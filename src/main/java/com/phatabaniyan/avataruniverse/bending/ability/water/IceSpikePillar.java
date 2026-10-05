@@ -122,7 +122,7 @@ public class IceSpikePillar extends BendingAbility {
         damaged.add(entity);
         entity.addEffect(new MobEffectInstance(
                 MobEffects.MOVEMENT_SLOWDOWN,
-                Config.ICESPIKE_SLOW_DURATION_TICKS.get(),
+                Config.msToTicks(Config.ICESPIKE_SLOW_DURATION_MS.get()),
                 Config.ICESPIKE_SLOW_POTENCY.get()));
     }
 

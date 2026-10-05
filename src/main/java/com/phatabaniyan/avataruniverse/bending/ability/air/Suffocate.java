@@ -36,21 +36,21 @@ public class Suffocate extends BendingAbility {
     public static final String ID = "Suffocate";
 
     /** Reference Cooldown 2000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SUFFOCATE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SUFFOCATE_COOLDOWN_MS.get());
     /** Reference charge 2000ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.SUFFOCATE_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.SUFFOCATE_CHARGE_MS.get());
 
     private static final double RANGE = Config.SUFFOCATE_RANGE.get();
     private static final double RADIUS = Config.SUFFOCATE_RADIUS.get();
     private static final double DAMAGE = Config.SUFFOCATE_DAMAGE.get();
-    private static final long DAMAGE_DELAY_TICKS = Config.SUFFOCATE_DAMAGE_DELAY_TICKS.get();
-    private static final long DAMAGE_REPEAT_TICKS = Config.SUFFOCATE_DAMAGE_REPEAT_TICKS.get();
+    private static final long DAMAGE_DELAY_TICKS = Config.msToTicks(Config.SUFFOCATE_DAMAGE_DELAY_MS.get());
+    private static final long DAMAGE_REPEAT_TICKS = Config.msToTicks(Config.SUFFOCATE_DAMAGE_REPEAT_MS.get());
     private static final int SLOW_AMP = Config.SUFFOCATE_SLOW_AMPLIFIER.get();
-    private static final long SLOW_REPEAT_TICKS = Config.SUFFOCATE_SLOW_REPEAT_TICKS.get();
-    private static final long SLOW_DELAY_TICKS = Config.SUFFOCATE_SLOW_DELAY_TICKS.get();
+    private static final long SLOW_REPEAT_TICKS = Config.msToTicks(Config.SUFFOCATE_SLOW_REPEAT_MS.get());
+    private static final long SLOW_DELAY_TICKS = Config.msToTicks(Config.SUFFOCATE_SLOW_DELAY_MS.get());
     private static final int BLIND_AMP = Config.SUFFOCATE_BLIND_AMPLIFIER.get();
-    private static final long BLIND_REPEAT_TICKS = Config.SUFFOCATE_BLIND_REPEAT_TICKS.get();
-    private static final long BLIND_DELAY_TICKS = Config.SUFFOCATE_BLIND_DELAY_TICKS.get();
+    private static final long BLIND_REPEAT_TICKS = Config.msToTicks(Config.SUFFOCATE_BLIND_REPEAT_MS.get());
+    private static final long BLIND_DELAY_TICKS = Config.msToTicks(Config.SUFFOCATE_BLIND_DELAY_MS.get());
     private static final boolean REQUIRE_AIM = true;
     private static final double AIM_RADIUS = Config.SUFFOCATE_AIM_RADIUS.get();
     private static final boolean AFFECT_UNDEAD = false;

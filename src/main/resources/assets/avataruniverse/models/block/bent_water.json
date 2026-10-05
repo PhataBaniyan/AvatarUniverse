@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "avataruniverse:block/bent_water",
+    "particle": "avataruniverse:block/bent_water"
+  }
+}

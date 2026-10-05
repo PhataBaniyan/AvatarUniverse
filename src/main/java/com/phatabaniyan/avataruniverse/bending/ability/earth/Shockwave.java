@@ -24,9 +24,9 @@ public class Shockwave extends EarthAbility {
     public static final String ID = "Shockwave";
 
     /** Reference ChargeTime 2500ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.SHOCKWAVE_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.SHOCKWAVE_CHARGE_MS.get());
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SHOCKWAVE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SHOCKWAVE_COOLDOWN_MS.get());
     /** Reference FallThreshold 12. */
     private static final double FALL_THRESHOLD = Config.SHOCKWAVE_FALL_THRESHOLD.get();
 

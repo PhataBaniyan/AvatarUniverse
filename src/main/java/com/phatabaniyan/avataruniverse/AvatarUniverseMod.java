@@ -1,6 +1,7 @@
 package com.phatabaniyan.avataruniverse;
 
 import com.mojang.logging.LogUtils;
+import com.phatabaniyan.avataruniverse.bending.BendingBlocks;
 import com.phatabaniyan.avataruniverse.bending.BendingNetworking;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,6 +29,10 @@ public class AvatarUniverseMod {
 
         // Custom packets (mod-bus lifecycle event, not gameplay).
         modEventBus.addListener(BendingNetworking::onRegisterPayloads);
+
+        // Bent-water marker block + overlay block entity.
+        BendingBlocks.BLOCKS.register(modEventBus);
+        BendingBlocks.BLOCK_ENTITY_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         NeoForge.EVENT_BUS.register(this);

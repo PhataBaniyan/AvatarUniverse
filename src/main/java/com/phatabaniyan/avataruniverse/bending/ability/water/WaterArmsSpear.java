@@ -76,7 +76,8 @@ public class WaterArmsSpear extends BendingAbility {
             return null;
         }
         if (Config.WATERARMS_WHIP_USAGE_COOLDOWN_ENABLED.get()) {
-            bending.setCooldown(armKey, player.level().getGameTime() + Config.WATERARMS_SPEAR_COOLDOWN_TICKS.get());
+            bending.setCooldown(
+                    armKey, player.level().getGameTime() + Config.msToTicks(Config.WATERARMS_SPEAR_COOLDOWN_MS.get()));
         }
         parent.consumeArm(arm);
         if (arm == WaterArms.Arm.LEFT) {
@@ -153,8 +154,7 @@ public class WaterArmsSpear extends BendingAbility {
             if (!BendingSources.isTransparentForBend(level, current)) {
                 return;
             }
-            TempBlock water =
-                    new TempBlock(level, current.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
+            TempBlock water = TempBlock.cube(level, current.immutable(), 0.25F);
             trail.add(water);
             BendingManager.scheduleRevert(water, level.getGameTime() + 12);
             position = position.add(direction);

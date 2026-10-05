@@ -122,7 +122,7 @@ public class WaterBubble extends BendingAbility {
         long now = level.getGameTime();
         double maxRadius = Config.WATERBUBBLE_RADIUS.get();
         double speed = Config.WATERBUBBLE_SPEED.get();
-        if (!shiftMode && now - bornTick > Config.WATERBUBBLE_CLICK_DURATION_TICKS.get()) {
+        if (!shiftMode && now - bornTick > Config.msToTicks(Config.WATERBUBBLE_CLICK_DURATION_MS.get())) {
             removing = true;
         }
         if (maxRadius < radius) {

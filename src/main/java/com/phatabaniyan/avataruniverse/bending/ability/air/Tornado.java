@@ -34,9 +34,9 @@ public class Tornado extends BendingAbility {
     public static final String ID = "Tornado";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.TORNADO_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.TORNADO_COOLDOWN_MS.get());
     /** Reference Duration 10000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.TORNADO_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.TORNADO_DURATION_MS.get());
 
     private static final double MAX_HEIGHT = Config.TORNADO_MAX_HEIGHT.get();
     private static final double RADIUS = Config.TORNADO_RADIUS.get();

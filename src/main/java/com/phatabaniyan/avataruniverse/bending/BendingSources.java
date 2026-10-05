@@ -93,13 +93,24 @@ public final class BendingSources {
     /**
      * Positions a bending wave/ring may occupy (Korra transparency): air,
      * replaceable blocks (grass, snow layers, torches) and fluids. Never
-     * containers (would drop/destroy stored items on replace).
+     * containers (would drop/destroy stored items on replace). Bent-water
+     * overlay markers count as transparent: they are temp visuals, and
+     * treating them as walls would make our own visuals block aiming and
+     * movement.
      */
     public static boolean isTransparentForBend(BlockGetter level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof net.minecraft.world.Container) {
             return false;
         }
         var state = level.getBlockState(pos);
+        if (state.getBlock() instanceof BentWaterBlock) {
+            return true;
+        }
         return state.isAir() || state.canBeReplaced() || !state.getFluidState().isEmpty();
+    }
+
+    /** Temp overlay marker cells behave like air for targeting marches. */
+    public static boolean isBentMarker(BlockGetter level, BlockPos pos) {
+        return level.getBlockState(pos).getBlock() instanceof BentWaterBlock;
     }
 }

@@ -36,11 +36,11 @@ public class CombustBeam extends BendingAbility {
     public static final String ID = "CombustBeam";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.COMBUSTBEAM_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.COMBUSTBEAM_COOLDOWN_MS.get());
     /** Reference MinCharge 1000ms, in server ticks. */
-    private static final long MIN_CHARGE_TICKS = Config.COMBUSTBEAM_MIN_CHARGE_TICKS.get();
+    private static final long MIN_CHARGE_TICKS = Config.msToTicks(Config.COMBUSTBEAM_MIN_CHARGE_MS.get());
     /** Reference MaxCharge 3000ms, in server ticks. */
-    private static final long MAX_CHARGE_TICKS = Config.COMBUSTBEAM_MAX_CHARGE_TICKS.get();
+    private static final long MAX_CHARGE_TICKS = Config.msToTicks(Config.COMBUSTBEAM_MAX_CHARGE_MS.get());
 
     private static final double RANGE = Config.COMBUSTBEAM_RANGE.get();
     private static final double MIN_POWER = Config.COMBUSTBEAM_MIN_POWER.get();
@@ -50,7 +50,7 @@ public class CombustBeam extends BendingAbility {
     private static final double MAX_ANGLE = Config.COMBUSTBEAM_MAX_ANGLE.get();
     private static final double BLAST_BASE_RADIUS = Config.COMBUSTBEAM_BLAST_BASE_RADIUS.get();
     private static final double KNOCKBACK_CAP = Config.COMBUSTBEAM_KNOCKBACK_CAP.get();
-    private static final int IGNITE_SECONDS = Config.COMBUSTBEAM_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.COMBUSTBEAM_IGNITE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

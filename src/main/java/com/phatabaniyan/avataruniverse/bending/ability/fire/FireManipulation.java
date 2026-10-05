@@ -33,7 +33,7 @@ public class FireManipulation extends BendingAbility {
     public static final String ID = "FireManipulation";
 
     /** Reference StreamCooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREMANIPULATION_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREMANIPULATION_COOLDOWN_MS.get());
 
     private static final double STREAM_RANGE = Config.FIREMANIPULATION_STREAM_RANGE.get();
     private static final float STREAM_DAMAGE =
@@ -43,8 +43,8 @@ public class FireManipulation extends BendingAbility {
             Config.FIREMANIPULATION_AURA_DAMAGE.get().floatValue();
     private static final double AURA_RADIUS = Config.FIREMANIPULATION_AURA_RADIUS.get();
     private static final double STREAM_HIT_RADIUS = Config.FIREMANIPULATION_STREAM_HIT_RADIUS.get();
-    private static final int AURA_FIRE_SECONDS = Config.FIREMANIPULATION_AURA_FIRE_SECONDS.get();
-    private static final int STREAM_FIRE_SECONDS = Config.FIREMANIPULATION_STREAM_FIRE_SECONDS.get();
+    private static final int AURA_FIRE_SECONDS = Config.FIREMANIPULATION_AURA_FIRE_MS.get() / 1000;
+    private static final int STREAM_FIRE_SECONDS = Config.FIREMANIPULATION_STREAM_FIRE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

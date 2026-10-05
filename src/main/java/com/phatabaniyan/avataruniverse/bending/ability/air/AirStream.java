@@ -31,7 +31,7 @@ public class AirStream extends BendingAbility {
     public static final String ID = "AirStream";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.AIRSTREAM_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.AIRSTREAM_COOLDOWN_MS.get());
 
     private static final double SPEED = Config.AIRSTREAM_SPEED.get();
     private static final double RANGE = Config.AIRSTREAM_RANGE.get();

@@ -34,9 +34,9 @@ public class Discharge extends BendingAbility {
     public static final String ID = "Discharge";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.DISCHARGE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.DISCHARGE_COOLDOWN_MS.get());
     /** Reference Duration 2000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.DISCHARGE_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.DISCHARGE_DURATION_MS.get());
 
     private static final double DAMAGE = Config.DISCHARGE_DAMAGE.get();
     private static final double RANGE = Config.DISCHARGE_RANGE.get();
@@ -45,7 +45,7 @@ public class Discharge extends BendingAbility {
     private static final int STEPS_PER_TICK = Config.DISCHARGE_STEPS_PER_TICK.get();
     private static final double STEP_LENGTH = Config.DISCHARGE_STEP_LENGTH.get();
     private static final double KNOCKBACK = Config.DISCHARGE_KNOCKBACK.get();
-    private static final int IGNITE_SECONDS = Config.DISCHARGE_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.DISCHARGE_IGNITE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

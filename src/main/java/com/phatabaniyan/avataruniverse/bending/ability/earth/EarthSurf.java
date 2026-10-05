@@ -35,9 +35,9 @@ public class EarthSurf extends EarthAbility {
     /** AirScooter reference values: speed, stall-check interval, floor ceiling, cooldown. */
     private static final double RIDE_SPEED = Config.EARTHSURF_RIDE_SPEED.get();
 
-    private static final long STALL_CHECK_TICKS = Config.EARTHSURF_STALL_CHECK_TICKS.get();
+    private static final long STALL_CHECK_TICKS = Config.msToTicks(Config.EARTHSURF_STALL_CHECK_MS.get());
     private static final int MAX_HEIGHT_FROM_GROUND = Config.EARTHSURF_MAX_HEIGHT.get();
-    private static final long COOLDOWN_TICKS = Config.EARTHSURF_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHSURF_COOLDOWN_MS.get());
 
     private final Map<Integer, Lump> lumps = new HashMap<>();
     private final long startGameTime;

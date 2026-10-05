@@ -36,7 +36,7 @@ public class FireSpin extends BendingAbility {
     public static final String ID = "FireSpin";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIRESPIN_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIRESPIN_COOLDOWN_MS.get());
 
     private static final double DAMAGE = Config.FIRESPIN_DAMAGE.get();
     private static final double SPEED = Config.FIRESPIN_SPEED.get();
@@ -120,7 +120,7 @@ public class FireSpin extends BendingAbility {
                     }
                     if (e instanceof LivingEntity living && this.affected.add(e.getUUID())) {
                         living.hurt(player.damageSources().magic(), (float) DAMAGE);
-                        living.igniteForSeconds(Config.FIRESPIN_FIRE_SECONDS.get());
+                        living.igniteForSeconds(Config.FIRESPIN_FIRE_MS.get() / 1000);
                     }
                     e.setDeltaMovement(h.dir().scale(PUSH));
                     e.hurtMarked = true;

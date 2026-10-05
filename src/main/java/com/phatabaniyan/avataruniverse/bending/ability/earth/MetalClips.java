@@ -51,10 +51,10 @@ public class MetalClips extends EarthAbility {
     private static final float HIT_DAMAGE = Config.METALCLIPS_HIT_DAMAGE.get().floatValue();
     private static final float CRUSH_DAMAGE =
             Config.METALCLIPS_CRUSH_DAMAGE.get().floatValue();
-    private static final long ARMOR_TICKS = Config.METALCLIPS_ARMOR_TICKS.get();
+    private static final long ARMOR_TICKS = Config.msToTicks(Config.METALCLIPS_ARMOR_MS.get());
     private static final double MAGNET_RANGE = Config.METALCLIPS_MAGNET_RANGE.get();
     private static final double MAGNET_SPEED = Config.METALCLIPS_MAGNET_SPEED.get();
-    private static final long SHOT_LIFE_TICKS = Config.METALCLIPS_SHOT_LIFE_TICKS.get();
+    private static final long SHOT_LIFE_TICKS = Config.msToTicks(Config.METALCLIPS_SHOT_LIFE_MS.get());
     private static final int MAX_CLIPS = Config.METALCLIPS_MAX_CLIPS.get();
 
     private LivingEntity victim;

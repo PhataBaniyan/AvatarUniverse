@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.material.Fluids;
@@ -30,6 +31,29 @@ public final class TempBlock {
     /** setBlock flags: sync clients without notifying neighbors (no flow triggers). */
     public static final int QUIET = Block.UPDATE_CLIENTS;
 
+    /**
+     * Display-only small blue cube (never a source block, so bent water can
+     * never trigger the infinite-water rule). Over natural fluids it places
+     * nothing and returns an invisible virtual entry instead, so lakes never
+     * hide under markers. Always non-null and safe to revert.
+     */
+    public static TempBlock cube(ServerLevel level, BlockPos pos, float size) {
+        return cube(level, pos, size, size, size);
+    }
+
+    /** Display-only small blue cube with independent axis scales (see {@link #cube}). */
+    public static TempBlock cube(ServerLevel level, BlockPos pos, float sx, float sy, float sz) {
+        if (!level.getFluidState(pos).isEmpty()) {
+            return new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), QUIET);
+        }
+        TempBlock temp =
+                new TempBlock(level, pos, BendingBlocks.BENT_WATER.get().defaultBlockState(), QUIET);
+        if (level.getBlockEntity(pos) instanceof BentWaterBlockEntity overlay) {
+            overlay.setVisual(0.0F, 0.0F, sx, sy, sz);
+        }
+        return temp;
+    }
+
     private static final Set<TempBlock> ACTIVE = ConcurrentHashMap.newKeySet();
     /**
      * Position index for O(1) lookups (Korra's per-block instance map). The
@@ -45,7 +69,7 @@ public final class TempBlock {
     private final BlockPos pos;
     private final BlockState original;
     private final int flags;
-    private final boolean virtual;
+    private boolean virtual;
     private BlockState replacement;
     private boolean reverted;
 
@@ -95,6 +119,11 @@ public final class TempBlock {
         level.setBlock(pos, state, flags);
         level.getFluidTicks().clearArea(new BoundingBox(pos));
         this.replacement = state;
+        // A real write happened: this cell is no longer virtual even if it
+        // started that way (a virtual entry that never wrote must still
+        // revert to a no-op). Without this, freezing over a river would
+        // strand permanent ice — revert() would skip a virtual entry.
+        this.virtual = false;
     }
 
     public BlockPos pos() {
@@ -139,7 +168,9 @@ public final class TempBlock {
             return;
         }
         BlockState current = level.getBlockState(pos);
-        if (!current.getFluidState().isSource() && !current.isAir()) {
+        // Our own replacement sitting untouched is not an overwrite (covers
+        // marker blocks, which are neither source fluid nor air).
+        if (!current.equals(replacement) && !current.getFluidState().isSource() && !current.isAir()) {
             AvatarUniverseMod.LOGGER.warn("TempBlock at {} was overwritten, restoring original anyway", pos);
         }
         level.setBlock(pos, original, flags);

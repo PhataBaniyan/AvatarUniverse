@@ -31,16 +31,16 @@ public class CombustionBlast extends BendingAbility {
     public static final String ID = "CombustionBlast";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.COMBUSTIONBLAST_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.COMBUSTIONBLAST_COOLDOWN_MS.get());
     /** Reference Charge 2000ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.COMBUSTIONBLAST_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.COMBUSTIONBLAST_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.COMBUSTIONBLAST_DAMAGE.get();
     private static final double BLAST_RADIUS = Config.COMBUSTIONBLAST_BLAST_RADIUS.get();
     private static final double RANGE = Config.COMBUSTIONBLAST_RANGE.get();
     private static final double HIT_RADIUS = Config.COMBUSTIONBLAST_HIT_RADIUS.get();
     private static final double EXPLOSION_POWER = Config.COMBUSTIONBLAST_EXPLOSION_POWER.get();
-    private static final int IGNITE_SECONDS = Config.COMBUSTIONBLAST_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.COMBUSTIONBLAST_IGNITE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

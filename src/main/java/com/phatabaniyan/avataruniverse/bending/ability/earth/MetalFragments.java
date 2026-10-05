@@ -40,7 +40,7 @@ public class MetalFragments extends EarthAbility {
     public static final String ID = "MetalFragments";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.METALFRAGMENTS_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.METALFRAGMENTS_COOLDOWN_MS.get());
 
     private static final int MAX_SOURCES = Config.METALFRAGMENTS_MAX_SOURCES.get();
     private static final double SOURCE_RANGE = Config.METALFRAGMENTS_SOURCE_RANGE.get();

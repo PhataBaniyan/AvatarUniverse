@@ -24,11 +24,11 @@ public class ESFire extends SphereAttack {
     public static final String ID = "ESFire";
 
     /** Reference Cooldown 1500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ESFIRE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ESFIRE_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.ESFIRE_RANGE.get();
     private static final double DAMAGE = Config.ESFIRE_DAMAGE.get();
-    private static final int BURN_TICKS = Config.ESFIRE_BURN_TICKS.get();
+    private static final int BURN_TICKS = Config.msToTicks(Config.ESFIRE_BURN_MS.get());
     private static final int SPEED = Config.ESFIRE_SPEED.get();
     private static final boolean CONTROLLABLE = Config.ESFIRE_CONTROLLABLE.get();
 

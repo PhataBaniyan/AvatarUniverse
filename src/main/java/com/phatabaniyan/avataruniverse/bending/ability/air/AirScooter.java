@@ -36,15 +36,15 @@ public class AirScooter extends BendingAbility {
 
     private static final double SPEED = Config.AIRSCOOTER_SPEED.get();
     /** Reference Interval 100ms, in server ticks. */
-    private static final int INTERVAL_TICKS = Config.AIRSCOOTER_INTERVAL_TICKS.get();
+    private static final int INTERVAL_TICKS = Config.msToTicks(Config.AIRSCOOTER_INTERVAL_MS.get());
     /** Reference Cooldown 500ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRSCOOTER_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRSCOOTER_COOLDOWN_MS.get());
     /** Reference Duration 0 (infinite), in server ticks. */
-    private static final int DURATION_TICKS = Config.AIRSCOOTER_DURATION_TICKS.get();
+    private static final int DURATION_TICKS = Config.msToTicks(Config.AIRSCOOTER_DURATION_MS.get());
 
     private static final double MAX_HEIGHT = Config.AIRSCOOTER_MAX_HEIGHT.get();
     /** Chime every 3000ms, in server ticks. */
-    private static final int CHIME_TICKS = Config.AIRSCOOTER_CHIME_TICKS.get();
+    private static final int CHIME_TICKS = Config.msToTicks(Config.AIRSCOOTER_CHIME_MS.get());
 
     private final ServerLevel level;
     private final long startTick;

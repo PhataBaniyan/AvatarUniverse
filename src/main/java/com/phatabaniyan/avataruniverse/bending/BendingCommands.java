@@ -50,6 +50,10 @@ public final class BendingCommands {
                             "bluefire"),
                     builder);
 
+    /** What mortals may choose for themselves: the four base elements only. */
+    private static final SuggestionProvider<CommandSourceStack> CHOOSE_ELEMENTS =
+            (ctx, builder) -> SharedSuggestionProvider.suggest(List.of("air", "water", "earth", "fire"), builder);
+
     @SubscribeEvent
     static void onRegisterCommands(RegisterCommandsEvent event) {
         event.getDispatcher().register(commandTree("au"));
@@ -95,7 +99,7 @@ public final class BendingCommands {
                                         displayTarget(ctx.getSource(), StringArgumentType.getString(ctx, "target")))))
                 .then(Commands.literal("choose")
                         .then(Commands.argument("element", StringArgumentType.word())
-                                .suggests(ELEMENTS)
+                                .suggests(CHOOSE_ELEMENTS)
                                 .executes(ctx ->
                                         choose(ctx.getSource(), StringArgumentType.getString(ctx, "element"), true))))
                 .then(Commands.literal("add")
@@ -292,10 +296,19 @@ public final class BendingCommands {
         }
         BendingElement element = BendingElement.byName(elementName);
         if (element == null) {
+            fail(src, "No such element stirs in this world: " + elementName + ". Name air, water, earth, or fire.");
+            return 0;
+        }
+        if (replace
+                && element != BendingElement.AIR
+                && element != BendingElement.WATER
+                && element != BendingElement.EARTH
+                && element != BendingElement.FIRE) {
+            // Choosing is for mortals: the four base elements only. Avatars
+            // and sub-arts are granted by operators through /au add.
             fail(
                     src,
-                    "No such element stirs in this world: " + elementName
-                            + ". Name air, water, earth, fire, or avatar.");
+                    "Mortals may only choose air, water, earth, or fire — ask an operator for " + element.key() + ".");
             return 0;
         }
         BendingPlayer bending = BendingPlayer.getOrCreate(player.getUUID());

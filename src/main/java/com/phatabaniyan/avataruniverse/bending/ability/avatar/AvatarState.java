@@ -95,21 +95,21 @@ public class AvatarState extends BendingAbility {
         player.setGlowingTag(true);
         player.addEffect(new MobEffectInstance(
                 MobEffects.REGENERATION,
-                Config.AVATARSTATE_EFFECT_DURATION_TICKS.get(),
+                Config.msToTicks(Config.AVATARSTATE_EFFECT_DURATION_MS.get()),
                 Config.AVATARSTATE_REGEN_AMP.get(),
                 false,
                 false,
                 false));
         player.addEffect(new MobEffectInstance(
                 MobEffects.DAMAGE_RESISTANCE,
-                Config.AVATARSTATE_EFFECT_DURATION_TICKS.get(),
+                Config.msToTicks(Config.AVATARSTATE_EFFECT_DURATION_MS.get()),
                 Config.AVATARSTATE_RESIST_AMP.get(),
                 false,
                 false,
                 false));
         player.addEffect(new MobEffectInstance(
                 MobEffects.MOVEMENT_SPEED,
-                Config.AVATARSTATE_EFFECT_DURATION_TICKS.get(),
+                Config.msToTicks(Config.AVATARSTATE_EFFECT_DURATION_MS.get()),
                 Config.AVATARSTATE_SPEED_AMP.get(),
                 false,
                 false,

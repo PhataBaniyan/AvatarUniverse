@@ -30,15 +30,15 @@ public class FireSki extends BendingAbility {
     public static final String ID = "FireSki";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIRESKI_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIRESKI_COOLDOWN_MS.get());
     /** Reference Duration 12000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.FIRESKI_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.FIRESKI_DURATION_MS.get());
     /** Grounded arm window 600ms, in server ticks. */
-    private static final long ARM_TICKS = Config.FIRESKI_ARM_TICKS.get();
+    private static final long ARM_TICKS = Config.msToTicks(Config.FIRESKI_ARM_MS.get());
 
     private static final double SPEED = Config.FIRESKI_SPEED.get();
     private static final boolean IGNITE = Config.FIRESKI_IGNITE.get();
-    private static final int FIRE_TICKS = Config.FIRESKI_FIRE_SECONDS.get();
+    private static final int FIRE_TICKS = Config.FIRESKI_FIRE_MS.get() / 1000;
     private static final double MIN_HEIGHT = Config.FIRESKI_MIN_HEIGHT.get();
 
     private final ServerPlayer player;

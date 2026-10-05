@@ -28,10 +28,10 @@ public class Dig extends EarthAbility {
     public static final String ID = "Dig";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.DIG_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.DIG_COOLDOWN_MS.get());
     // Reference Duration -1: no time expiry while sneaking.
     /** Reference RevertTime 3500ms, in server ticks. */
-    private static final long REVERT_TICKS = Config.DIG_REVERT_TICKS.get();
+    private static final long REVERT_TICKS = Config.msToTicks(Config.DIG_REVERT_MS.get());
 
     private static final double SPEED = Config.DIG_SPEED.get();
     private static final double TARGET_RANGE = Config.DIG_TARGET_RANGE.get();

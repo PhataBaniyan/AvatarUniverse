@@ -25,11 +25,11 @@ public class QuickWeld extends EarthAbility {
     public static final String ID = "QuickWeld";
 
     /** Reference Cooldown 1000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.QUICKWELD_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.QUICKWELD_COOLDOWN_MS.get());
 
     private static final int REPAIR_AMOUNT = Config.QUICKWELD_REPAIR_AMOUNT.get();
     /** Reference RepairInterval 1250ms, in server ticks. */
-    private static final long REPAIR_EVERY = Config.QUICKWELD_REPAIR_EVERY_TICKS.get();
+    private static final long REPAIR_EVERY = Config.msToTicks(Config.QUICKWELD_REPAIR_EVERY_MS.get());
 
     private long lastRepair = -100L;
 

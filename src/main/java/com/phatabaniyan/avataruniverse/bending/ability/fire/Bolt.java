@@ -37,9 +37,9 @@ public class Bolt extends BendingAbility {
     public static final String ID = "Bolt";
 
     /** Reference Cooldown 3500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.BOLT_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.BOLT_COOLDOWN_MS.get());
     /** Reference charge 1500ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.BOLT_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.BOLT_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.BOLT_DAMAGE.get();
     private static final double RANGE = Config.BOLT_RANGE.get();

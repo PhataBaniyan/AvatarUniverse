@@ -35,9 +35,9 @@ public class AirShield extends BendingAbility {
     public static final String ID = "AirShield";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRSHIELD_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRSHIELD_COOLDOWN_MS.get());
     /** Reference Duration 6500ms, in server ticks (cooldown math only). */
-    private static final int DURATION_TICKS = Config.AIRSHIELD_DURATION_TICKS.get();
+    private static final int DURATION_TICKS = Config.msToTicks(Config.AIRSHIELD_DURATION_MS.get());
 
     private static final double MAX_RADIUS = Config.AIRSHIELD_MAX_RADIUS.get();
     private static final double INITIAL_RADIUS = Config.AIRSHIELD_INITIAL_RADIUS.get();

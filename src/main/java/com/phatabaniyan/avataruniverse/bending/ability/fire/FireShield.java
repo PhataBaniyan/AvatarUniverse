@@ -29,10 +29,10 @@ public class FireShield extends BendingAbility {
     public static final String ID = "FireShield";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIRESHIELD_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIRESHIELD_COOLDOWN_MS.get());
 
     private static final double RADIUS = Config.FIRESHIELD_RADIUS.get();
-    private static final int FIRE_SECONDS = Config.FIRESHIELD_FIRE_SECONDS.get();
+    private static final int FIRE_SECONDS = Config.FIRESHIELD_FIRE_MS.get() / 1000;
     private static final double PUSH = Config.FIRESHIELD_PUSH.get();
 
     private final ServerLevel level;

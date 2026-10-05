@@ -1,8 +1,10 @@
 package com.phatabaniyan.avataruniverse;
 
+import com.phatabaniyan.avataruniverse.bending.BendingBlocks;
 import com.phatabaniyan.avataruniverse.bending.BendingCastPayload;
 import com.phatabaniyan.avataruniverse.bending.BendingSelectPayload;
 import com.phatabaniyan.avataruniverse.bending.BendingSources;
+import com.phatabaniyan.avataruniverse.client.BentWaterRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -33,6 +35,11 @@ public class AvatarUniverseClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         AvatarUniverseMod.LOGGER.info("AvatarUniverse client setup complete");
+    }
+
+    @SubscribeEvent
+    static void registerRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(BendingBlocks.BENT_WATER_BE.get(), BentWaterRenderer::new);
     }
 
     /**

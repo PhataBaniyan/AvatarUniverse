@@ -110,7 +110,7 @@ public class Bloodbending extends BendingAbility {
         target.fallDistance = 0.0F;
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.BLOODBENDING_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.BLOODBENDING_COOLDOWN_MS.get()));
         }
     }
 
@@ -133,7 +133,7 @@ public class Bloodbending extends BendingAbility {
             endQuietly(bending);
             return false;
         }
-        long duration = Config.BLOODBENDING_DURATION_TICKS.get();
+        long duration = Config.msToTicks(Config.BLOODBENDING_DURATION_MS.get());
         if (duration > 0 && level.getGameTime() - startTick > duration) {
             endQuietly(bending);
             return false;
@@ -175,7 +175,7 @@ public class Bloodbending extends BendingAbility {
 
     private void endQuietly(BendingPlayer bending) {
         if (level.getGameTime() - startTick < 24L) {
-            bending.setCooldown(ID, level.getGameTime() + Config.BLOODBENDING_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.BLOODBENDING_COOLDOWN_MS.get()));
         }
     }
 

@@ -33,7 +33,7 @@ public class ESStream extends SphereAttack {
     public static final String ID = "ESStream";
 
     /** Reference Cooldown 8000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ESSTREAM_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ESSTREAM_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.ESSTREAM_RANGE.get();
     private static final double DAMAGE = Config.ESSTREAM_DAMAGE.get();

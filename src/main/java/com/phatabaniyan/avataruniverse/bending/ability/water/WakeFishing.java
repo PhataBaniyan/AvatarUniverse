@@ -70,7 +70,7 @@ public class WakeFishing extends BendingAbility {
         if (seen == null || !seen.equals(focused)) {
             return false;
         }
-        if (level.getGameTime() - startTick > Config.WAKEFISHING_DURATION_TICKS.get()) {
+        if (level.getGameTime() - startTick > Config.msToTicks(Config.WAKEFISHING_DURATION_MS.get())) {
             return false;
         }
         point = (point + 1) % 32;
@@ -139,7 +139,7 @@ public class WakeFishing extends BendingAbility {
     public void onRemove() {
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.WAKEFISHING_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.WAKEFISHING_COOLDOWN_MS.get()));
         }
     }
 }

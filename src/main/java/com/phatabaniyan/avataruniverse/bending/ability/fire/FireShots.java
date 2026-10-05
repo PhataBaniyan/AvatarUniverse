@@ -37,12 +37,12 @@ public class FireShots extends BendingAbility {
     public static final String ID = "FireShots";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIRESHOTS_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIRESHOTS_COOLDOWN_MS.get());
 
     private static final int STOCK = Config.FIRESHOTS_STOCK.get();
     private static final double RANGE = Config.FIRESHOTS_RANGE.get();
     private static final float DAMAGE = Config.FIRESHOTS_DAMAGE.get().floatValue();
-    private static final int FIRE_SECONDS = Config.FIRESHOTS_FIRE_SECONDS.get();
+    private static final int FIRE_SECONDS = Config.FIRESHOTS_FIRE_MS.get() / 1000;
     private static final double HIT_RADIUS = Config.FIRESHOTS_HIT_RADIUS.get();
     private static final double SPEED = Config.FIRESHOTS_SPEED.get();
 

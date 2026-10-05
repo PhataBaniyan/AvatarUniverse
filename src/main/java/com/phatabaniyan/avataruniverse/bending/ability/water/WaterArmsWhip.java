@@ -72,10 +72,10 @@ public class WaterArmsWhip extends BendingAbility {
         this.whipLength = whipLength;
         this.activeLength = initLength;
         this.usageCooldownTicks = switch (mode) {
-            case PULL -> Config.WATERARMS_WHIP_COOLDOWN_PULL_TICKS.get();
-            case PUNCH -> Config.WATERARMS_WHIP_COOLDOWN_PUNCH_TICKS.get();
-            case GRAPPLE -> Config.WATERARMS_WHIP_COOLDOWN_GRAPPLE_TICKS.get();
-            case GRAB -> Config.WATERARMS_WHIP_COOLDOWN_GRAB_TICKS.get();};
+            case PULL -> Config.msToTicks(Config.WATERARMS_WHIP_COOLDOWN_PULL_MS.get());
+            case PUNCH -> Config.msToTicks(Config.WATERARMS_WHIP_COOLDOWN_PUNCH_MS.get());
+            case GRAPPLE -> Config.msToTicks(Config.WATERARMS_WHIP_COOLDOWN_GRAPPLE_MS.get());
+            case GRAB -> Config.msToTicks(Config.WATERARMS_WHIP_COOLDOWN_GRAB_MS.get());};
     }
 
     /**
@@ -195,7 +195,7 @@ public class WaterArmsWhip extends BendingAbility {
                 latched = true;
                 break;
             }
-            trail.add(new TempBlock(level, pos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+            trail.add(TempBlock.cube(level, pos.immutable(), 0.25F));
             performAction(player, parent, Vec3.atCenterOf(pos));
             if (i == activeLength) {
                 Vec3 side = WaterArms.sideVec(player);
@@ -210,7 +210,7 @@ public class WaterArmsWhip extends BendingAbility {
                     performAction(player, parent, tipPos);
                     break;
                 }
-                trail.add(new TempBlock(level, tipCell.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+                trail.add(TempBlock.cube(level, tipCell.immutable(), 0.25F));
                 performAction(player, parent, tipPos);
             }
             if (latched) {
@@ -271,14 +271,16 @@ public class WaterArmsWhip extends BendingAbility {
                             entity.getUUID(),
                             new GrabRecord(
                                     owner,
-                                    level.getGameTime() + Config.WATERARMS_WHIP_GRAB_DURATION_TICKS.get(),
+                                    level.getGameTime()
+                                            + Config.msToTicks(Config.WATERARMS_WHIP_GRAB_DURATION_MS.get()),
                                     player.getHealth()));
                     grabbedVictim = entity.getUUID();
                     grabbed = true;
                     reverting = true;
                     parent.setActiveArmCooldown(true);
                     ownerHealthSnap = player.getHealth();
-                    grabTimeoutTick = level.getGameTime() + Config.WATERARMS_WHIP_GRAB_DURATION_TICKS.get();
+                    grabTimeoutTick =
+                            level.getGameTime() + Config.msToTicks(Config.WATERARMS_WHIP_GRAB_DURATION_MS.get());
                     break;
                 }
             }

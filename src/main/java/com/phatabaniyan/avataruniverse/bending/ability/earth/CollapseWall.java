@@ -29,12 +29,11 @@ import net.minecraft.world.phys.Vec3;
 public class CollapseWall extends EarthAbility {
     public static final String ID = "CollapseWall";
     /** Reference Wall.Cooldown 500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS =
-            Config.COLLAPSEWALL_COOLDOWN_TICKS.get().longValue();
+    private static final long COOLDOWN_TICKS = ((long) Config.msToTicks(Config.COLLAPSEWALL_COOLDOWN_MS.get()));
 
     private static final int HEIGHT = Config.COLLAPSEWALL_HEIGHT.get();
     private static final int HALF_WIDTH = Config.COLLAPSEWALL_HALF_WIDTH.get();
-    private static final long LAYER_INTERVAL_TICKS = Config.COLLAPSEWALL_LAYER_INTERVAL_TICKS.get();
+    private static final long LAYER_INTERVAL_TICKS = Config.msToTicks(Config.COLLAPSEWALL_LAYER_INTERVAL_MS.get());
     private static final double DISTANCE = Config.COLLAPSEWALL_DISTANCE.get();
 
     private int layersBuilt;

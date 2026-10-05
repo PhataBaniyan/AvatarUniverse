@@ -28,7 +28,7 @@ public class AirSuction extends BendingAbility {
     public static final String ID = "AirSuction";
 
     /** Reference Cooldown 2000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.AIRSUCTION_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.AIRSUCTION_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.AIRSUCTION_RANGE.get();
     private static final double RADIUS = Config.AIRSUCTION_RADIUS.get();

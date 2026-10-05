@@ -32,7 +32,7 @@ public class Combustion extends BendingAbility {
     public static final String ID = "Combustion";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.COMBUSTION_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.COMBUSTION_COOLDOWN_MS.get());
 
     private static final double DAMAGE = Config.COMBUSTION_DAMAGE.get();
     private static final double RADIUS = Config.COMBUSTION_RADIUS.get();
@@ -41,8 +41,8 @@ public class Combustion extends BendingAbility {
     private static final double HIT_RADIUS = Config.COMBUSTION_HIT_RADIUS.get();
     private static final double EXPLOSION_POWER = Config.COMBUSTION_EXPLOSION_POWER.get();
     private static final double KNOCKBACK = Config.COMBUSTION_KNOCKBACK.get();
-    private static final int IGNITE_SECONDS = Config.COMBUSTION_IGNITE_SECONDS.get();
-    private static final int MAX_TICKS = Config.COMBUSTION_MAX_TICKS.get();
+    private static final int IGNITE_SECONDS = Config.COMBUSTION_IGNITE_MS.get() / 1000;
+    private static final int MAX_TICKS = Config.msToTicks(Config.COMBUSTION_MAX_MS.get());
 
     private final ServerPlayer player;
     private final ServerLevel level;

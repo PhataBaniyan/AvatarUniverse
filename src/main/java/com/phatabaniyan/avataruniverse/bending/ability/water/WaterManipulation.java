@@ -14,17 +14,15 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Reference port of ProjectKorra {@code WaterManipulation}
  * (waterbending/WaterManipulation.java): the fundamental water ability. Like
- * Korra it bends a real block: a 3-block comet (source head plus two fading
- * tail blocks) advances exactly one block per tick, each previous position
- * reverting only after the new head is placed, so the bolt never strobes or
- * gaps and the world is untouched when it ends. The bolt originates at the
+ * Korra it bends display blocks: a 3-cube comet of small blue cubes
+ * advances exactly one block per tick, each previous position reverting
+ * only after the new head is placed, so the bolt never strobes or gaps and the world is untouched when it ends. The bolt originates at the
  * player's tapped source (Korra source selection) and steers toward the live
  * gaze target on every click (Korra redirect); an isolated source is
  * consumed unless it sits in a large body (Korra 3+ source ocean
@@ -100,19 +98,18 @@ public class WaterManipulation extends BendingAbility {
             return false;
         }
 
-        // Place the new head first, then slide the fading tail forward
-        // (Korra order): held cells are never touched, so nothing flickers.
-        TempBlock newHead = new TempBlock(
-                level, cell.immutable(), icy ? Blocks.PACKED_ICE.defaultBlockState() : waterLevel(7), TempBlock.QUIET);
+        // Place the new head first, then slide the tail forward (Korra
+        // order): held cells are never touched, so nothing flickers. Small
+        // blue cubes; icy sources fire packed ice instead.
+        TempBlock newHead = icy
+                ? new TempBlock(level, cell.immutable(), Blocks.PACKED_ICE.defaultBlockState(), TempBlock.QUIET)
+                : TempBlock.cube(level, cell.immutable(), 0.25F);
         if (tail2 != null) {
             tail2.revert();
         }
         tail2 = tail;
         tail = head;
         head = newHead;
-        if (tail != null) {
-            tail.updateReplacement(icy ? Blocks.PACKED_ICE.defaultBlockState() : waterLevel(6));
-        }
 
         if (icy) {
             level.sendParticles(
@@ -153,14 +150,6 @@ public class WaterManipulation extends BendingAbility {
             hit = true;
         }
         return !hit;
-    }
-
-    private static BlockState waterLevel(int level) {
-        BlockState state = Blocks.WATER.defaultBlockState();
-        if (state.hasProperty(BlockStateProperties.LEVEL)) {
-            state = state.setValue(BlockStateProperties.LEVEL, level);
-        }
-        return state;
     }
 
     @Override

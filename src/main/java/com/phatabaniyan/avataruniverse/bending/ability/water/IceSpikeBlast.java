@@ -78,7 +78,8 @@ public class IceSpikeBlast extends BendingAbility {
         settingUp = true;
         prepared = false;
         if (BendingSources.isPlant(level, sourceBlock) || BendingSources.isSnow(level, sourceBlock)) {
-            BendingManager.consumePlantSource(level, sourceBlock, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+            BendingManager.consumePlantSource(
+                    level, sourceBlock, Config.msToTicks(Config.WATERMANIP_PLANT_REGROW_MS.get()));
         } else if (level.getFluidState(sourceBlock).is(net.minecraft.world.level.material.Fluids.WATER)
                 && adjacentWaterCount(sourceBlock) < 3) {
             level.setBlock(sourceBlock, Blocks.AIR.defaultBlockState(), TempBlock.QUIET);
@@ -253,7 +254,7 @@ public class IceSpikeBlast extends BendingAbility {
                     Config.ICESPIKE_BLAST_DAMAGE.get().floatValue());
             entity.addEffect(new MobEffectInstance(
                     MobEffects.MOVEMENT_SLOWDOWN,
-                    Config.ICESPIKE_BLAST_SLOW_DURATION_TICKS.get(),
+                    Config.msToTicks(Config.ICESPIKE_BLAST_SLOW_DURATION_MS.get()),
                     Config.ICESPIKE_BLAST_SLOW_POTENCY.get()));
             return false;
         }

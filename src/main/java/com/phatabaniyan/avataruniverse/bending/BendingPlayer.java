@@ -1,6 +1,7 @@
 package com.phatabaniyan.avataruniverse.bending;
 
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,9 @@ public final class BendingPlayer {
     private final Set<BendingElement> elements = EnumSet.noneOf(BendingElement.class);
     private final Map<Integer, String> slots = new HashMap<>();
     private final Map<String, Long> cooldowns = new HashMap<>();
+    /** Attuned online ticks per base element (mastery progress toward sub-elements). */
+    private final Map<BendingElement, Long> attunement = new EnumMap<>(BendingElement.class);
+
     private boolean toggled = true;
 
     private boolean bottledSource;
@@ -64,6 +68,8 @@ public final class BendingPlayer {
         BendingPlayer target = getOrCreate(to);
         target.elements.clear();
         target.elements.addAll(source.elements);
+        target.attunement.clear();
+        target.attunement.putAll(source.attunement);
         target.slots.clear();
         target.slots.putAll(source.slots);
         target.toggled = source.toggled;
@@ -120,6 +126,15 @@ public final class BendingPlayer {
         return Collections.unmodifiableMap(slots);
     }
 
+    public Map<BendingElement, Long> attunement() {
+        return Collections.unmodifiableMap(attunement);
+    }
+
+    /** Bank online attuned ticks toward a base element's next sub-element. */
+    public void addAttunement(BendingElement base, long ticks) {
+        attunement.merge(base, ticks, Long::sum);
+    }
+
     /** Snapshot elements, binds and toggle into the vanilla player tag. */
     public void saveTo(net.minecraft.server.level.ServerPlayer player) {
         net.minecraft.nbt.CompoundTag root = new net.minecraft.nbt.CompoundTag();
@@ -136,6 +151,11 @@ public final class BendingPlayer {
         }
         root.put("binds", bindsTag);
         root.putBoolean("toggled", toggled);
+        net.minecraft.nbt.CompoundTag attuneTag = new net.minecraft.nbt.CompoundTag();
+        for (Map.Entry<BendingElement, Long> entry : attunement.entrySet()) {
+            attuneTag.putLong(entry.getKey().key(), entry.getValue());
+        }
+        root.put("attunement", attuneTag);
         player.getPersistentData().put(KEY, root);
     }
 
@@ -163,6 +183,14 @@ public final class BendingPlayer {
         }
         if (root.contains("toggled", net.minecraft.nbt.Tag.TAG_BYTE)) {
             toggled = root.getBoolean("toggled");
+        }
+        net.minecraft.nbt.CompoundTag attuneTag = root.getCompound("attunement");
+        attunement.clear();
+        for (String key : attuneTag.getAllKeys()) {
+            BendingElement base = BendingElement.byName(key);
+            if (base != null) {
+                attunement.put(base, attuneTag.getLong(key));
+            }
         }
     }
 

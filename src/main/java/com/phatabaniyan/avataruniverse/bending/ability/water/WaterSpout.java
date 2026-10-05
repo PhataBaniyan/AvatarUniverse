@@ -5,6 +5,7 @@ import com.phatabaniyan.avataruniverse.bending.BendingManager;
 import com.phatabaniyan.avataruniverse.bending.BendingPlayer;
 import com.phatabaniyan.avataruniverse.bending.BendingSources;
 import com.phatabaniyan.avataruniverse.bending.BendingTheme;
+import com.phatabaniyan.avataruniverse.bending.BentWaterBlockEntity;
 import com.phatabaniyan.avataruniverse.bending.TempBlock;
 import com.phatabaniyan.avataruniverse.bending.ability.BendingAbility;
 import java.util.HashMap;
@@ -19,8 +20,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -48,6 +47,8 @@ public class WaterSpout extends BendingAbility {
     private static final int FLY_RELEASE_GRACE_TICKS = 5;
     private static final int ABILITIES_HEARTBEAT_TICKS = 40;
     private static final long PARTICLE_INTERVAL_MS = 50L;
+    /** Spiral overlay cube size: uniform on every axis, smaller than before. */
+    private static final float SPIRAL_SIZE = 0.25F;
 
     private final ServerLevel level;
     /**
@@ -165,20 +166,36 @@ public class WaterSpout extends BendingAbility {
             if (owned.containsKey(pos) || (coveredBase != null && coveredBase.equals(pos))) {
                 continue;
             }
-            if (BendingSources.isTransparentForBend(level, pos)) {
-                owned.put(pos, new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+            if (!BendingSources.isTransparentForBend(level, pos)) {
+                continue;
             }
+            // Same small cubes as everywhere else, full cell tall so the
+            // stream stays continuous. cube() skips natural fluids.
+            TempBlock temp = TempBlock.cube(level, pos, 0.25F, 1.0F, 0.25F);
+            owned.put(pos, temp);
         }
         for (BlockPos pos : spiralWant) {
             if (owned.containsKey(pos) || (coveredBase != null && coveredBase.equals(pos))) {
                 continue;
             }
-            if (BendingSources.isTransparentForBend(level, pos)) {
-                BlockState spiral = Blocks.WATER.defaultBlockState();
-                if (spiral.hasProperty(BlockStateProperties.LEVEL)) {
-                    spiral = spiral.setValue(BlockStateProperties.LEVEL, 7);
+            if (!BendingSources.isTransparentForBend(level, pos)) {
+                continue;
+            }
+            TempBlock temp = TempBlock.cube(level, pos, SPIRAL_SIZE);
+            owned.put(pos, temp);
+            // Nudge the cube slightly outward from the shaft so the two
+            // visuals never visually merge into the column.
+            if (level.getBlockEntity(pos) instanceof BentWaterBlockEntity overlay) {
+                double dx = (pos.getX() + 0.5) - (base.getX() + 0.5);
+                double dz = (pos.getZ() + 0.5) - (base.getZ() + 0.5);
+                double len = Math.sqrt(dx * dx + dz * dz);
+                float pushX = 0.0F;
+                float pushZ = 0.0F;
+                if (len > 1.0e-6) {
+                    pushX = (float) (dx / len * 0.15);
+                    pushZ = (float) (dz / len * 0.15);
                 }
-                owned.put(pos, new TempBlock(level, pos, spiral, TempBlock.QUIET));
+                overlay.setVisual(pushX, pushZ, SPIRAL_SIZE, SPIRAL_SIZE, SPIRAL_SIZE);
             }
         }
 

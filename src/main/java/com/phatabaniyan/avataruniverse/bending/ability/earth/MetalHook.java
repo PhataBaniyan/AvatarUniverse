@@ -34,13 +34,13 @@ public class MetalHook extends EarthAbility {
     public static final String ID = "MetalHook";
 
     /** Reference Cooldown 3000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.METALHOOK_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.METALHOOK_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.METALHOOK_RANGE.get();
     private static final int MAX_HOOKS = Config.METALHOOK_MAX_HOOKS.get();
     private static final double HOOK_SPEED = Config.METALHOOK_HOOK_SPEED.get();
     /** Ticks of sneak held to cut loose. */
-    private static final long SNEAK_RELEASE_TICKS = Config.METALHOOK_SNEAK_RELEASE_TICKS.get();
+    private static final long SNEAK_RELEASE_TICKS = Config.msToTicks(Config.METALHOOK_SNEAK_RELEASE_MS.get());
 
     private static final double PULL_SPEED = Config.METALHOOK_PULL_SPEED.get();
     private static final double PULL_FACTOR = Config.METALHOOK_PULL_FACTOR.get();

@@ -33,7 +33,7 @@ public class AirFlight extends BendingAbility {
     public static final String ID = "AirFlight";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRFLIGHT_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRFLIGHT_COOLDOWN_MS.get());
 
     private static final double SPEED = Config.AIRFLIGHT_SPEED.get();
     private static final double SOAR_SLOW = Config.AIRFLIGHT_SOAR_SLOW.get();

@@ -256,7 +256,7 @@ public class IceBlast extends BendingAbility {
         }
         BendingPlayer bending = BendingPlayer.get(owner);
         if (bending != null) {
-            bending.setCooldown(ID, level.getGameTime() + Config.ICEBLAST_COOLDOWN_TICKS.get());
+            bending.setCooldown(ID, level.getGameTime() + Config.msToTicks(Config.ICEBLAST_COOLDOWN_MS.get()));
         }
     }
 }

@@ -53,7 +53,7 @@ public final class BendingPassives {
                 ferroControl(player, bending, gameTime);
             }
             if (bending.hasElement(BendingElement.FIRE)
-                    && gameTime % Config.PASSIVE_FIRE_GLOW_INTERVAL_TICKS.get() == 0) {
+                    && gameTime % Config.msToTicks(Config.PASSIVE_FIRE_GLOW_INTERVAL_MS.get()) == 0) {
                 fireGlow(player);
             }
             if (bending.hasElement(BendingElement.FIRE) && player.isOnFire()) {

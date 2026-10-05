@@ -36,7 +36,7 @@ public class RockSlide extends EarthAbility {
     public static final String ID = "RockSlide";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.ROCKSLIDE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.ROCKSLIDE_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.ROCKSLIDE_DAMAGE.get().floatValue();
     private static final double KNOCKBACK = Config.ROCKSLIDE_KNOCKBACK.get();

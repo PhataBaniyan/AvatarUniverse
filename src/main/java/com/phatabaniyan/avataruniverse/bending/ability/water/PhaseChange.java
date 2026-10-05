@@ -85,7 +85,7 @@ public class PhaseChange extends BendingAbility {
         if (any) {
             BendingPlayer bending = BendingPlayer.get(owner);
             if (bending != null) {
-                bending.setCooldown("PhaseChangeFreeze", now + Config.PHASE_FREEZE_COOLDOWN_TICKS.get());
+                bending.setCooldown("PhaseChangeFreeze", now + Config.msToTicks(Config.PHASE_FREEZE_COOLDOWN_MS.get()));
             }
         }
         return any;
@@ -205,13 +205,13 @@ public class PhaseChange extends BendingAbility {
                     : state.setValue(BlockStateProperties.LAYERS, layers - 1);
             BendingManager.scheduleRevert(
                     new TempBlock(level, pos.immutable(), replacement, TempBlock.QUIET),
-                    level.getGameTime() + Config.PHASE_SNOW_MELT_TICKS.get());
+                    level.getGameTime() + Config.msToTicks(Config.PHASE_SNOW_MELT_MS.get()));
             return;
         }
         if (BendingSources.isSnow(level, pos)) {
             BendingManager.scheduleRevert(
                     new TempBlock(level, pos.immutable(), Blocks.AIR.defaultBlockState(), TempBlock.QUIET),
-                    level.getGameTime() + Config.PHASE_SNOW_MELT_TICKS.get());
+                    level.getGameTime() + Config.msToTicks(Config.PHASE_SNOW_MELT_MS.get()));
             return;
         }
         if (!BendingSources.isIce(level, pos)) {
@@ -227,13 +227,14 @@ public class PhaseChange extends BendingAbility {
         } else {
             BendingManager.scheduleRevert(
                     new TempBlock(level, pos.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET),
-                    level.getGameTime() + Config.PHASE_SNOW_MELT_TICKS.get());
+                    level.getGameTime() + Config.msToTicks(Config.PHASE_SNOW_MELT_MS.get()));
             melted.add(pos.immutable());
         }
     }
 
     private void endMelt(BendingPlayer bending) {
-        bending.setCooldown("PhaseChangeMelt", level.getGameTime() + Config.PHASE_MELT_COOLDOWN_TICKS.get());
+        bending.setCooldown(
+                "PhaseChangeMelt", level.getGameTime() + Config.msToTicks(Config.PHASE_MELT_COOLDOWN_MS.get()));
         meltRadius = 1;
         meltTicks = 0;
     }

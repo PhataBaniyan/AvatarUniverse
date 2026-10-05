@@ -40,19 +40,20 @@ public class HeatControl extends BendingAbility {
     public static final String ID = "HeatControl";
 
     /** Reference Cooldown 2000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.HEATCONTROL_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.HEATCONTROL_COOLDOWN_MS.get());
     /** Reference CookMs 1500ms, in server ticks. */
-    private static final long COOK_INTERVAL_TICKS = Config.HEATCONTROL_COOK_INTERVAL_TICKS.get();
+    private static final long COOK_INTERVAL_TICKS = Config.msToTicks(Config.HEATCONTROL_COOK_INTERVAL_MS.get());
     /** Reference ExtinguishCooldown 2000ms, in server ticks. */
-    private static final long EXTINGUISH_COOLDOWN_TICKS = Config.HEATCONTROL_EXTINGUISH_COOLDOWN_TICKS.get();
+    private static final long EXTINGUISH_COOLDOWN_TICKS =
+            Config.msToTicks(Config.HEATCONTROL_EXTINGUISH_COOLDOWN_MS.get());
     /** Reference magma-to-stone 1000ms, in server ticks. */
-    private static final long MAGMA_DELAY_TICKS = Config.HEATCONTROL_MAGMA_DELAY_TICKS.get();
+    private static final long MAGMA_DELAY_TICKS = Config.msToTicks(Config.HEATCONTROL_MAGMA_DELAY_MS.get());
     /** Reference ring step 50ms, in server ticks. */
-    private static final long SOLIDIFY_STEP_TICKS = Config.HEATCONTROL_SOLIDIFY_STEP_TICKS.get();
+    private static final long SOLIDIFY_STEP_TICKS = Config.msToTicks(Config.HEATCONTROL_SOLIDIFY_STEP_MS.get());
     /** Reference melt-water revert 5min, in server ticks. */
-    private static final long MELT_REVERT_TICKS = Config.HEATCONTROL_MELT_REVERT_TICKS.get();
+    private static final long MELT_REVERT_TICKS = Config.msToTicks(Config.HEATCONTROL_MELT_REVERT_MS.get());
     /** Reference SolidifyRevertMs 600000ms, in server ticks. */
-    private static final long SOLIDIFY_REVERT_TICKS = Config.HEATCONTROL_SOLIDIFY_REVERT_TICKS.get();
+    private static final long SOLIDIFY_REVERT_TICKS = Config.msToTicks(Config.HEATCONTROL_SOLIDIFY_REVERT_MS.get());
 
     private static final double EXTINGUISH_RADIUS = Config.HEATCONTROL_EXTINGUISH_RADIUS.get();
     private static final double MELT_RANGE = Config.HEATCONTROL_MELT_RANGE.get();
@@ -156,8 +157,7 @@ public class HeatControl extends BendingAbility {
                     if (state.is(Blocks.SNOW)) {
                         level.setBlockAndUpdate(bp, Blocks.AIR.defaultBlockState());
                     } else {
-                        TempBlock temp =
-                                new TempBlock(level, bp.immutable(), Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
+                        TempBlock temp = TempBlock.cube(level, bp.immutable(), 0.25F);
                         BendingManager.scheduleRevert(temp, level.getGameTime() + MELT_REVERT_TICKS);
                     }
                 }

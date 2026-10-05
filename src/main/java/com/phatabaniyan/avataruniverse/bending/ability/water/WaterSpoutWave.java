@@ -54,6 +54,9 @@ public class WaterSpoutWave extends BendingAbility {
     }
 
     private static final double SELECT_RANGE = 6.0;
+    /** Charge-ring overlay cube size: deliberately smaller than the spout spiral blobs. */
+    private static final float RING_CUBE = 0.25F;
+
     private static final double RADIUS = 3.8;
     private static final double WAVE_RADIUS = 1.5;
     private static final long CHARGE_TIME_MS = 500L;
@@ -292,7 +295,8 @@ public class WaterSpoutWave extends BendingAbility {
                 }
                 TempBlock ice = new TempBlock(level, pos, Blocks.PACKED_ICE.defaultBlockState(), TempBlock.QUIET);
                 affectedBlocks.put(pos, ice);
-                BendingManager.scheduleRevert(ice, level.getGameTime() + Config.ICEWAVE_REVERT_SECONDS.get() * 20L);
+                BendingManager.scheduleRevert(
+                        ice, level.getGameTime() + Config.msToTicks(Config.ICEWAVE_REVERT_MS.get()));
             } else {
                 setTrailBlock(pos);
             }
@@ -318,7 +322,7 @@ public class WaterSpoutWave extends BendingAbility {
 
     /** Encase a victim in a thawing ice sphere (Korra IceWave spheres). */
     private void encase(LivingEntity victim) {
-        long revertAt = level.getGameTime() + Config.ICEWAVE_REVERT_SECONDS.get() * 20L;
+        long revertAt = level.getGameTime() + Config.msToTicks(Config.ICEWAVE_REVERT_MS.get());
         Vec3 center = victim.position();
         double radius = Config.ICEWAVE_SPHERE_RADIUS.get();
         int bound = (int) Math.ceil(radius);
@@ -413,7 +417,10 @@ public class WaterSpoutWave extends BendingAbility {
         if (existing != null) {
             existing.revert();
         }
-        affectedBlocks.put(pos, new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET));
+        // Small cubes like the torrent ring; cube() skips natural fluids.
+        if (BendingSources.isTransparentForBend(level, pos)) {
+            affectedBlocks.put(pos, TempBlock.cube(level, pos, RING_CUBE));
+        }
     }
 
     private void setTrailBlock(BlockPos pos) {
@@ -421,9 +428,9 @@ public class WaterSpoutWave extends BendingAbility {
         if (existing != null) {
             return;
         }
-        TempBlock temp = new TempBlock(level, pos, Blocks.WATER.defaultBlockState(), TempBlock.QUIET);
-        affectedBlocks.put(pos, temp);
-        BendingManager.scheduleRevert(temp, level.getGameTime() + TRAIL_REVERT_TICKS);
+        // Same small cubes as the charge ring: the whole ride reads as one visual.
+        affectedBlocks.put(pos, TempBlock.cube(level, pos, RING_CUBE));
+        BendingManager.scheduleRevert(affectedBlocks.get(pos), level.getGameTime() + TRAIL_REVERT_TICKS);
     }
 
     private void revertBlocks() {

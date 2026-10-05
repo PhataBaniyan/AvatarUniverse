@@ -30,16 +30,16 @@ public class FireWave extends BendingAbility {
     public static final String ID = "FireWave";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREWAVE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREWAVE_COOLDOWN_MS.get());
     /** Reference Duration 6000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.FIREWAVE_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.FIREWAVE_DURATION_MS.get());
 
     private static final double RANGE = Config.FIREWAVE_RANGE.get();
     private static final double SPEED = Config.FIREWAVE_SPEED.get();
     private static final double WIDTH = Config.FIREWAVE_WIDTH.get();
     private static final double HEIGHT = Config.FIREWAVE_HEIGHT.get();
     private static final float DAMAGE = Config.FIREWAVE_DAMAGE.get().floatValue();
-    private static final int FIRE_SECONDS = Config.FIREWAVE_FIRE_SECONDS.get();
+    private static final int FIRE_SECONDS = Config.FIREWAVE_FIRE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

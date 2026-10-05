@@ -34,9 +34,9 @@ public class AirSwipe extends BendingAbility {
     public static final String ID = "AirSwipe";
 
     /** Reference Cooldown 2000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.AIRSWIPE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.AIRSWIPE_COOLDOWN_MS.get());
     /** Reference full charge 2000ms, in server ticks. */
-    private static final long MAX_CHARGE_TICKS = Config.AIRSWIPE_MAX_CHARGE_TICKS.get();
+    private static final long MAX_CHARGE_TICKS = Config.msToTicks(Config.AIRSWIPE_MAX_CHARGE_MS.get());
 
     private static final double DAMAGE = Config.AIRSWIPE_DAMAGE.get();
     private static final double PUSH = Config.AIRSWIPE_PUSH.get();

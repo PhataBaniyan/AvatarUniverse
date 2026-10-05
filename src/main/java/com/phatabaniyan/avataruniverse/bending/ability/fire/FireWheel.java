@@ -31,13 +31,13 @@ public class FireWheel extends BendingAbility {
     public static final String ID = "FireWheel";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREWHEEL_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREWHEEL_COOLDOWN_MS.get());
 
     private static final double DAMAGE = Config.FIREWHEEL_DAMAGE.get();
     private static final double SPEED = Config.FIREWHEEL_SPEED.get();
     private static final double RANGE = Config.FIREWHEEL_RANGE.get();
     private static final double HEIGHT = Config.FIREWHEEL_HEIGHT.get();
-    private static final int FIRE_TICKS = Config.FIREWHEEL_FIRE_SECONDS.get();
+    private static final int FIRE_TICKS = Config.FIREWHEEL_FIRE_MS.get() / 1000;
 
     private final ServerLevel level;
     private final double radius;

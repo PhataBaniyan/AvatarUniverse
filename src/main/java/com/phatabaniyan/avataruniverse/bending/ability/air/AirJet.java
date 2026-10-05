@@ -23,9 +23,9 @@ public class AirJet extends BendingAbility {
     public static final String ID = "AirJet";
 
     /** Reference Duration 2000ms, in server ticks. */
-    private static final int DURATION_TICKS = Config.AIRJET_DURATION_TICKS.get();
+    private static final int DURATION_TICKS = Config.msToTicks(Config.AIRJET_DURATION_MS.get());
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final int COOLDOWN_TICKS = Config.AIRJET_COOLDOWN_TICKS.get();
+    private static final int COOLDOWN_TICKS = Config.msToTicks(Config.AIRJET_COOLDOWN_MS.get());
 
     private static final double SPEED = Config.AIRJET_SPEED.get();
     private static final boolean SHOW_GLIDING = true;

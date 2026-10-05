@@ -22,7 +22,7 @@ public class SpiritStep extends BendingAbility {
     public static final String ID = "SpiritStep";
 
     /** Reference Cooldown 6000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.SPIRITSTEP_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.SPIRITSTEP_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.SPIRITSTEP_RANGE.get();
 

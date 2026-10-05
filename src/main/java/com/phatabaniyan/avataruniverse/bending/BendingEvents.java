@@ -725,7 +725,8 @@ public final class BendingEvents {
             }
             if (blast != null && blast.isPrepared()) {
                 blast.throwIce(player);
-                bending.setCooldown(IceSpikeBlast.ID, gameTime + Config.ICESPIKE_BLAST_COOLDOWN_TICKS.get());
+                bending.setCooldown(
+                        IceSpikeBlast.ID, gameTime + Config.msToTicks(Config.ICESPIKE_BLAST_COOLDOWN_MS.get()));
                 return false;
             }
             LivingEntity caught = null;
@@ -778,7 +779,7 @@ public final class BendingEvents {
                     feedback(player, bending, BendingElement.WATER, "The ground is crowded — no spire can rise there.");
                     return false;
                 }
-                bending.setCooldown(IceSpikePillar.ID, gameTime + Config.ICESPIKE_COOLDOWN_TICKS.get());
+                bending.setCooldown(IceSpikePillar.ID, gameTime + Config.msToTicks(Config.ICESPIKE_COOLDOWN_MS.get()));
                 BendingManager.start(pillar);
                 return false;
             }
@@ -859,7 +860,7 @@ public final class BendingEvents {
                 feedback(player, bending, BendingElement.WATER, "No wall can stand upon that ground.");
                 return false;
             }
-            bending.setCooldown(IceWall.ID, gameTime + Config.ICEWALL_COOLDOWN_TICKS.get());
+            bending.setCooldown(IceWall.ID, gameTime + Config.msToTicks(Config.ICEWALL_COOLDOWN_MS.get()));
             BendingManager.start(new IceWall(player, plan));
             return false;
         }
@@ -1487,11 +1488,12 @@ public final class BendingEvents {
             feedback(player, bending, BendingElement.WATER, "The waters are spent (" + Math.max(left, 1) + "s).");
             return false;
         }
-        bending.setCooldown(WaterManipulation.ID, gameTime + Config.WATERMANIP_COOLDOWN_TICKS.get());
+        bending.setCooldown(WaterManipulation.ID, gameTime + Config.msToTicks(Config.WATERMANIP_COOLDOWN_MS.get()));
         boolean icy = BendingSources.isIce(serverLevel, source);
         BendingManager.start(new WaterManipulation(player, Vec3.atCenterOf(source), gaze, icy));
         if (BendingSources.isPlant(serverLevel, source)) {
-            BendingManager.consumePlantSource(serverLevel, source, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+            BendingManager.consumePlantSource(
+                    serverLevel, source, Config.msToTicks(Config.WATERMANIP_PLANT_REGROW_MS.get()));
         } else if (!icy
                 && serverLevel.getFluidState(source).is(net.minecraft.world.level.material.Fluids.WATER)
                 && BendingSources.adjacentWaterCount(serverLevel, source) < 3) {
@@ -1616,7 +1618,8 @@ public final class BendingEvents {
                 return false;
             }
             if (plant) {
-                BendingManager.consumePlantSource(level, source, Config.WATERMANIP_PLANT_REGROW_SECONDS.get());
+                BendingManager.consumePlantSource(
+                        level, source, Config.msToTicks(Config.WATERMANIP_PLANT_REGROW_MS.get()));
                 fullSource = false;
             } else if (!level.getFluidState(source).is(net.minecraft.world.level.material.Fluids.WATER)
                     && !BendingSources.isIce(level, source)) {
@@ -1723,7 +1726,7 @@ public final class BendingEvents {
             feedback(player, bending, BendingElement.WATER, "The torrent is spent (" + Math.max(left, 1) + "s).");
             return false;
         }
-        bending.setCooldown(Torrent.ID, gameTime + Config.TORRENT_COOLDOWN_TICKS.get());
+        bending.setCooldown(Torrent.ID, gameTime + Config.msToTicks(Config.TORRENT_COOLDOWN_MS.get()));
         BendingManager.start(new Torrent(player, source));
         // Keep the focus shimmer while waiting: it marks the chosen source
         // until sneak-start consumes it.

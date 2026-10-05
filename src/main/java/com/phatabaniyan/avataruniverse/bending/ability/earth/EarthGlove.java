@@ -30,7 +30,7 @@ public class EarthGlove extends EarthAbility {
     public static final String ID = "EarthGlove";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EARTHGLOVE_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHGLOVE_COOLDOWN_MS.get());
 
     private static final float DAMAGE = Config.EARTHGLOVE_DAMAGE.get().floatValue();
     private static final double RANGE = Config.EARTHGLOVE_RANGE.get();

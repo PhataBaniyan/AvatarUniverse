@@ -42,11 +42,11 @@ public class Lightning extends BendingAbility {
     public static final String ID = "Lightning";
 
     /** Reference Cooldown 4000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LIGHTNING_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LIGHTNING_COOLDOWN_MS.get());
     /** Reference charge 2000ms, in server ticks. */
-    private static final long CHARGE_TICKS = Config.LIGHTNING_CHARGE_TICKS.get();
+    private static final long CHARGE_TICKS = Config.msToTicks(Config.LIGHTNING_CHARGE_MS.get());
     /** Bolt linger after the strike (~400ms), in server ticks. */
-    private static final long LINGER_TICKS = Config.LIGHTNING_LINGER_TICKS.get();
+    private static final long LINGER_TICKS = Config.msToTicks(Config.LIGHTNING_LINGER_MS.get());
 
     private static final double DAMAGE = Config.LIGHTNING_DAMAGE.get();
     private static final double RANGE = Config.LIGHTNING_RANGE.get();
@@ -54,7 +54,7 @@ public class Lightning extends BendingAbility {
     private static final int MAX_CHAINS = Config.LIGHTNING_MAX_CHAINS.get();
     private static final double CHAIN_CHANCE = Config.LIGHTNING_CHAIN_CHANCE.get();
     private static final double STUN_CHANCE = Config.LIGHTNING_STUN_CHANCE.get();
-    private static final long STUN_TICKS = Config.LIGHTNING_STUN_TICKS.get();
+    private static final long STUN_TICKS = Config.msToTicks(Config.LIGHTNING_STUN_MS.get());
 
     private static final int POINT_GENERATION = Config.LIGHTNING_POINT_GENERATION.get();
     private static final double SUB_ARC_CHANCE = Config.LIGHTNING_SUB_ARC_CHANCE.get();
@@ -65,7 +65,7 @@ public class Lightning extends BendingAbility {
     private static final double CONDUCTIVITY_RANGE = Config.LIGHTNING_CONDUCTIVITY_RANGE.get();
     private static final double WET_HIT_RADIUS = Config.LIGHTNING_WET_HIT_RADIUS.get();
     private static final double DRY_HIT_RADIUS = Config.LIGHTNING_DRY_HIT_RADIUS.get();
-    private static final int IGNITE_SECONDS = Config.LIGHTNING_IGNITE_SECONDS.get();
+    private static final int IGNITE_SECONDS = Config.LIGHTNING_IGNITE_MS.get() / 1000;
 
     private final ServerPlayer player;
     private final ServerLevel level;

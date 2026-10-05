@@ -27,12 +27,12 @@ import net.minecraft.world.phys.Vec3;
 public class EarthDome extends EarthAbility {
     public static final String ID = "EarthDome";
     /** Reference Cooldown 10000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EARTHDOME_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHDOME_COOLDOWN_MS.get());
 
     private static final double RADIUS = Config.EARTHDOME_RADIUS.get();
     private static final int HEIGHT = Config.EARTHDOME_HEIGHT.get();
     /** Dome stand time before everything reverts, in server ticks. */
-    private static final long STAND_TICKS = Config.EARTHDOME_STAND_TICKS.get();
+    private static final long STAND_TICKS = Config.msToTicks(Config.EARTHDOME_STAND_MS.get());
 
     private static final double TARGET_RANGE = Config.EARTHDOME_TARGET_RANGE.get();
     private static final int RINGS = Config.EARTHDOME_RINGS.get();

@@ -30,14 +30,14 @@ public class FireBreath extends BendingAbility {
     public static final String ID = "FireBreath";
 
     /** Reference Cooldown 3500ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.FIREBREATH_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.FIREBREATH_COOLDOWN_MS.get());
     /** Reference Duration 3000ms, in server ticks. */
-    private static final long DURATION_TICKS = Config.FIREBREATH_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.FIREBREATH_DURATION_MS.get());
 
     private static final int PARTICLES = Config.FIREBREATH_PARTICLES.get();
     private static final double PLAYER_DAMAGE = Config.FIREBREATH_PLAYER_DAMAGE.get();
     private static final double MOB_DAMAGE = Config.FIREBREATH_MOB_DAMAGE.get();
-    private static final int FIRE_SECONDS = Config.FIREBREATH_FIRE_SECONDS.get();
+    private static final int FIRE_SECONDS = Config.FIREBREATH_FIRE_MS.get() / 1000;
     private static final double RANGE = Config.FIREBREATH_RANGE.get();
 
     private final ServerPlayer player;

@@ -46,15 +46,15 @@ public class EarthGrab extends EarthAbility {
     public static final String TRAP_TAG = "avataruniverse_earthgrab_trap";
 
     /** Reference Cooldown 5000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.EARTHGRAB_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.EARTHGRAB_COOLDOWN_MS.get());
 
     private static final double RANGE = Config.EARTHGRAB_RANGE.get();
     private static final double DRAG_SPEED = Config.EARTHGRAB_DRAG_SPEED.get();
-    private static final long HIT_INTERVAL_TICKS = Config.EARTHGRAB_HIT_INTERVAL_TICKS.get();
+    private static final long HIT_INTERVAL_TICKS = Config.msToTicks(Config.EARTHGRAB_HIT_INTERVAL_MS.get());
     private static final int TRAP_HP = Config.EARTHGRAB_TRAP_HP.get();
     private static final float DAMAGE_THRESHOLD =
             Config.EARTHGRAB_DAMAGE_THRESHOLD.get().floatValue();
-    private static final int SLOW_TICKS = Config.EARTHGRAB_SLOW_TICKS.get();
+    private static final int SLOW_TICKS = Config.msToTicks(Config.EARTHGRAB_SLOW_MS.get());
     private static final int SLOW_AMPLIFIER = Config.EARTHGRAB_SLOW_AMPLIFIER.get();
     private static final double TRAP_LEASH = Config.EARTHGRAB_TRAP_LEASH.get();
 

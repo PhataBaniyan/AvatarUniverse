@@ -37,21 +37,21 @@ public class LavaDisc extends EarthAbility {
     public static final String ID = "LavaDisc";
 
     /** Reference Cooldown 7000ms, in server ticks. */
-    private static final long COOLDOWN_TICKS = Config.LAVADISC_COOLDOWN_TICKS.get();
+    private static final long COOLDOWN_TICKS = Config.msToTicks(Config.LAVADISC_COOLDOWN_MS.get());
     /** Reference Duration 1000ms of flight, in server ticks. */
-    private static final long DURATION_TICKS = Config.LAVADISC_DURATION_TICKS.get();
+    private static final long DURATION_TICKS = Config.msToTicks(Config.LAVADISC_DURATION_MS.get());
 
     private static final float DAMAGE = Config.LAVADISC_DAMAGE.get().floatValue();
     private static final int PARTICLES = Config.LAVADISC_PARTICLES.get();
     private static final int RECALL_LIMIT = Config.LAVADISC_RECALL_LIMIT.get();
     /** Reference Destroy.RegenTime 5000ms, in server ticks. */
-    private static final long TRAIL_REVERT_TICKS = Config.LAVADISC_TRAIL_REVERT_TICKS.get();
+    private static final long TRAIL_REVERT_TICKS = Config.msToTicks(Config.LAVADISC_TRAIL_REVERT_MS.get());
     /** Reference Source.RegenTime 10000ms, in server ticks. */
-    private static final long SOURCE_REVERT_TICKS = Config.LAVADISC_SOURCE_REVERT_TICKS.get();
+    private static final long SOURCE_REVERT_TICKS = Config.msToTicks(Config.LAVADISC_SOURCE_REVERT_MS.get());
 
     private static final double SOURCE_RANGE = Config.LAVADISC_SOURCE_RANGE.get();
     private static final double SPEED = Config.LAVADISC_SPEED.get();
-    private static final int FIRE_TICKS = Config.LAVADISC_FIRE_TICKS.get();
+    private static final int FIRE_TICKS = Config.msToTicks(Config.LAVADISC_FIRE_MS.get());
     private static final double HOLD_DISTANCE = Config.LAVADISC_HOLD_DISTANCE.get();
     private static final double HIT_RADIUS = Config.LAVADISC_HIT_RADIUS.get();
 
