@@ -17,6 +17,7 @@
 
 ## Notes
 
-- License LGPL-2.1-or-later; bending mechanics inspired by ProjectKorra
+- License LGPL-2.1-or-later;
+- bending mechanics inspired by ProjectKorra
   (see CREDITS.md)
 - Report bugs with your `latest.log` and the ability name
