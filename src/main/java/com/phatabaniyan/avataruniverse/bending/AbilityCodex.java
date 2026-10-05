@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * In-source codex of bending-ability description + usage text, harvested verbatim
- * from ProjectAvatar AbilityBootstrap, ProjectKorra ConfigManager, ProjectAddons,
- * JedCore-Cozmyc JedCoreConfig and Hyperion ConfigManager. Nothing invented.
+ * In-source codex of bending-ability description + usage text, written originally
+ * for AvatarUniverse. Ability mechanics take inspiration from ProjectKorra,
+ * ProjectAvatar, ProjectAddons, JedCore and Hyperion (see CREDITS.md), but all
+ * text below is original — nothing copied from those projects.
  */
 public final class AbilityCodex {
     private AbilityCodex() {}
@@ -21,103 +22,103 @@ public final class AbilityCodex {
         register(
                 "WaterManipulation",
                 BendingElement.WATER,
-                "WaterManipulation is a fundamental ability for waterbenders. Although it is a basic move, it allows for fast damage due to its rapid fire nature, which is incredibly useful when wanting to finish off low health targets.",
-                "Tap sneak while looking at a water source and left click to send a water manipulation to the point that you clicked. Additionally, you can left click again to change the direction of this move. This includes other players\\' WaterManipulations.");
+                "The first lesson of every waterbender: seize a nearby water source and hurl it as a guided bolt. Fast, cheap, and spammable — ideal for finishing weakened targets.",
+                "Sneak while facing a water source, then click to launch the bolt toward your cursor. Click again mid-flight to redirect it — including bolts thrown by other benders.");
         register(
                 "Torrent",
                 BendingElement.WATER,
-                "Torrent is one of the strongest moves in a waterbender\\'s arsenal. It has the potential to do immense damage and to be comboed with other abilities to perform a deal a large damage burst. Torrent is fundamental for waterbender\\'s.",
-                "(Torrent) Left click at a water source and hold sneak to form the torrent. Then, left click and the torrent will shoot out, moving in the direction you\\'re looking. If the torrent hits an entity, it can drag them and deal damage. Additionally, if you left click before the torrent hits a surface or entity it will freeze on impact.\\n(Wave) Left click a water source and hold sneak to form a torrent around you. Then, release sneak to send a wave of water expanding outwards every direction that will push entities back.");
+                "A ring of living water raised around the bender that can be fired as a crushing stream, burst outward as a wave, or flash-frozen solid on impact.",
+                "(Torrent) Click a water source and hold sneak to shape the ring, then click to fire it down your gaze — click once more before impact to freeze it.\\n(Wave) Shape the ring, then release sneak to blast a wave outward in every direction, hurling entities back.");
         register(
                 "WaterSpout",
                 BendingElement.WATER,
-                "This ability provides a Waterbender with a means of transportation. It\\'s the most useful mobility move that a waterbender possesses and is great for chasing down targets or escaping.",
-                "(Spout) Left click to activate a spout beneath you and hold spacebar to go higher. If you wish to go lower, simply hold sneak. To disable this ability, left click once again.\\n(SpoutHop) While WaterSpout is active, hold sneak and left-click to jump forward!\\n(Wave) Left click a water source and hold sneak until water has formed around you. Then, release sneak to ride a water wave that transports you in the direction you\\'re looking. To cancel this water wave, left click with WaterSpout.");
+                "A travelling column of water that lifts its rider above seas and battlefields — the waterbender's answer to flight, with a wave to ride when there is somewhere to be.",
+                "(Spout) Click to raise the column; hold jump to climb, sneak to sink, click again to step off.\\n(Wave) Click a water source and hold sneak until water gathers around you, then release to ride the wave forward; click with WaterSpout bound to cancel.");
         register(
                 "WaterArms",
                 BendingElement.WATER,
-                "One of the most diverse moves in a Waterbender\\'s arsenal, this move creates tendrils of water from the players arms to emulate their actual arms. It has the potential to do a variety of things that can either do mass amounts of damage, or used for mobility.",
-                "To activate this ability, tap sneak at a water source. Additionally, to de-activate this ability, hold sneak and left click.\\n(Pull) Left click at a target and your arms will expand outwards, pulling entities towards you if they\\'re in range.\\n(Punch) Left click and one arm will expand outwards, punching anyone it hits and dealing damage.\\n(Grapple) Left click to send your arms forward, pulling you to whatever surface they land on.\\n(Grab) Left click to grab an entity that\\'s in range. They will then be controlled and moved in whatever direction you look. Additionally, if you left click again you can throw the target that you\\'re controlling.\\n(Freeze) Left click to rapidly fire ice blasts at a target, damaging the target and giving them slowness.\\n(Spear) Left click to send an ice spear out, damaging and freezing whoever it hits in ice blocks.");
+                "Twin tendrils of water grafted to the bender's arms that punch, pull, grapple, grab, and freeze — the most versatile tool in a waterbender's arsenal.",
+                "Tap sneak at a water source to grow the arms; hold sneak and click to dismiss.\\n(Pull) Click a target to drag it toward you.\\n(Punch) Click to lash an arm out for damage.\\n(Grapple) Click terrain to yank yourself to it.\\n(Grab) Click an entity to seize and steer it; click again to throw.\\n(Freeze) Click to spray chilling ice shards.\\n(Spear) Click to fire a freezing ice spear.");
         register(
                 "HealingWaters",
                 BendingElement.HEALING,
-                "HealingWaters is an advanced waterbender skill that allows the player to heal themselves or others from the damage they\\'ve taken. If healing another player, you must continue to look at them to channel the ability.",
-                "Hold sneak to begin healing yourself or right click while sneaking to begin healing another player. You or the player must be in water and damaged for this ability to work, or you need to have water bottles in your inventory.");
+                "Draw on water's restorative nature to knit wounds closed — your own, or an ally's, so long as water is close at hand.",
+                "Hold sneak while in or near water to heal yourself, or hold sneak while facing a hurt ally to channel healing into them. Bottled water works when no source is near.");
         register(
                 "WaterBubble",
                 BendingElement.WATER,
-                "WaterBubble is a basic waterbending ability that allows the bender to create air pockets under water. This is incredibly useful for building under water.",
-                "Hold sneak when in range of water to push the water back and create a water bubble. Alternatively, you can click to create a bubble for a short amount of time.");
+                "Push the surrounding water back into a pocket of air that travels with you — for diving deep, building dry, and fighting beneath the waves.",
+                "Click for a short-lived bubble, or hold sneak with it bound to carry one that follows you. Click again nearby to refresh it; it melts when released or left behind.");
         register(
                 "FrostBreath",
                 BendingElement.ICE,
-                "FrostBreath is an ability that lets the user to icebend through their lungs. Breathe out a cold air to freeze your enemies!",
-                "Hold sneak and look at your target to freeze them.");
+                "Exhale winter itself: a freezing cone that slows, harms, and encases victims in a cage of ice.",
+                "Hold sneak while facing your target to breathe frost over them.");
         register(
                 "IceBlast",
                 BendingElement.ICE,
-                "IceBlast is a powerful ability that deals damage to entities it comes into contact with. Because IceBlast\\'s travel time is pretty quick, it\\'s incredibly useful for finishing off low health targets.",
-                "Tap sneak while looking at an ice block and then click in a direction to send an ice blast in that direction.");
+                "A fast shard of ice shaped from a frozen source — quick to loose and deadly against fleeing targets.",
+                "Tap sneak while facing ice, then click to fire the blast down your gaze.");
         register(
                 "IceSpike",
                 BendingElement.ICE,
-                "This ability offers a powerful ice utility for Waterbenders. It can be used to fire an ice blast or raise an ice spike. If the ice blast or ice spike comes into contact with another entity, it will give them slowness and deal some damage to them..",
-                "(Blast) Tap sneak on a water source and then left click in a direction to fire an ice blast in a direction. Additionally, you can left click to manipulate the ice blast while it\\'s in the air to change the direction of the blast.\\n(Spike) While in range of ice, tap sneak to raise ice pillars from the ice. If a player is caught in these ice pillars they will be propelled into the air. You cannot be looking at ice or water or this feature will not activate. Alternatively, you can left click an ice block to raise a single pilar of ice.");
+                "Two faces of ice: hurl a steerable blast, or erupt a pillar of spikes from frozen ground that launches whatever it catches skyward.",
+                "(Blast) Tap sneak at a water source, then click to fire; click mid-flight to steer the blast.\\n(Spike) While near ice, tap sneak without facing ice or water to erupt pillars that fling caught targets upward — or click an ice block directly to raise a single spike.");
         register(
                 "PhaseChange",
                 BendingElement.WATER,
-                "PhaseChange is one of the most useful utility moves that a waterbender possess. This ability is better used when fighting, allowing you to create a platform on water that you can fight on and being territorial by manipulating your environment. It\\'s also useful for travelling across seas.",
-                "(Melt) To melt ice, hold sneak while looking at an ice block.\\n(Freeze) To freeze water and turn it into ice, simply left click at water. This ice will stay so long as you are in range, otherwise it will revert back to water. This only freezes the top layer of ice.");
+                "Walk on water by freezing it beneath your feet — or melt ice back to water. Reshape the surface of the battlefield at will.",
+                "(Freeze) Click water to freeze a platform that holds while you stay near and melts once you leave.\\n(Melt) Hold sneak facing ice to melt it back to water.");
         register(
                 "Bloodbending",
                 BendingElement.BLOOD,
-                "Bloodbending is one of the most unique bending abilities that existed and it has immense power, which is why it was made illegal in the Avatar universe. People who are capable of bloodbending are immune to your technique, and you are immune to theirs.",
-                "(Control) Hold sneak while looking at an entity to bloodbend them. You will then be controlling the entity, making them move wherever you look.\\n(Throw) While bloodbending an entity, left click to throw that entity in the direction you\\'re looking.");
+                "The forbidden art: seize the water inside a living body and puppet its movements. Fellow bloodbenders resist your grip, as you resist theirs.",
+                "(Control) Hold sneak while facing an entity to steer it with your gaze.\\n(Throw) Click while holding to hurl the victim where you look.");
         register(
                 "BloodPuppet",
                 BendingElement.BLOOD,
-                "This very high-level bloodbending ability lets a master control entities\\' limbs, forcing them to attack the master\\'s target. To use this ability, you must be a bloodbender. Next, sneak while targeting a mob or player and you will start controlling them. To make the entity hit another, click. To release your target, stop sneaking. This ability has NO cooldown, but may only be usable during the night depending on the server configuration.",
-                "Bind it and bend to learn its ways.");
+                "A master's refinement of bloodbending: seize a victim's limbs and force them to strike a target of your choosing.",
+                "Sneak while facing a mob or player to take hold of it; click to make it attack. Release sneak to let go. No cooldown, but may be night-only depending on configuration.");
         register(
                 "Drain",
                 BendingElement.WATER,
-                "Inspired by how Hama drained water from the fire lilies, many benders have practiced in the skill of draining water from plants! With this ability bound, Sneak (Default: Shift) near/around plant sources to drain the water out of them to fill up any bottles/buckets in your inventory! Alternatively, if you have nothing to fill and blasts are enabled in the config, you will be able to create mini blasts of water to shoot at your targets! Aleternatively, this ability can also be used to quickly fill up bottles from straight water sources or from falling rain!",
-                "Bind it and bend to learn its ways.");
+                "Wring water from leaves, open sources, and even falling rain — fill your bottles with it, or shape the dregs into stinging blasts.",
+                "Sneak near plants to draw water into empty bottles or buckets you carry; with nothing left to fill, the gathered water fires off as small blasts instead. Works on rain and plain water sources too.");
         register(
                 "IceClaws",
                 BendingElement.ICE,
-                "As demonstrated by Hama, a Waterbender can pull water out of thin air to create claws at the tips of their fingers. With IceClaws bound, hold Sneak (Default: Shift) to start pulling water out the air until you form claws at your finger tips, then attack an enemy to slow them down and do a bit of damage!",
-                "Bind it and bend to learn its ways.");
+                "Condense moisture from thin air into claws of ice for fast melee strikes that chill whatever they rake.",
+                "Hold sneak to form the claws at your fingertips, then strike enemies to damage and slow them; the charged claws can also be hurled.");
         register(
                 "IceWall",
                 BendingElement.ICE,
-                "IceWall allows an icebender to create a wall of ice, similar to raiseearth. To use, simply sneak while targeting either water, ice, or snow. To break the wall, you must sneak again while targeting it. Be aware that other icebenders can break your own shields, and if you are too close you can get hurt by the shards.",
-                "Bind it and bend to learn its ways.");
+                "Raise a curved rampart of ice from water, ice, or snow — cover that bursts into damaging shards when it falls.",
+                "Sneak facing water, ice, or snow to raise the wall; sneak facing the wall to collapse it. Rival icebenders can break your walls, and standing too close to a collapse hurts.");
         register(
                 "WakeFishing",
                 BendingElement.WATER,
-                "With this ability bound, hold Sneak (Default: Shift) at a water block and don\\'t lose focus of that block. Eventually some fish will investigate the wake and swim out at you!",
-                "Bind it and bend to learn its ways.");
+                "Stir a watery wake and hold it steady until curious fish swim out to meet you.",
+                "Hold sneak facing a water block without looking away; keep the wake alive and fish will eventually investigate it.");
         register(
                 "RazorLeaf",
                 BendingElement.PLANT,
-                "Spin leaves around really fast and make them razor sharp!",
-                "Sneak at plants to begin, hold to aim, and release to shoot it! Sneaking again will pull it back towards you!");
+                "Spin leaves into a razor-edged disc you can aim, loose, and call back to your hand.",
+                "Sneak at plants to spin up the disc, hold to aim, release to throw — sneak again to pull it back toward you.");
         register(
                 "IceCrawl",
                 BendingElement.ICE,
-                "Tap sneak at a water or ice source block and then left click in a direction to launch forward a narrow line of ice. Upon colliding with an enemy, it deals damage and freezes the target\\'s feet.",
-                "Bind it and bend to learn its ways.");
+                "Send a narrow runner of ice racing along the ground that bites the feet of whatever it reaches, rooting them in place.",
+                "Tap sneak at a water or ice source, then click to launch the crawl down your gaze.");
         register(
                 "PlantArmor",
                 BendingElement.PLANT,
-                "Wrap your body in vines and leaves to create a protective armor which nullifies falling and drowning damage, while also giving speed, jump, and swim boosts! The armor then acts as a source for many subabilities!\\n[VineWhip] : Throw a whip of vines to damage entities!\\n[RazorLeaf] : Control a spinning disc of leaves to damage entities!\\n[LeafShield] : Hold a circular shield of leaves to block attacks!\\n[Tangle] : Shoot a bundle of vines to constrict enemies!\\n[Leap] : Launch yourself really high into the air from the ground!\\n[Grapple] : Grapple to a point with your vines!\\n[LeafDome] : Surround your body in a dome of leaves!\\n[Regenerate] : Gather more plants to repair armor!\\n[Disperse] : Deactivate your plantarmor!",
-                "Press sneak to activate multiability\\n[VineWhip, Tangle, Leap, Grapple, Disperse]: Left Click\\n[RazorLeaf, LeafShield, LeafDome, Regenerate]: Hold Sneak");
+                "Wrap yourself in living vines and leaves: protection from falls and drowning, boosts to speed, leap, and swimming — and the armor itself becomes a source for vine sub-techniques.",
+                "Sneak to grow the armor.\\nClick for VineWhip, Tangle, Leap, Grapple, Disperse.\\nHold sneak for RazorLeaf, LeafShield, LeafDome, Regenerate.");
         register(
                 "LeafStorm",
                 BendingElement.PLANT,
-                "A combo only usable in with PlantArmor, create a whirling storm of leaves around you! Leaves disappear after hitting a block or entity, or you stop sneaking.",
-                "RazorLeaf (Double Click) > VineWhip (Hold Sneak)");
+                "A PlantArmor-only combo: shed your leaves as a whirling storm that shreds whatever it touches until it lands or you release.",
+                "While wearing PlantArmor: double-click with RazorLeaf bound, then hold sneak with VineWhip bound.");
         register(
                 "FireJet",
                 BendingElement.FIRE,
@@ -396,158 +397,158 @@ public final class AbilityCodex {
         register(
                 "Accretion",
                 BendingElement.EARTH,
-                "Slam the earth to send blocks into the air, then shoot them all towards a single point! They will build up on an enemy, damaging and slowing them down! Each block that hits adds 1 second and level of slowness.",
-                "Sneak to rise blocks, Left Click before they land to shoot!");
+                "Slam the earth to throw blocks skyward, then drive them all onto a single point where they pile onto the victim — every block adding hurt and slowness.",
+                "Sneak to blast blocks upward, then click before they land to hurl the cluster at your target.");
         register(
                 "Catapult",
                 BendingElement.EARTH,
-                "Catapult is an advanced earthbending ability that allows you to forcefully push yourself using earth, reaching great heights. This technique is best used when travelling, but it can also be used to quickly escape a battle.",
-                "Hold sneak until you see particles and hear a sound and then release to be propelled in the direction you\\'re looking. Additionally, you can left-click to be propelled with less power.");
+                "Kick the earth itself to launch skyward — a traveller's leap and a duelist's escape in one.",
+                "Hold sneak until particles gather and you hear the charge build, then release to launch where you look; click without charging for a weaker hop.");
         register(
                 "EarthBlast",
                 BendingElement.EARTH,
-                "EarthBlast is a basic yet fundamental earthbending ability. It allows you to deal rapid fire damage to your target to finish low health targets off or deal burst damage to them. Although it can be used at long range, it\\'s potential is greater in close ranged combat.",
-                "Tap sneak at an earthbendable block and then left click in a direction to send an earthblast. Additionally, you can left click again to change the direction of the earthblast. You can also redirect other earthbender\\'s earth blast by left clicking. If the earth blast hits an entity it will deal damage and knockback.");
+                "The earthbender's bread and butter: rip stone free and fire it as a rapid, redirectable bolt — strongest up close.",
+                "Tap sneak at bendable earth, then click to fire; click mid-flight to redirect — including rival benders' blasts, which you can turn back on them.");
         register(
                 "EarthArmor",
                 BendingElement.EARTH,
-                "This ability encases the Earthbender in armor, giving them protection. It is a fundamental earthbending technique that\\'s used to survive longer in battles.",
-                "Tap sneak while looking at an earthbendable block to bring those blocks towards you, forming earth armor. This ability will give you extra hearts and will be removed once those extra hearts are gone. You can disable this ability by holding sneak and left clicking with EarthArmor.");
+                "Call stone around your body as ablative armor that soaks up hits in place of your health.",
+                "Tap sneak facing bendable earth to plate yourself in extra hearts; hold sneak and click with it bound to shed the armor early.");
         register(
                 "CollapseWall",
                 BendingElement.EARTH,
-                "This ability is a basic earthbending ability that allows the earthbender great utility. It allows them to control earth blocks by compressing earth. Players and mobs can be trapped and killed if earth is collapsed and they\\'re stuck inside it, meaning this move is deadly when in cave systems.",
-                "Left click an earthbendable block. If there\\'s space under that block, it will be collapsed. Alternatively, you can tap sneak to collapse multiple blocks at a time.");
+                "Compress the ground downward into pits and cave-ins — deadly work where the ceiling runs low and anything caught inside is crushed.",
+                "Click bendable earth to drop it where there is space below; tap sneak to collapse a wider area at once.");
         register(
                 "RaiseEarth",
                 BendingElement.EARTH,
-                "RaiseEarth is a basic yet useful utility move. It has the potential to allow the earthbender to create great escape routes by raising earth underneath them to propel themselves upwards. It also offers synergy with other moves, such as shockwave. RaiseEarth is often used to block incoming abilities.",
-                "(Pillar) To raise a pillar of earth, left click on an earthbendable block.\\n(Wall) To raise a wall of earth, tap sneak on an earthbendable block.");
+                "Lift the ground into pillars for escape routes and high ground, or raise walls to block incoming attacks and combo with shockwaves.",
+                "(Pillar) Click bendable earth to raise a column beneath the target.\\n(Wall) Tap sneak on bendable earth to raise a wall.");
         register(
                 "Shockwave",
                 BendingElement.EARTH,
-                "Shockwave is one of the most powerful earthbending abilities. It allows the earthbender to deal mass damage to everyone around them and knock them back. It\\'s extremely useful when fighting more than one target or if you\\'re surrounded by mobs.",
-                "Hold sneak until you see particles and then release sneak to send a wave of earth outwards, damaging and knocking entities back that it collides with. Additionally, instead of releasing sneak you can send a cone of earth forwards by left clicking. If you are on the Shockwave slot and you fall from a great height, your Shockwave will automatically activate.");
+                "Stomp a ring of shattering earth outward that batters everything around you — or focus it into a forward cone. It even breaks your own falls.",
+                "Hold sneak until particles gather, then release for the radial wave or click for a cone. Falling far with it bound triggers it automatically to cushion the landing.");
         register(
                 "EarthKick",
                 BendingElement.EARTH,
-                "Earthbenders can kick the earth in front of them and send shards flying towards their enemies.",
-                "Sneak at earth in front of you");
+                "A short-range kick that sprays rock shards into whatever stands ahead of you.",
+                "Sneak while facing bendable earth ahead to kick up the shard fan.");
         register(
                 "Extraction",
                 BendingElement.METAL,
-                "This ability allows metalbenders to extract the minerals from ore blocks. This ability is extremely useful for gathering materials as it has a chance to extract double or triple the ores.",
-                "Tap sneak while looking at an earthbendable ore to extract the ore.");
+                "Coax raw ore out of stone — a miner's trick that sometimes shakes loose double or triple yield.",
+                "Tap sneak while facing an ore vein to extract its minerals.");
         register(
                 "MetalClips",
                 BendingElement.METAL,
-                "MetalClips is an advanced metalbending ability that allows you to take control of a fight. It gives the metalbender the ability to control an entity, create space between them and a player and even added utility.",
-                "(Clips) This ability requires iron ingots in your inventory. Left click to throw an ingot at an entity, dealing damage to them. This ingot will form into armor, wrapping itself around the entity. Once enough armor pieces are around the entity, you can then control them. To control them, hold sneak while looking at them and then they will be moved in the direction you look. Additionally, you can release sneak to throw them in the direction you\\'re looking.\\n(Magnet) Hold sneak with this ability to pull iron ingots towards you.");
+                "Throw iron that wraps victims in binding bands, then puppet the bound — or call loose metal back to your hand.",
+                "(Clips) Click while carrying iron ingots to throw bands that sear, armor, and seize an entity; hold sneak to steer it, release to hurl it.\\n(Magnet) Hold sneak to draw loose ingots toward you.");
         register(
                 "LavaFlow",
                 BendingElement.LAVA,
-                "LavaFlow is an extremely advanced, and dangerous ability. It allows the earthbender to create pools of lava around them, or to solidify existing lava. This ability can be deadly when comboed with EarthGrab.",
-                "(Flow) Hold sneak and lava will begin expanding outwards. Once the lava has stopped expanding, you can release sneak. Additionally, if you tap sneak the lava you created will revert back to the earthbendable block.\\n(Lava Pool) Left click to slowly transform earthbendable blocks into a pool of lava.\\n(Solidify) Left click on lava to solidify it, turning it to stone.");
+                "Bloom pools of lava outward across stone — or cool existing lava back to rock. Devastating when paired with grabs.",
+                "(Flow) Hold sneak to spread lava outward; tap sneak to revert your flows to earth.\\n(Pool) Click earth to melt it into a lava pool.\\n(Solidify) Click lava to freeze it into stone.");
         register(
                 "LavaSurge",
                 BendingElement.LAVA,
-                "Throw a surging wave of lava in the direction you are looking!",
-                "Sneak to create your lava source (or select an existing source) and click to throw the wave!");
+                "Gather molten rock and throw it as a rolling surge down your gaze.",
+                "Sneak to gather a lava source — or select an existing one — then click to hurl the wave.");
         register(
                 "QuickWeld",
                 BendingElement.EARTH,
-                "Advanced metalbenders can use this to repair damaged iron weapons/armor/tools. This ability requires iron ingots in your inventory to work.",
-                "Sneak with the item you want to repair in your main hand.");
+                "Mend damaged iron gear in the field by flowing fresh metal into the cracks.",
+                "Hold the item to repair in your main hand and sneak; iron ingots are consumed from your inventory.");
         register(
                 "RockSlide",
                 BendingElement.EARTH,
-                "Slide over the earth using loose chunks of rock",
-                "Shockwave (hold sneak) > Shockwave (right click block) > EarthSmash (release sneak)");
+                "Ride loose chunks of rock across the ground — a combo that turns a shockwave into a slide.",
+                "Charge Shockwave (hold sneak), trigger it against a block (click), then release into EarthSmash to slide.");
         register(
                 "Shrapnel",
                 BendingElement.EARTH,
-                "Use your metalbending to throw nuggets of gold and iron like pieces of shrapnel, dealing damage when they hit entities. This requires that you have gold or iron nuggets in your inventory to launch!",
-                "Click to shoot a single piece of shrapnel at high velocity to the targeted location, click while sneaking to launch several shotgun-style.");
+                "Spend carried gold and iron nuggets as a hail of metal shot — single precise shots, or a sneaking scattergun blast.",
+                "Click to fire one nugget at high velocity; sneak-click to loose a shotgun spread. Requires nuggets in your inventory.");
         register(
                 "EarthPillar",
                 BendingElement.EARTH,
-                "With this ability bound, tap Sneak (Default: Shift) on any Earthbendable surface to create pillar of earth in the direction of the block face!",
-                "Bind it and bend to learn its ways.");
+                "Extrude a pillar of earth out of any bendable face — floor, wall, or ceiling.",
+                "Tap sneak on a bendable surface to grow a pillar along the face direction.");
         register(
                 "EarthShard",
                 BendingElement.EARTH,
-                "EarthShard is a variation of EarthBlast which the earthbender may use to hit a target. This ability deals a fair amount of damage and is easy to rapid-fire. To use, simply shift at an earthbendable block, and it will ascend to your eye height. Then, click towards your target and the block will launch itself towards it.",
-                "Bind it and bend to learn its ways.");
+                "A lighter cousin of EarthBlast: lift a stone to eye height, then fling it — easy to rapid-fire.",
+                "Sneak at bendable earth to raise a shard, then click toward your target to launch it.");
         register(
                 "Fissure",
                 BendingElement.EARTH,
-                "Fissure is an advanced Lavabending ability enabling a lavabender to tear up the ground, swallowing up any enemies. To use, simply swing at an enemy and a line of lava will crack open. Then, tap Sneak (Default: Shift) to expand the crevice. The crevice has a maximum width and depth. Once the crevice has reached it\\'s maximum width, Sneak while looking at the crevice to close it!",
-                "Bind it and bend to learn its ways.");
+                "Tear a lava-filled crevice through the ground that swallows enemies — then seal it shut over them.",
+                "Click toward an enemy to crack the ground open; tap sneak to widen the fissure, and sneak facing it at full width to close it.");
         register(
                 "LavaDisc",
                 BendingElement.LAVA,
-                "Hold Sneak (Default: Shift) on a lava source block to generate a disc of lava at your finger tips. Releasing Sneak will shoot the disc off in the direction you are looking! If you tap or hold Sneak again, the disc will attempt to return to you!",
-                "Bind it and bend to learn its ways.");
+                "Spin lava into a returning disc at your fingertips that burns down your gaze — and comes back when called.",
+                "Hold sneak on a lava source to shape the disc; release to throw it. Sneak again to recall it to your hand.");
         register(
                 "LavaFlux",
                 BendingElement.LAVA,
-                "This offensive ability enables a Lavabender to create a wave of lava, swiftly progressing forward and hurting/burning anything in its way. To use, simply swing your arm towards a target and the ability will activate.",
-                "Bind it and bend to learn its ways.");
+                "Loose a fast wave of lava that rolls forward, burning and battering everything in its path.",
+                "Click toward your target to send the flux rolling.");
         register(
                 "MagnetShield",
                 BendingElement.METAL,
-                "Repel any metal projectiles using a strong magnetic shield. To activate, simply hold sneak with this ability bound.",
-                "Bind it and bend to learn its ways.");
+                "A magnetic ward that turns aside incoming metal projectiles before they reach you.",
+                "Hold sneak with it bound to raise the shield.");
         register(
                 "MetalFragments",
                 BendingElement.METAL,
-                "MetalFragments allows you to select a source and shoot multiple fragments of metal out of that source block towards your target, injuring them on impact. To use, tap Sneak (Default: Shift) at a metal source block and it will float up. Then, turn around and click at your target to fling metal fragments at them.",
-                "Bind it and bend to learn its ways.");
+                "Levitate metal from a source, then fling a fan of sharp fragments that injure whatever they strike.",
+                "Tap sneak at a metal source to lift it, then click your target to shred it with fragments.");
         register(
                 "MetalHook",
                 BendingElement.METAL,
-                "This ability lets a Metalbender bend metal into grappling hooks, allowing them to easily manouver terrain. To use this ability, the user must either have Iron in their inventory or be wearing an Iron/Chainmail Chestplate. Left-Click in the direction you are looking to fire a grappling hook, several hooks can be active at once, allowing the bender to \\'hang\\' in locations. To disengage the hooks, hold Shift (Default: Sneak) or Sprint.",
-                "Bind it and bend to learn its ways.");
+                "Bend grappling hooks from carried iron to swing across terrain — several hooks can hold at once, letting you hang mid-air.",
+                "Click to fire a hook where you look (needs iron carried, or an iron/chainmail chestplate worn). Hold sneak or sprint to release. Multiple hooks can anchor you at once.");
         register(
                 "MudSurge",
                 BendingElement.EARTH,
-                "This ability lets an earthbender send a surge of mud in any direction, knocking back enemies and dealing moderate damage. This ability has a chance of blinding the target. To use, select a source of earth and click in any direction.",
-                "Bind it and bend to learn its ways.");
+                "Hurl a surge of blinding mud that knocks foes back and wounds them.",
+                "Select an earth source, then click in any direction to send the surge.");
         register(
                 "LavaDisk",
                 BendingElement.LAVA,
-                "Tap sneak to select a nearby earth or lava source. This disk made of molten earth will destroy any earthbendable and any soft materials it comes in contact with. The closer you are to the LavaDisk the faster it spins and the more damage it deals.",
-                "Bind it and bend to learn its ways.");
+                "A spinning disk of molten earth that chews through soft ground — deadliest up close, where it spins fastest and hits hardest.",
+                "Tap sneak near an earth or lava source to shape the disk.");
         register(
                 "EarthGlove",
                 BendingElement.EARTH,
-                "Dai Li agents use this technique for various purposes. Left click to launch your glove and attempt to grab your target. If you are holding sneak, the gloves will attempt to return to you. You can also destroy other players\\' gloves by tapping sneak while looking at them.",
-                "Bind it and bend to learn its ways.");
+                "The Dai Li's signature trick: launch stone gauntlets to seize targets at range — or smash rivals' gloves out of the air.",
+                "Click to launch a glove at your target; hold sneak to reel your gloves back. Sneak while facing another player's glove to destroy it.");
         register(
                 "EarthDome",
                 BendingElement.EARTH,
-                "EarthDome allows earthbenders to surround themselves or another entity in earth, temporarily preventing anything from entering or escaping the dome.",
-                "(Self) RaiseEarth (Right click) > Shockwave (Right click)\\n(Projection) RaiseEarth (Right click) > Shockwave (Left click)");
+                "Seal yourself — or a victim — inside an earthen dome that nothing crosses.",
+                "(Self) RaiseEarth (click) followed by Shockwave (click) at your feet.\\n(Projection) Aim the Shockwave click at another entity to entomb them instead.");
         register(
                 "Dig",
                 BendingElement.EARTH,
-                "Swim through the earth, digging a path with your earthbending. Inspired by toph\\'s learning from the badgermoles! You must also be looking at an earthbendable block for the ability to work!",
-                "Sneak while on an earthbendable block");
+                "Swim through stone, carving tunnels as you go — the badgermoles' own way of travel.",
+                "Sneak while facing bendable earth to burrow through it.");
         register(
                 "EarthTunnel",
                 BendingElement.EARTH,
-                "Earth Tunnel is a completely utility ability for earthbenders. It allows you to dig a hole that lowers players down while you continue the ability, create fast escape routes or just great for making your own cave systems.",
-                "Hold sneak while looking at an earthbendable block to tunnel the blocks away. If you release sneak or look at a block that isn\\'t earthbendable, the ability will cancel.");
+                "Bore a descending shaft for escapes, ambushes, or brand-new cave systems.",
+                "Hold sneak while facing bendable earth to drill downward; release, or face non-earth, to stop.");
         register(
                 "EarthSurf",
                 BendingElement.EARTH,
-                "This ability allows an earth bender to ride up on a wave of earth, allowing them to travel a little faster than normal. To use, simply be in the air just above the ground, and Left Click! Additionally, if an entity just so happens to get caught in the wave, they will be moved with the wave.",
-                "Bind it and bend to learn its ways.");
+                "Catch a wave of earth and ride it — anything caught in the crest rides along with you.",
+                "While airborne just above the ground, click to mount the wave.");
         register(
                 "EarthGrab",
                 BendingElement.EARTH,
-                "EarthGrab is one of the best defence abilities in an earthbender\\'s arsenal. It allows you to trap someone who is running away so that you can catch up to someone. It is also of great utility use to an earthbender. It can be used to drag items, arrows, and crops that are on earthbendable blocks towards you, saving you the time of running to get them.",
-                "(Grab) To grab an entity, left click in the direction of the target. Your power will be sent through the earth, and then it will reach up and root them in their spot upon contact. The ability can be manually be disabled by sneaking or clicking again on the EarthGrab slot.\\n(Drag) To drag items towards you, sneak\\n(Escaping) To escape, the trap must be destroyed or the user damaged. The trap can be destroyed by damage or the trapped entity right-clicking it a certain number of times. Additionally, forcefully moving the entity with another earth ability destroys the trap.");
+                "Send your will through the ground to root fleeing enemies in stone — or drag loose items to your feet.",
+                "(Grab) Click toward a target to trap it where it stands; sneak or click again to release. Victims escape by breaking the trap, being force-moved, or striking it repeatedly.\\n(Drag) Sneak to pull items, arrows, and crops resting on earth toward you.");
     }
 
     private static void register(String name, BendingElement element, String description, String usage) {

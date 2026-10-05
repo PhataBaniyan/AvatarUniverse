@@ -32,7 +32,8 @@ Copy the built JAR from `build/libs/` into a NeoForge 1.21.1 `mods/` folder.
 
 - Mod ID: `avataruniverse`
 - Version: `0.1.0`
-- License: MIT (see `LICENSE`). Template files retain `TEMPLATE_LICENSE.txt` (MIT 2023 NeoForged).
+- License: LGPL-2.1-or-later (see `LICENSE`). Ability mechanics are inspired by
+  ProjectKorra and related bending plugins — see `CREDITS.md`.
 - Config: COMMON `avataruniverse-common.toml` (`enableDebugLogging`, default false) + in-game config screen.
 
 ## Mapping names
